@@ -1,0 +1,274 @@
+/*
+VAT Patch test (C++ Ver 1.0).
+
+PatchID=[GF1PATCH110]
+GravisID=[ID#000002]
+Description=[Made by UltraSound Patch Maker v1.12]
+Instruments=1
+Voices=14
+Channels=1
+Waveforms=8
+Master Volume=127
+Data Size=869280
+--- INSTRUMENT: 0 ---
+Instrument ID=0
+Name=[]
+Size=869280
+Layers=1
+*** LAYER: 0 ***
+Duplicate=0
+ID=0
+Size=869280
+Samples=8
+
+^^^ SAMPLE: 0 ^^^
+
+		Name=[ge1]
+		Fractions=15/0
+		Size=204778
+		Start Loop=195120
+		End Loop=204758
+		Sample Rate=44100
+		Low Frequency=26986
+		High Frequency=84040
+		Root Frequency=82407
+		Tune=512
+		Balance=7
+		Envelope data: 3F 3F C5 C8 3F 3F F6 F6  8  8
+		Tremolo Sweep=0
+		Tremolo Rate=0
+		Tremolo Depth=0
+		Vibrato Sweep=0
+		Vibrato Rate=0
+		Vibrato Depth=0
+		Modes:
+			Sample depth:16bit
+			high bit:signed
+			Looping:On
+			Bi-D Looping:Off
+			-Looping:Off
+			Sustain:On
+			Envelopes:On
+			Clamped Release:Off
+		Scale Frequency=60
+		Scale Factor=1024
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^ SAMPLE: 1 ^^^
+Name=[ga1]
+Fractions=3/0
+Size=111816
+Start Loop=103420
+End Loop=111758
+Sample Rate=44100
+Low Frequency=85674
+High Frequency=112180
+Root Frequency=110000
+Tune=512
+Balance=7
+Envelope data: 3F 3F C5 C8 3F 3F F6 F6  8  8 
+Tremolo Sweep=0
+Tremolo Rate=0
+Tremolo Depth=0
+Vibrato Sweep=0
+Vibrato Rate=0
+Vibrato Depth=0
+Modes:
+  Sample depth:16bit
+  high bit:signed
+  Looping:On
+  Bi-D Looping:Off
+  -Looping:Off
+  Sustain:On
+  Envelopes:On
+  Clamped Release:Off
+Scale Frequency=60
+Scale Factor=1024
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^ SAMPLE: 2 ^^^
+Name=[gd2]
+Fractions=1/0
+Size=143696
+Start Loop=143080
+End Loop=143684
+Sample Rate=44100
+Low Frequency=114361
+High Frequency=149743
+Root Frequency=146832
+Tune=512
+Balance=7
+Envelope data: 3F 3F C5 C8 3F 3F F6 F6  8  8 
+Tremolo Sweep=0
+Tremolo Rate=0
+Tremolo Depth=0
+Vibrato Sweep=0
+Vibrato Rate=0
+Vibrato Depth=0
+Modes:
+  Sample depth:16bit
+  high bit:signed
+  Looping:On
+  Bi-D Looping:Off
+  -Looping:Off
+  Sustain:On
+  Envelopes:On
+  Clamped Release:Off
+Scale Frequency=60
+Scale Factor=1024
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^ SAMPLE: 3 ^^^
+Name=[gg2]
+Fractions=15/0
+Size=102494
+Start Loop=101580
+End Loop=102478
+Sample Rate=44100
+Low Frequency=152653
+High Frequency=199883
+Root Frequency=195998
+Tune=512
+Balance=7
+Envelope data: 3F 3F C5 C8 3F 3F F6 F6  8  8 
+Tremolo Sweep=0
+Tremolo Rate=0
+Tremolo Depth=0
+Vibrato Sweep=0
+Vibrato Rate=0
+Vibrato Depth=0
+Modes:
+  Sample depth:16bit
+  high bit:signed
+  Looping:On
+  Bi-D Looping:Off
+  -Looping:Off
+  Sustain:On
+  Envelopes:On
+  Clamped Release:Off
+Scale Frequency=60
+Scale Factor=1024
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^ SAMPLE: 4 ^^^
+Name=[gb2]
+Fractions=15/0
+Size=76670
+Start Loop=71300
+End Loop=76658
+Sample Rate=44100
+Low Frequency=203767
+High Frequency=251836
+Root Frequency=246942
+Tune=512
+Balance=7
+Envelope data: 3F 3F C5 C8 3F 3F F6 F6  8  8 
+Tremolo Sweep=0
+Tremolo Rate=0
+Tremolo Depth=0
+Vibrato Sweep=0
+Vibrato Rate=0
+Vibrato Depth=0
+Modes:
+  Sample depth:16bit
+  high bit:signed
+  Looping:On
+  Bi-D Looping:Off
+  -Looping:Off
+  Sustain:On
+  Envelopes:On
+  Clamped Release:Off
+Scale Frequency=60
+Scale Factor=1024
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^ SAMPLE: 5 ^^^
+Name=[ge3]
+Fractions=13/0
+Size=91796
+Start Loop=85880
+End Loop=91766
+Sample Rate=44100
+Low Frequency=256731
+High Frequency=336161
+Root Frequency=329628
+Tune=512
+Balance=7
+Envelope data: 3F 3F C5 C8 3F 3F F6 F6  8  8 
+Tremolo Sweep=0
+Tremolo Rate=0
+Tremolo Depth=0
+Vibrato Sweep=0
+Vibrato Rate=0
+Vibrato Depth=0
+Modes:
+  Sample depth:16bit
+  high bit:signed
+  Looping:On
+  Bi-D Looping:Off
+  -Looping:Off
+  Sustain:On
+  Envelopes:On
+  Clamped Release:Off
+Scale Frequency=60
+Scale Factor=1024
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^ SAMPLE: 6 ^^^
+Name=[ga3]
+Fractions=15/0
+Size=71850
+Start Loop=71640
+End Loop=71838
+Sample Rate=44100
+Low Frequency=342695
+High Frequency=448721
+Root Frequency=440000
+Tune=512
+Balance=7
+Envelope data: 3F 3F C5 C8 3F 3F F6 F6  8  8 
+Tremolo Sweep=0
+Tremolo Rate=0
+Tremolo Depth=0
+Vibrato Sweep=0
+Vibrato Rate=0
+Vibrato Depth=0
+Modes:
+  Sample depth:16bit
+  high bit:signed
+  Looping:On
+  Bi-D Looping:Off
+  -Looping:Off
+  Sustain:On
+  Envelopes:On
+  Clamped Release:Off
+Scale Frequency=60
+Scale Factor=1024
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^ SAMPLE: 7 ^^^
+Name=[gd4]
+Fractions=8/0
+Size=66058
+Start Loop=60080
+End Loop=66044
+Sample Rate=44100
+Low Frequency=457443
+High Frequency=4268980
+Root Frequency=587330
+Tune=512
+Balance=7
+Envelope data: 3F 3F C5 C8 3F 3F F6 F6  8  8 
+Tremolo Sweep=0
+Tremolo Rate=0
+Tremolo Depth=0
+Vibrato Sweep=0
+Vibrato Rate=0
+Vibrato Depth=0
+Modes:
+  Sample depth:16bit
+  high bit:signed
+  Looping:On
+  Bi-D Looping:Off
+  -Looping:Off
+  Sustain:On
+  Envelopes:On
+  Clamped Release:Off
+Scale Frequency=60
+Scale Factor=1024
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+***************************************
+---------------------------------------

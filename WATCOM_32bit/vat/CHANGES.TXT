@@ -1,0 +1,47 @@
+
+
+/* Changes to VAT code made by Eric
+
+- Changed compiler opts to /otrl /s to stop crashes.  (/oa was the culprit)
+- Improved Freemidi function.  Added Freemidi use to loadMidi
+- Expanded Maximum Midi tracks to 256.  Fixed a bug in the MIDI
+	structure (had only 16 tracks hard coded)
+
+- Changed some DWORDs in the CHANNEL struct to be LONGs so that negative
+	compares could happen.
+- Added a break; statement in command 20 in sdotick().
+- Added code to help insure a period is generated  if the period is zero.
+	This is near the beginning of the sdodiv() function.
+- Changed loads3m() so that it allocates all the patterns before it reads
+	them.  For some reason, greenmol.s3m crashes when loading if the patterns
+	are allocated while they are being read.
+- Added code to help catch divide by zero errors.
+- Added debug lines.
+- Added code to ignore pattern 0xfe.
+- Added code to prevent invalid instruments and notes
+- Fixed some slight problems with volume and tone slide in the s3m player.
+- Added code to modplayer() so it doesn't mix channels with no smaple data.
+- Improved the vibrato handler for mods
+
+- Added some diagnostic printing things to mod.c
+- Moved extern "C" wrapper to include structures in the header
+- Added code to mod.c in dodiv() to screen out bad sample numbers
+- Wavesetting does not need to clip values for the rate setting.
+  All values are allowed now.
+- Added LoadWaveFromMemory function
+- Added dma_bufferlen and dma_buffer[] to header file
+- Added longbuffer.  This is for collecting long streams of data.  This
+  is hard to do outside of the mixer loop because the dma buffer is short
+  and it is hard to prevent te interruption of data collection.
+- Added code to LoadMod to bail on unknown module types.
+
+- Added Gravis patch playing capability.
+- Switched MIDI implementation away from FM to patches
+- Added SaveWave() function
+- Added GetMusicType() function
+
+
+Notes:
+
+Possible bug:  ticks are going by before dodiv ever gets called.
+	Fix by initializing s3m_currenttick to 10000 in reset code.

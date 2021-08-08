@@ -1,0 +1,5 @@
+rep_clr.exe : rep_clr.c
+  wcl386 -c -l=dos4g    rep_clr.c
+  wlink @link.cmd
+
+

@@ -1,0 +1,5 @@
+High Score information.
+Enter this at http://www.ericjorgensen.com/eittris
+Score: 6823
+Rows: 3
+Validation code: 0126061C83C9

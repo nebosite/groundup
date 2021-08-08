@@ -1,0 +1,6 @@
+spr2c.exe : spr2c.obj
+  wlink @link.cmd
+
+spr2c.obj : spr2c.c
+  wcl386 -c -l=dos4g spr2c.c
+

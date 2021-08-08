@@ -1,0 +1,3 @@
+spiro.exe : spiro.c
+  wcl386 -c -l=dos4g    spiro.c
+  wlink @link.cmd

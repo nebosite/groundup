@@ -1,0 +1,4 @@
+ripper.exe : ripper.c
+  wcl386 -c -l=dos4g -oneat -e5 ripper.c
+  wlink @link.cmd
+

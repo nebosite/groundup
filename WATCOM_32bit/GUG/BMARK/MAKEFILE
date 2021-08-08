@@ -1,0 +1,13 @@
+# The demo program
+bmark.exe : bmark.c bench_c.obj bench_a.obj 
+  wcl386 -c -l=dos4gw   bmark.c
+  wlink @link.cmd
+
+bench_c.obj : bench_c.c
+  wcl386 -c -l=dos4gw   bench_c.c
+
+bench_a.obj : bench_a.asm
+  wasm bench_a.asm
+
+
+

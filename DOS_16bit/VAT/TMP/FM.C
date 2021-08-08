@@ -1,0 +1,410 @@
+#include <dos.h>
+#include "vat.h"
+
+//-------------------------------- External functions
+
+WORD                  mcalc(WORD micro);
+void _saveregs        mdelay(WORD delay);
+
+//-------------------------------- External variables
+
+extern WORD mue3,mue23,fm_addr;
+
+
+//-------------------------------- FM variables and data
+
+static WORD FM_off[9]={0,0x100,0x200,0x800,0x900,0xa00,0x1000,0x1100,0x1200};
+static BYTE FM_fnr[12]={0x57,0x6b,0x81,0x98,0xb0,0xca,0xe5,0x02,0x20,0x41,0x63,0x87};
+static BYTE FM_key_or[12]={1,1,1,1,1,1,1,2,2,2,2,2};
+static BYTE FM_key[9];
+static BYTE FM_keyscale1[9];
+static BYTE FM_keyscale2[9];
+static BYTE FM_vol[9] = {0x3f,0x3f,0x3f,0x3f,0x3f,0x3f,0x3f,0x3f,0x3f};
+static WORD rythm=0xbd00;
+
+/*  ---------------  FM  Stuff ------------ */
+
+
+
+/**************************************************************************
+	void FMWrite(WORD data)
+
+	DESCRIPTION: Writes a byte to the FM chip.
+
+	INPUTS:
+			data    High byte contains the register number, low byte
+							contains the data to write to that register.
+
+**************************************************************************/
+void FMWrite(WORD data)
+{
+	BYTE reg,value;
+
+	reg = (data & 0xff00)>>8;       // extract register and data value
+	value = data & 0x00ff;
+
+	mdelay(mue3);                   // Wait three microseconds
+	outportb(fm_addr,reg);          // Write the register
+	mdelay(mue3);                   // Wait three microseconds
+
+	outportb(fm_addr+1,value);      // Write the data
+	mdelay(mue23);                  // Wait 23 microseconds
+
+}
+
+
+/**************************************************************************
+	void FMReset()
+
+	DESCRIPTION:  Resets the FM chip by clearing all the registers then
+								setting a few appropriate bits.
+
+**************************************************************************/
+void FMReset(void)
+{
+	WORD i;
+	for(i = 0; i <= 0xf500 ; i+= 0x100) FMWrite(i);
+	FMWrite(0x0120);                 // Turn on Wave form control
+	FMWrite(0xbdc0);                 // Set AM and Vibrato to high
+}
+
+
+/**************************************************************************
+	BYTE FMStatus()
+
+	DESCRIPTION:  Reads the status byte of the FM chip
+
+	RETURNS:  The value at fm_addr
+
+**************************************************************************/
+BYTE FMStatus(void)
+{
+	return (inportb(fm_addr));
+
+}
+
+
+/**************************************************************************
+	SHORT FMDetect()
+
+	DESCRIPTION:  Detects the presence of an FM chip
+
+	RETURNS:  A boolean value indicating wether or not test was successful
+
+**************************************************************************/
+SHORT FMDetect(void)
+{
+	FMWrite(0x0100); /* init Test register */
+
+	FMWrite(0x0460); /* reset both timer */
+	FMWrite(0x0480); /* enable interrupts */
+	if(FMStatus() & 0xe0) return(FALSE);
+
+	FMWrite(0x02ff); /* write ffh to timer 1 */
+	FMWrite(0x0421); /* start timer 1 */
+	if(fm_addr==0x388) MilliDelay(42); /* wait at least 21000 mcs */
+	else mdelay(mcalc(160));   /* wait at least 80 microsec */
+	if((FMStatus() & 0xe0)!=0xc0) return(FALSE);
+
+	FMWrite(0x0460); /* reset both timer */
+	FMWrite(0x0480); /* enable interrupts */
+	return(TRUE);
+}
+
+
+
+/**************************************************************************
+	void FMSetVoice(BYTE voice,BYTE *ins)
+
+	DESCRIPTION: Sets the voice from an 11 byte array
+
+	INPUTS:
+
+		voice   FM voice number (0-8)
+		ins     A pointer to an array of voice descriptor  bytes
+
+		BYTE    ID
+
+			0      Ampmod /vib /envtype /scale rate/ mod freq mult (oper 1)
+			1      Ampmod /vib /envtype /scale rate/ mod freq mult (oper 2)
+			2      Key level scaling/ total level (oper 1)
+			3      Key level scaling/ total level (oper 2)
+			4      Attack Rate/ Decay rate  (oper 1)
+			5      Attack Rate/ Decay rate  (oper 2)
+			6      Sustain Level/ Release rate (oper 1)
+			7      Sustain Level/ Release rate (oper 2)
+			8     Feedback / Algorythm (oper 1&2)
+			9      Wave Form  Select (oper 1)
+			10    Wave Form  Select (oper 2)
+
+**************************************************************************/
+void FMSetVoice(BYTE voice,BYTE *ins)
+{
+	if(voice > 8) return;
+
+	FM_keyscale1[voice]=ins[2] & 0xc0;        // store key scaling for FM_Vol
+	FM_keyscale2[voice]=ins[3] & 0xc0;
+																						// Write voice data
+	FMWrite((0x2000 + FM_off[voice]) | ins[0]);
+	FMWrite((0x2300 + FM_off[voice]) | ins[1]);
+																						// For the next two, we want to
+																						// make sure current volume is
+																						// preserved.
+	FMWrite((0x4000 + FM_off[voice]) | (ins[2] & 0xc0) | FM_vol[voice]);
+	FMWrite((0x4300 + FM_off[voice]) | (ins[3] & 0xc0) | FM_vol[voice]);
+																						// the rest of the voice is just
+																						// straight writes.
+	FMWrite((0x6000 + FM_off[voice]) | ins[4]);
+	FMWrite((0x6300 + FM_off[voice]) | ins[5]);
+	FMWrite((0x8000 + FM_off[voice]) | ins[6]);
+	FMWrite((0x8300 + FM_off[voice]) | ins[7]);
+	FMWrite((0xc000 + voice * 0x100) | ins[8]);
+	FMWrite((0xE000 + FM_off[voice]) | ins[9]);
+	FMWrite((0xE300 + FM_off[voice]) | ins[10]);
+}
+
+
+/**************************************************************************
+	void FMSetFrequency(BYTE voice,SHORT freq)
+
+	DESCRIPTION: sets an explicit pseudo frequency (0 - 0xffff)
+
+	INPUTS:
+
+		voice   FM voice (0-8)
+		freq    Frequency Value in Hertz (1 - 6040)
+
+	Special thanks:  Scott T. For making me aware of how to set real
+									 Frequency Values on the SB.
+
+**************************************************************************/
+void FMSetFrequency(BYTE voice,WORD freq)
+{
+	BYTE highbits,lowbits;
+	WORD data,frac=1;
+	SHORT octave;
+
+	if(freq > 6040) freq = 6040;             // 6040 is highest freq possible
+																					 // Determine the octave
+	if(freq < 55) octave = 0;
+	else if(freq < 110) octave = 1;
+	else if(freq < 220) octave = 2;
+	else if(freq < 440) octave = 3;
+	else if(freq < 880) octave = 4;
+	else if(freq < 1760) octave = 5;
+	else if(freq < 3520) octave = 6;
+	else octave = 7;
+																					 // Find the f-number
+	frac = (freq * (1L << (20-octave)))/50000L;
+	if(frac > 1023) {
+		octave++;
+		if(octave > 7) octave = 7;
+		frac = (freq * (1L << (20-octave)))/50000L;
+	}
+																					 // extract low and high bits
+	highbits = (frac & 0x300) >> 8;
+	lowbits = frac & 0xff;
+
+	data=0xa000+(voice<<8)|lowbits; // store low bits for now
+	FM_key[voice]=highbits|(octave<<2);  // save high bits for Key_on(); (octave 4)
+	FMWrite(data);                 // write low bits to FM chip;
+}
+
+/**************************************************************************
+	void FMSetNote(BYTE voice,BYTE note)
+
+	DESCRIPTION: sets the frequency for a chromatic note
+
+	INPUTS:
+		voice   FM voice #  (0-8)
+		note    Regular MIDI note (0-127)
+
+**************************************************************************/
+void FMSetNote(BYTE voice,BYTE note)
+{
+	BYTE blk,notex;
+	WORD data;
+															//  calculate freq number and octave
+	notex=note-24;
+	blk=1;
+	while(notex>=12)
+	{
+		notex-=12;
+		blk++;                    // octave number
+	}
+
+	data=0xa000+(voice<<8)|FM_fnr[notex];
+	FM_key[voice]=FM_key_or[notex]|(blk<<2); // save part of the note for Key_on()
+	FMWrite(data);             // write note to the chip
+}
+
+
+/**************************************************************************
+	void FMSetVolume(BYTE voice,BYTE vol)
+
+	DESCRIPTION: The the volume (0-63) for a voice.
+
+	INPUTS:
+		voice   FM voice #  (0-8)
+		vol     volume value (0-63)
+
+**************************************************************************/
+void FMSetVolume(BYTE voice,BYTE vol)
+{
+	if (voice >8) return;
+															 // Convert  volume from a logical value to
+															 // the value that is really used.  ie: 3f is
+															 // really the quietest setting, while 0 is
+															 // the loudest.  Weird, eh?
+	FM_vol[voice] = (0x3f - (vol & 0x3f));
+															 // Write the volume while preserving the
+															 // other important parts of the voice.
+	FMWrite((0x4000+FM_off[voice]) |FM_vol[voice] | FM_keyscale1[voice]);
+	FMWrite((0x4300+FM_off[voice]) |FM_vol[voice] | FM_keyscale2[voice]);
+
+}
+
+/*  A NOTE ABOUT RYTHM FUNCTIONS:
+
+	I've only played around with these functions a little bit. Here are some
+	things that I've learned:
+
+		- only channels 6,7,and 8 are affected by the rythm mode.
+		- You will need to develop special instrument definitions to get
+			the rythm instruments to sound right.  The most important parameters
+			in a rythm instrument definition are attack/decay/sustain rates and
+			the waveform (bytes 9 and 10).
+		- channels 6,7, and 8 each behave differently in rythm mode:
+
+				6 - Instrumental.  Sounds like a triangle
+				7 - White noise.  Sounds like a snare drum
+				8 - High white noise.  Sounds like a Cymbal.
+
+		- If you want to add white noise effects to your program (Gun shots
+			engines, etc...)  channel 7 in rythm  mode is a good source.
+
+																			- ERIC
+*/
+
+
+
+/**************************************************************************
+	void FMSetRythmMode(BYTE bool)
+
+	DESCRIPTION:  Turns on/off rythm mode based on input.
+
+	INPUTS:
+		bool    TRUE or FALSE value for setting the rythm mode
+
+**************************************************************************/
+void FMSetRythmMode(BYTE bool)
+{
+	WORD data;
+
+	if(bool) data=0xbde0;               // Set the rythm mode bit
+	else data=0xbdc0;
+
+	rythm=data;                         // This global keeps track of the
+																			// mode for other rythm functions.
+	FMWrite(data);
+}
+
+
+/**************************************************************************
+	void FMRythmOn(BYTE inst)
+
+	DESCRIPTION: Turns on a Specified  rythm instrument.
+
+	INPUTS:
+		inst    FM rythm instrument specification.
+
+						You should use these definitions:
+
+											FM_HIHAT
+											FM_TOPCYM
+											FM_TOMTOM
+											FM_SNARE
+											FM_BASS
+
+**************************************************************************/
+void FMRythmOn(BYTE inst)
+{
+	rythm|=inst;
+	FMWrite(rythm);
+}
+
+/**************************************************************************
+	void FMRythmOff(BYTE inst)
+
+	DESCRIPTION: Turns off a Specified  rythm instrument.
+
+	INPUTS:
+		inst    FM rythm instrument specification.
+
+						You should use these definitions:
+
+											FM_HIHAT
+											FM_TOPCYM
+											FM_TOMTOM
+											FM_SNARE
+											FM_BASS
+
+**************************************************************************/
+void FMRythmOff(BYTE inst)
+{
+	rythm&=(~inst);
+	FMWrite(rythm);
+}
+
+
+/**************************************************************************
+	void FMKeyOn(BYTE voice)
+
+	DESCRIPTION: Turn on an FM voice.
+
+							 This description is misleading, since in my experirnce,
+							 FM voices are always on.  This function really just
+							 triggers the FM voice.
+
+	INPUTS:
+		voice   FM voice #  (0-8)
+
+**************************************************************************/
+void FMKeyOn(BYTE voice)
+{
+	WORD data;
+
+	if(voice > 8) return;
+
+	data=0xb000+(voice<<8);            // set write address
+	data |= FM_key[voice]|0x20;        // set key on bit and frequency
+	 FMWrite(data);
+}
+
+
+/**************************************************************************
+	void FMKeyOff(BYTE voice)
+
+	DESCRIPTION: Turn off an FM voice.
+
+								(See FMKeyOn)  Again, I've found that voices are always
+								on, and to turn them off you really need to just set the
+								volume to 0.  Turning off the Key_on bit may prepare
+								the voice for a trigger, though.
+
+	INPUTS:
+		voice   FM voice #  (0-8)
+
+**************************************************************************/
+void FMKeyOff(BYTE voice)
+{
+	WORD data;
+
+	if(voice > 8) return;
+
+	data=0xb000+(voice<<8);            // set address
+	data |= FM_key[voice];              // preserve frequency data
+	FMWrite(data);
+																		 //  working.
+}
+

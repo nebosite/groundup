@@ -1,0 +1,242 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif\r\n"
+    "#include ""res\\fl.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\fl.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_FL_DIALOG DIALOGEX 0, 0, 325, 220
+STYLE DS_ABSALIGN | DS_MODALFRAME | DS_SETFOREGROUND | DS_CENTER | WS_POPUP | 
+    WS_VISIBLE
+EXSTYLE WS_EX_APPWINDOW
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "OK",IDOK,"Button",BS_OWNERDRAW | WS_TABSTOP,227,174,91,
+                    21
+    COMBOBOX        IDC_COMBO_MUSICLIST,181,98,122,70,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Play Sound Effects",IDC_BUTTON_SFX,"Button",
+                    BS_OWNERDRAW | WS_TABSTOP,19,84,135,14,WS_EX_TRANSPARENT
+    CONTROL         "Play Music",IDC_BUTTON_MUSIC,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,19,99,135,14
+    CONTROL         "Start With Music",IDC_BUTTON_STARTMUSIC,"Button",
+                    BS_OWNERDRAW | WS_TABSTOP,19,114,135,14
+    CONTROL         """Qq"" to Quit",IDC_BUTTON_QQQUIT,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,19,128,135,14
+    CONTROL         "Allow Windows Keys",IDC_BUTTON_WINKEYS,"Button",
+                    BS_OWNERDRAW | WS_TABSTOP,19,143,135,14
+    CONTROL         "Better Sound",IDC_BUTTON_HQSOUND,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,19,157,135,14
+    CONTROL         "www.purpleplanet.com",IDC_BUTTON_URL,"Button",
+                    BS_OWNERDRAW | WS_TABSTOP,170,45,148,20
+    LTEXT           "Important information here!",IDC_TEXT_INFO,274,7,44,8,
+                    NOT WS_VISIBLE,WS_EX_TRANSPARENT | WS_EX_CLIENTEDGE
+    CONTROL         133,IDC_STATIC,"Static",SS_BITMAP,1,1,248,39
+    CONTROL         136,IDC_STATIC,"Static",SS_BITMAP,248,16,63,25
+    CONTROL         135,IDC_STATIC,"Static",SS_BITMAP,7,66,67,14
+    CONTROL         134,IDC_STATIC,"Static",SS_BITMAP,200,78,85,14
+    CONTROL         "Nice Mouse",IDC_BUTTON_NICEMOUSE,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,19,171,135,14
+    LTEXT           ".",IDC_TEXT_KEYHELP,18,191,184,15
+    CONTROL         "Cancel",IDCANCEL,"Button",BS_OWNERDRAW | WS_TABSTOP,268,
+                    198,50,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "fl MFC Application\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "fl\0"
+            VALUE "LegalCopyright", "Copyright (C) 1998\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "fl.EXE\0"
+            VALUE "ProductName", "fl Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_FL_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 318
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 212
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_FL_DIALOG DLGINIT
+BEGIN
+    IDC_COMBO_MUSICLIST, 0x403, 1, 0
+"\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_START_WITH_MUSIC_1  BITMAP  DISCARDABLE     "res\\Bt_swm1.bmp"
+IDB_START_WITH_MUSIC_0  BITMAP  DISCARDABLE     "res\\Bt_swm0.bmp"
+IDB_LOGO                BITMAP  DISCARDABLE     "res\\Bm_logo.bmp"
+IDB_MUSIC_LIST          BITMAP  DISCARDABLE     "res\\Bm_mlist.bmp"
+IDB_OPTIONS             BITMAP  DISCARDABLE     "res\\Bm_opt.bmp"
+IDB_VERSION             BITMAP  DISCARDABLE     "res\\Bm_ver.bmp"
+IDB_ALLOW_WINKEYS_0     BITMAP  DISCARDABLE     "res\\Bt_awk0.bmp"
+IDB_ALLOW_WINKEYS_1     BITMAP  DISCARDABLE     "res\\Bt_awk1.bmp"
+IDB_BETTER_SOUND_0      BITMAP  DISCARDABLE     "res\\Bt_bs0.bmp"
+IDB_BETTER_SOUND_1      BITMAP  DISCARDABLE     "res\\Bt_bs1.bmp"
+IDB_DONE                BITMAP  DISCARDABLE     "res\\Bt_done.bmp"
+IDB_NICE_MOUSE_0        BITMAP  DISCARDABLE     "res\\Bt_nm0.bmp"
+IDB_NICE_MOUSE_1        BITMAP  DISCARDABLE     "res\\Bt_nm1.bmp"
+IDB_PLAY_MUSIC_0        BITMAP  DISCARDABLE     "res\\Bt_pm0.bmp"
+IDB_PLAY_MUSIC_1        BITMAP  DISCARDABLE     "res\\Bt_pm1.bmp"
+IDB_PLAY_SFX_0          BITMAP  DISCARDABLE     "res\\Bt_psfx0.bmp"
+IDB_PLAY_SFX_1          BITMAP  DISCARDABLE     "res\\Bt_psfx1.bmp"
+IDB_QQ_0                BITMAP  DISCARDABLE     "res\\Bt_qq0.bmp"
+IDB_QQ_1                BITMAP  DISCARDABLE     "res\\Bt_qq1.bmp"
+IDB_REGISTER            BITMAP  DISCARDABLE     "res\\Bt_reg.bmp"
+IDB_START               BITMAP  DISCARDABLE     "res\\Bt_start.bmp"
+IDB_URL                 BITMAP  DISCARDABLE     "res\\Bt_url.bmp"
+IDB_PREVIEW             BITMAP  DISCARDABLE     "res\\Preview.bmp"
+IDB_CANCEL              BITMAP  DISCARDABLE     "res\\Bt_canc.bmp"
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif
+#include "res\fl.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,19 @@
+------ Entering playmusic() ------- 
+  playmusic() Checking pointer...
+Music pointer is music\ydoodle.mid    
+Playing Midi ydoodle.mid    
+------ Entering playmusic() ------- 
+  playmusic() Checking pointer...
+Freeing Midi (ydoodle.mid    )
+Music pointer is music\greenmol.s3m   
+Playing S3M 
+------ Entering playmusic() ------- 
+  playmusic() Checking pointer...
+Freeing S3M ()
+Music pointer is music\xmas.mod       
+Playing Module the christmas music
+------ Entering playmusic() ------- 
+  playmusic() Checking pointer...
+Freeing Module (the christmas music)
+Music pointer is music\twinkle.mid    
+Playing Midi twinkle.mid    

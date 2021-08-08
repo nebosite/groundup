@@ -1,0 +1,62 @@
+WATCOM C/C++32 Compile and Link Utility Version 10.0
+Copyright by WATCOM International Corp. 1988, 1994. All rights reserved.
+WATCOM is a trademark of WATCOM International Corp.
+Usage:  wcl386 {option(s)} {file(s)}
+Options:  ( - option is also accepted )
+/c  compile only, no link             /y ignore the WCL386 environment variable
+/cc treat source files as C code      /cc++ treat source files as C++ code
+                           [Preprocessor options]
+/d<name>[=text] define a macro        /p   preprocess file
+/d+ extend syntax of /d option        /pl  output #line directives
+/fo=<filename> set object file name   /pc  output comments
+/i=<directory>  include directory     /plc output #line and comments
+/u<name>  undefine macro name
+Press any key to continue:
+                             [Compiler options]
+/3r 386 register calling conventions  /nm=<module_name> set module name
+/3s 386 stack calling conventions     /nt=<name>  set text segment name
+/4r 486 register calling conventions  /r  save/restore segregs across calls
+/4s 486 stack calling conventions     /s  remove stack overflow checks
+/5r Pentium register calling conv.    /v  output func declarations to .def
+/5s Pentium stack calling conventions /w<number>  set warning level number
+/d1{+} line number debugging info.    /we treat all warnings as errors
+/d2 full symbolic debugging info.     /z{a,e} disable/enable extensions
+/e<number>  set error limit number    /zc place strings in CODE segment
+/ee  call epilogue hook routine       /zd{f,p} DS floats vs DS pegged to DGROUP
+/ei  force enums to be type int       /zf{f,p} FS floats vs FS pegged to seg
+/en  emit routine names in the code   /zg{f,p} GS floats vs GS pegged to seg
+/ep[=<num>] call prologue hook routine/zg  generate function prototypes
+/ez  generate PharLap EZ-OMF object   /zk{0,0u,1,2} double-byte char support
+/fh=<filename> pre-compiled headers   /zku=<codepage> UNICODE support
+/fi=<filename> force include of file  /zl  remove default library information
+/fo=<filename> set object file name   /zld remove file dependency information
+/g=<codegroup> set code group name    /zm  place functions in separate segments
+/hc codeview debug format             /zp{1,2,4,8} set struct packing alignment
+/hd dwarf debug format                /zq  operate quietly
+/hw watcom debug format               /zs  check syntax only
+/j  change char default to signed     /zt<number> set data threshold
+/m{f,s,m,c,l}  memory model           /zu  SS != DGROUP
+/nc=<name>  set CODE class name       /zw  Microsoft Windows
+/nd=<name>  set data segment name
+Press any key to continue:
+                           [Optimization options]
+/oa relax alias checking              /on generate agressive floating-point
+/oc disable call/ret optimization     /oo continue compiling when low on memory
+/od disable optimizations             /op improve floating-point consistency
+/oe{=num} expand functions inline     /or re-order instructions to avoid stalls
+/of{+} generate traceable stack frames/os optimize for space
+/oi inline intrinsic functions        /ot optimize for time
+/ol perform loop optimizations        /ou ensure unique addresses for functions
+/om generate inline math functions    /ox maximum optimization (/oilr /s)
+                          [Floating-point options]
+/fpc calls to floating-point library  /fpi87 inline 387 instructions
+/fpi inline 8087 with emulation       /fp2   inline 287 instructions
+/fpr use old floating-point convention/fp3   inline 387 instructions
+/7   same as /fpi87                   /fp5  generate Pentium optimized code
+                              [Linker options]
+/bd  build Dynamic link library       /fm[=<map_file>]  generate map file
+/bm  build Multi-thread application   /k<stack_size> set stack size
+/bw  build default Windowing app.     /l=<system> link for the specified system
+/bt=<os> build target OS.             /x  make names case sensitive
+/fd[=<directive_file>] directive file @<directive_file> include file
+/fe=<executable> name executable file /"linker directives"

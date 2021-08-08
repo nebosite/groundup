@@ -1,0 +1,1190 @@
+/**************************************************************************
+												VARMINT'S AUDIO TOOLS 0.71
+
+	VAT.C
+
+		This file contains source code for Sound Blaster initialization
+		and DSP access, plus some random stuff that does not belong
+		anywhere else.
+
+
+	Authors: Eric Jorgensen (smeagol@rt66.com)
+					 Bryan Wilkins  (bwilkins@rt66.com)
+
+	Copyright 1995 - Ground Up
+
+
+	NO-NONSENSE LISCENCE TERMS
+
+		- This code is for personal use only.  Don't give it to anyone else.
+
+		- You can use this code in your own applications, and you can even
+			distribute these applications without royalty fees (please send
+			us a copy!), but you can't include any of this source code with
+			the distribution.
+
+		- You may NOT use this code in your own libraires or programming tools
+			if you are going to distribute them.
+
+		- You are now responsible for this code.  If you put it in a game and
+			it crashes the US Department of Defense computer system, it's your
+			problem now, and not ours.
+
+			We would like to hear about bug reports, but now that you have the
+			code, it is not our responsibility to fix those bugs.
+
+		- Ground Up is not obligated to provide technical support for VAT.
+			(if you are willing to shell out a lot of clams, however, I am
+			sure that we would be happy to drop what we're doing and help you
+			out.)
+
+													 **** WARNING ****
+
+ Use Varmint's Audio Tools at your own risk.  We have tested VAT as much
+ as we can, but we will not garantee that it won't turn your hair blue,
+ rot your teeth, or send your love life spiraling even further into oblivion.
+
+ VAT has been found to cause cancer in laboratory rats.
+
+**************************************************************************/
+
+#include <stdio.h>
+#include <dos.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#include <ctype.h>
+#include <alloc.h>
+#include "vat.h"
+
+
+//-------------------------------- Local Defs
+
+
+#define DMAAUTOINIT   0x58
+#define DMAONESHOT    0x48
+
+//#define SHAREWARE
+
+//-------------------------------- External functions used locally
+
+void 									dbprintf(CHAR *string,...);
+WORD                  mcalc(WORD micro);
+void _saveregs        mdelay(WORD delay);
+void                  midiplayer(void);
+void                  modplayer(void);
+void 									wavplayer(void);
+void                  s3mplayer(void);
+
+
+//-------------------------------- Internal Function prototypes
+
+SHORT                 cardcheck(void);
+static cardtype       checkhard(void);
+void                  dmaset(BYTE VFAR *sound_address,WORD len,BYTE channel);
+void                  enableint(BYTE nr);
+void                  disableint(BYTE nr);
+DWORD 								far2long(BYTE VFAR *adr);
+SHORT                 getsbenv(void);
+BYTE                  int2vect(BYTE intnr);
+void VFAR _saveregs _loadds interrupt sbint(void);
+void                  sbremovevector(void);
+void                  sbsetvector(void);
+static SHORT          scanint(void);
+static SHORT          testint(void);
+void                  venable(void);
+void                  vdisable(void);
+cardtype              whichcard(void);
+
+
+//-------------------------------- Global function pointers
+																// These are used by the interrupt routines
+																// To help keep track of interrupts that
+																// Get shuffled around.
+
+void VFAR _saveregs _loadds interrupt  (*handlerint)(void) = sbint;
+static void VFAR interrupt (*orgint)(void) = NULL;
+static void VFAR interrupt (*orgirqint)(void) = NULL;
+
+
+//-------------------------------- setup data and variables
+
+static WORD ioaddr[6]={0x220,0x240,0x210,0x230,0x250,0x260};
+static BYTE intrx[8]={5,7,2,3,10,11,12,15};
+WORD        io_addr= 0x220;
+WORD        intnr= 5;
+WORD        dma_ch=1;
+WORD        card_id=1;
+WORD        fm_addr;
+WORD        dsp_vers;
+WORD        midi_mpuport = 0x330;
+SHORT       mpu_available = FALSE;
+WORD 				mue3,mue23;
+static WORD dma_adr[8]= {0x00,0x02,0x04,0x06,0xc0,0xc4,0xc8,0xcc};
+static WORD dma_len[8]= {0x01,0x03,0x05,0x07,0xc2,0xc6,0xca,0xce};
+static WORD dma_page[8]={0x87,0x83,0x81,0x82,0x8f,0x8b,0x89,0x8a};
+SBERROR     sberr = 0;
+CHAR        *errname[] = {
+							"Cannot detect FMchip",
+							"Cannot detect DSP",
+							"Cannot find an open IRQ",
+							"Cannot find an open DMA channel",
+							"Cannot allocate memory for DMA buffer"};
+SHORT         tst_cnt;
+BYTE        dma_controlbyte = DMAAUTOINIT;
+
+#ifdef SHAREWARE
+extern SAMPLE varmintsound[];
+#endif
+
+//-------------------------------- DMA/DSP mixer varaibles and data
+
+WORD        dma_bufferlen = 64;
+BYTE VFAR    *dma_buffer[2] = {NULL,NULL};
+SHORT         dma_currentbuffer = 0;
+SHORT VFAR     *mix_buffer = NULL;
+WORD        sample_rate = 11000;
+
+
+
+//-------------------------------- Miscellaneous varaibles
+
+                                   // Used by MOD and S3M for vibrato calcs
+SHORT         vsin[100] = {0,16,32,47,63,79,94,108,123,137,150,163,175,186,
+							197,207,216,224,231,238,243,247,251,253,255,256,255,253,251,
+							247,243,238,231,224,216,207,197,186,175,163,150,137,123,108,
+							94,79,63,47,32,16,0,-16,-32,-47,-63,-79,-94,-108,-123,-137,
+							-150,-163,-175,-186,-197,-207,-216,-224,-231,-238,-243,-247,
+							-251,-253,-255,-256,-255,-253,-251,-247,-243,-238,-231,-224,
+							-216,-207,-197,-186,-175,-163,-150,-137,-123,-108,-94,-79,
+							-63,-47,-32,-16};
+
+                                   // midi tempo counters used in sbint
+LONG        midi_count = 256;
+SHORT       midi_callfreq = 256;
+
+
+LONG        debugnum=0;
+SHORT       debug_lowdsp = FALSE;
+SHORT       debug_reverseflipflop = FALSE;
+SHORT       debug_forceflipflop = -1;
+SHORT       disabled = 0;
+WORD        DSP_overhead = 0;
+FASTINT			bytes_per_synccheck = 8;
+FASTINT			syncbytecount = 0;
+
+extern unsigned _stklen = 16000;  // The stack is usually only 4K, but
+																	// I was getting stack overflow problems
+																	// with that ammount.
+
+WORD vsync_toolong = 4;           // This is the number of vclock ticks that
+																	// tells us we have waited to long in
+																	// the VarmintVSync() function.
+DWORD       vclock=0;
+WORD        vsyncclock = 0;
+BYTE        sync_on = FALSE;
+																	// This string is here to help debug
+																	// startup problems
+// ECODE change back to 5000
+CHAR        vatdebugstring[3000] = {"*** DEBUGGING STRING ***\n"};
+CHAR        vatapstr[255];
+SHORT				vinit;
+
+
+/**************************************************************************
+	void GoVarmint(void)
+	void DropDeadVarmint(void)
+
+	DESCRIPTION:  Starts/stops the interrupt routine for Varmint's audio tools
+
+**************************************************************************/
+void GoVarmint(void)
+{
+	LONG n;
+#ifdef SHAREWARE
+	WAVE *vs;
+	LONG sr,vsid;
+#endif
+
+	sbsetvector();                          // Install the sound kernel
+
+	if(debug_lowdsp) dsp_vers = debug_lowdsp;
+
+																					// Seems like later DSP versions
+																					// need to have the flipflop in
+																					// reverse order to remove static
+	if(dsp_vers >= 0x300) debug_reverseflipflop = TRUE;
+	if(debug_forceflipflop != -1) debug_reverseflipflop = debug_forceflipflop;
+
+
+	if(dsp_vers >= 0x400) {                   // SB 4.0(SB16) or better?
+                                          // Set up DMA channel.
+		dmaset(dma_buffer[0],dma_bufferlen*2-1,dma_ch);
+		DSPWrite(0xC6);                       // Generic DSP command
+    	                                    // (8 bit, DAC, Auto-init)
+    DSPWrite(0x00);												// Send Mode byte (mono,unsigned)
+		DSPWrite((dma_bufferlen-1) & 0xff);   // Write length low byte
+		DSPWrite((dma_bufferlen-1) >> 8);     // Write length high byte
+
+	}
+	else if(dsp_vers >= 0x300) {                   // SB Pro or better?
+
+		DSPWrite(0x48);                       // Set DSP for 8bit Autoinit DMA
+		DSPWrite((dma_bufferlen-1) & 0xff);   // Write length low byte
+		DSPWrite((dma_bufferlen-1) >> 8);     // Write length high byte
+		dmaset(dma_buffer[0],dma_bufferlen*2-1,dma_ch);
+
+		DSPWrite(0x90);                       // Set DSP for High speed
+																					// Autoinit 8bit DMA
+	}
+	else if(dsp_vers >= 0x200) {                   // SB2.0 or better?
+
+		DSPWrite(0x48);                       // Set DSP for 8bit Autoinit DMA
+		DSPWrite((dma_bufferlen-1) & 0xff);   // Write length low byte
+		DSPWrite((dma_bufferlen-1) >> 8);     // Write length high byte
+		dmaset(dma_buffer[0],dma_bufferlen*2-1,dma_ch);
+
+		DSPWrite(0x1C);                       // Set DSP for Autoinit 8bit DMA
+	}
+	else {                                  // SB 1.x?
+		dma_controlbyte = DMAONESHOT;
+	}
+
+	DSPWrite(DSP_INVOKE_INTR);              // Ignition!
+
+	n = vclock;
+	while(n == vclock);                     // Wait for at least one interrupt
+																					// to happen so that the internal
+																					// initilizations happens.
+#ifdef SHAREWARE
+	vs = LoadWaveFromMemory(NULL,varmintsound,7460L);
+	if(vs) {
+		vsid = PlaySound(vs,v_fancy);
+		AlterSoundEffect(vsid,v_setrate,2816000L/sample_rate);
+		MilliDelay(750);
+	}
+#endif
+}
+
+void DropDeadVarmint(void)
+{
+	DSPWrite(0xD0);                         // Halt DMA
+	if(dsp_vers >= 0x200) DSPWrite(0xDA);     // Halt Autoinitialized DMA
+	DSPWrite(0xD0);                         // Halt DMA
+	sbremovevector();                       // Clean up sound kernel
+}
+
+
+
+/*  ---------------  DSP  Stuff ------------ */
+
+
+
+
+/**************************************************************************
+	SHORT DSPReset()
+
+	DESCRIPTION: Resets the DSP
+
+	RETURNS:
+		TRUE or FALSE to indicate wether reset was sucsessful
+
+**************************************************************************/
+SHORT DSPReset(void)
+{
+	SHORT i;
+
+	dbprintf("DSPReset() - <entry>\n");
+
+	mdelay(mue3);                         // Wait 3 microseconds
+	VOUTPORTB(io_addr+DSP_RESET,1);        // Write a 1 to the DSP reset port
+	mdelay(mue3);                         // Wait 3 microseconds
+	VOUTPORTB(io_addr+DSP_RESET,0);        // Write a 0 to the DSP reset port
+
+
+	for(i=0;i<50;i++) {                   // DSP should send back an 0xaa
+		mdelay(mue3);
+		if(DSPRead()==0xaa) return(TRUE);
+	}
+
+	return(FALSE);
+}
+
+
+/**************************************************************************
+	BYTE DSPRead()
+
+	DESCRIPTION:  reads a byte from the dsp
+
+	RETURNS:
+		The byte that was read
+
+**************************************************************************/
+BYTE DSPRead(void)
+{
+																			// Read until high bit of status port
+																			// is set.
+	while(!(VINPORTB(io_addr+DSP_RSTATUS) &  0x80));
+	return (VINPORTB(io_addr+DSP_READ)); // Send back the value of the read port
+}
+
+/**************************************************************************
+	void DSPWrite(BYTE output)
+
+	DESCRIPTION: Writes a byte to the DSP
+
+	INPUT:
+		output  byte to write to the DSP
+
+**************************************************************************/
+void DSPWrite(BYTE output)
+{
+																			// Read until high bit of status port
+																			// is clear.
+	while((VINPORTB(io_addr+DSP_WSTATUS) &  0x80));
+	VOUTPORTB(io_addr+DSP_WRITE,output); // Write our byte
+}
+
+
+
+/**************************************************************************
+	WORD DSPGetVersion()
+
+	DESCRIPTION:  Get the version number of the DSP
+
+	RETURNS:
+		DSP version number. High byte = major version, low byte = minor version
+
+**************************************************************************/
+WORD DSPGetVersion(void)
+{
+	DSPWrite(DSP_GET_VERS);
+	return((WORD)DSPRead()*256+DSPRead());
+}
+
+
+/**************************************************************************
+	SHORT getsbenv()
+
+	DESCRIPTION:  Get sound blaster information from the environment
+								variable "BLASTER"
+
+	RETURNS:
+		TRUE if successful, FALSE if there was a problem
+
+**************************************************************************/
+SHORT getsbenv(void)
+{
+	static CHAR *envstr;                    // Environment strings must be
+																					// static or global
+	CHAR str[255];
+	SHORT i;
+	SHORT outvalue = TRUE;
+
+	dbprintf("getsbenv() - <entry>\n");
+
+	envstr=getenv("BLASTER");
+	if(!envstr) return(FALSE);              // no blaster variable? go home
+	strcpy(str,envstr);
+
+	dbprintf("getsbenv() - Raw BLASTER=%s\n",str);
+
+																					// Convert string to upper case
+	for(i = 0 ; i < strlen(str); i++) *(str+i) = toupper(*(str+i));
+																					// pick apart variable for info.
+																					// Io address
+	for(i = 0; *(str+i) != 0 && *(str + i) != 'A'; i++);
+	if(*(str+i)){
+		sscanf(str+i+1,"%x",&io_addr);
+		if(io_addr<0x210 || io_addr>0x260) outvalue = FALSE;
+	}
+																					// MIDI port address
+	for(i = 0; *(str+i) != 0 && *(str + i) != 'P'; i++);
+	if(*(str+i)) sscanf(str+i+1,"%x",&midi_mpuport);
+
+																					// Dma channel number
+	for(i = 0; *(str+i) != 0 && *(str + i) != 'D'; i++);
+	if(*(str+i)){
+		sscanf(str+i+1,"%d",&dma_ch);
+		if(dma_ch > 7) {
+			outvalue = (FALSE);                 // only 0-7 allowed
+			dma_ch = 1;                         // Set a reasonable default
+		}
+	}
+
+																					// IRQ interrupt number
+	for(i = 0; *(str+i) != 0 && *(str + i) != 'I'; i++);
+	if(*(str+i)){
+		sscanf(str+i+1,"%d",&intnr);
+		if(intnr < 2  || intnr > 15) {
+			outvalue =  (FALSE);
+			intnr = 7;
+		}
+	}
+
+																					// card_id
+	for(i = 0; *(str+i) != 0 && *(str + i) != 'T'; i++);
+	if(*(str+i)){
+		sscanf(str+i+1,"%d",&card_id);
+		if(card_id < 1 && card_id > 6) outvalue = FALSE; // 1 = SB 1.x, 6 = SB AWE
+	}
+
+	dbprintf("getsbenv() - Processed BLASTER=A%X P%X I%u D%u T%u\n",io_addr,midi_mpuport,intnr,dma_ch,card_id);
+
+	return(outvalue);
+}
+
+
+
+/*  ---------------  Misc.  Stuff ------------ */
+
+
+
+/**************************************************************************
+	SHORT cardcheck()
+
+	DESCRIPTION:  Check for both FM chip and DSP
+
+	RETURNS:
+		Returns a value that has FM and DSP status information
+
+**************************************************************************/
+SHORT cardcheck(void)
+{
+	SHORT ret=0;
+
+	if(FMDetect()) ret|=FM_DETECT;
+	if(DSPReset()) ret|=DSP_DETECT;
+	return(ret);
+}
+
+
+/**************************************************************************
+static void VFAR _saveregs interrupt testnint()
+
+	DESCRIPTION:  This function is stored as an interrupt to test
+								various interrupt vectors by testint()
+
+**************************************************************************/
+static void VFAR _saveregs interrupt testnint(void)
+{
+	tst_cnt++;                               // increment our test counter
+
+	VINPORTB(io_addr+DSP_RSTATUS);            // Acknowledge DSP interrupt
+
+	VOUTPORTB(0x20,0x20);                     // Clear PIC
+	VOUTPORTB(0xa0,0x20);
+}
+
+
+
+/**************************************************************************
+	static SHORT testint()
+
+	DESCRIPTION:  This function is used by scanint() to test interrupt
+								stuff.  It installs a test interrupt in the
+								requested spot (intnr) then sees if the DSP can
+								use it.
+
+	RETURNS:
+		TRUE if successful, FALSE if not
+
+**************************************************************************/
+static SHORT testint(void)
+{
+	SHORT i;
+	BYTE int1,int2;
+
+	orgint=_dos_getvect(int2vect(intnr));     // Save original interrupt
+	tst_cnt=0;                                // reset our test interrupt counter.
+
+	int1 = VINPORTB(0x21);                     // Save PIC settings
+	int2 = VINPORTB(0xa1);
+
+	vdisable();                               // Disable interrupts
+	VOUTPORTB(0x21,0xff);                      // Turn off all interrupts
+	VOUTPORTB(0xa1,0xff);
+
+																						// put in our test interrupt
+	_dos_setvect(int2vect(intnr),testnint);
+	enableint(intnr);                         //  Turn on that interrupt
+	venable();                                // Enable interrupts
+
+	DSPWrite(DSP_INVOKE_INTR);                // Force DSP interrupt
+
+	for(i=0;i<30000;i++) if(tst_cnt) break;   // wait for interrupt code to happen
+
+	if(i == 30000) {                          // normalize things if the interrupt
+																						// did not get called.
+		VINPORTB(io_addr+DSP_RSTATUS);           // Acknowledge DSP interrupt
+
+		VOUTPORTB(0x20,0x20);                    // Clear PIC
+		VOUTPORTB(0xa0,0x20);
+	}
+
+	vdisable();                               // disable inerrupts
+	disableint(intnr);                        // put original interrupt back
+	_dos_setvect(int2vect(intnr),orgint);
+
+	VOUTPORTB(0x21,int1);                      // restore PIC settings
+	VOUTPORTB(0xa1,int2);
+	venable();                                // enable interrupts
+
+	if(i==30000) return(FALSE);               // Timed out? No good!
+	else return(TRUE);
+}
+
+
+/**************************************************************************
+	static SHORT scanint()
+
+	DESCRIPTION: This makes sure that the interrupt number picked by the
+								IRQ specification is a good choice.
+
+	RETURNS:
+		0 if failed, Interrupt number if successful
+**************************************************************************/
+static SHORT scanint(void)
+{
+	SHORT i;
+
+	dbprintf("scanint() - <entry>\n");
+
+	if(testint()) return(intnr);   // Original choice good?
+
+	dbprintf("scanint() - original interrupt failed (%d)\n",intnr);
+
+	for(i=0;i<8;i++)                // Try our eight best guesses
+	{
+		intnr=intrx[i];
+		sprintf(vatapstr,"scanint() - trying interrupt: %d\n",intnr);
+		if(testint()) return(intnr);
+	}
+
+	dbprintf("scanint() - All interrupt tries failed\n");
+
+	return(0);
+}
+
+
+/**************************************************************************
+	static cardtype checkhard()
+
+	DESCRIPTION:  Checks hardware for DSP and FM chip
+
+	RETURNS:
+		The  detected Card Type.  (For now this is only an SB2.0)
+
+**************************************************************************/
+static cardtype checkhard(void)
+{
+	SHORT ret;
+
+	dbprintf("checkhard() - <entry>\n");
+
+	ret=DSPReset();
+
+	dbprintf("checkhard() - DSPreset: %d\n",ret);
+
+	if(ret)
+	{
+		if(!scanint()) {                    // Scan IRQ's
+			sberr= irqerr;
+			return(none);
+		}
+		dbprintf("checkhard() - scanint chose: %d\n",intnr);
+
+		fm_addr=FM_ADLIB_ADDRESS;           // Check adlib chip first
+		if(!FMDetect()) {
+			fm_addr=io_addr+FM_BOTH_OFF;      // Check SB chip
+			if(!FMDetect()) {
+				sberr = fmerr;
+				return(none);                   // no fm? -> damaged!
+			}
+		}
+		dbprintf("checkhard() - FM address: %X\n",fm_addr);
+
+		return(sb20);
+	}
+	sberr = nodsperr;
+	return(none);
+}
+
+
+/**************************************************************************
+	cardtype whichcard()
+
+	DESCRIPTION:  Calls various functions to make sure you've
+								got a Sound Blaster.  Also checks to make sure that
+								it has the right sound blaster environment settings.
+
+	RETURNS:
+		0 on failure, cardtype on success
+**************************************************************************/
+cardtype whichcard(void)
+{
+	cardtype cret = nodsp;
+	SHORT i;
+
+	dbprintf("whichcard() - <entry>\n");
+
+	if(getsbenv()) cret=checkhard();      // grab environment variable
+	if(cret!=nodsp) return(cret);         // If dsp is there, then go home
+
+	dbprintf("whichcard() - Original settings failed\n");
+
+
+	for(i=0;i<6;i++)                      // scan around for a better io address
+	{
+		io_addr=ioaddr[i];
+		sprintf(vatapstr,"whichcard() - Trying new io address: %X\n",io_addr);
+
+		cret=checkhard();
+		if(cret!=nodsp) return(cret);
+	}
+	dbprintf("whichcard() - FAILED COMPLETELY\n");
+
+	return(none);                         // Uh oh.
+}
+
+/**************************************************************************
+	void MPUExit(void)
+
+	DESCRIPTION:  Sends the UART mode command to the MPU.  You must call
+								MPUEnter first.
+
+**************************************************************************/
+void MPUExit(void)
+{
+
+	if(!mpu_available) return;
+  vdisable();
+	VOUTPORTB(midi_mpuport+1,0xFF);          // Reset the MPU
+  venable();
+}
+
+/**************************************************************************
+	void SBCleanUp()
+
+	DESCRIPTION: This conveniently cleans up all the stuff done by SBSetUp()
+							 and other sound functions
+
+	RETURNS:
+		TRUE on success, FALSE on failure
+
+**************************************************************************/
+void SBCleanUp(void)
+{
+	SHORT i;
+
+	for(i = 0; i < 9; i++) FMSetVolume(1,0);
+	FMReset();
+
+	DSPWrite(DSP_SPKR_OFF);
+
+	VFREE(dma_buffer[0]);
+	VFREE(mix_buffer);
+	MPUExit();
+
+}
+/**************************************************************************
+	SHORT SBSetUp()
+
+	DESCRIPTION: Sets up the sound blaster for action.  This is the only
+							 function a programmer should really use.  Most of the
+							 nitty gritty is handled internally.
+
+	RETURNS:
+		TRUE on success, FALSE on failure
+
+**************************************************************************/
+SHORT SBSetUp(void)
+{
+	SHORT i;
+
+	dbprintf("Varmint's Audio Tools Version %s\n",VAT_VERSION);
+	dbprintf("SBSetUp() - InitTimerFunctions\n");
+
+	InitTimerFunctions();         // Initialize counter 2 for timing functions
+
+
+																// Calculate some special delays.
+	mue3=mcalc(6) ;
+	mue23=mcalc(46) ;
+
+	dbprintf("SBSetUp() - mcalcs- [m3: %u] [m23: %u]\n",mue3,mue23);
+
+																				// Go and check the hardware
+
+	if(whichcard()==none) return(FALSE);
+
+																				// Get DSP ready
+	dsp_vers=DSPGetVersion();
+	DSPWrite(DSP_SPKR_ON);
+
+	dbprintf("SBSetUp() - DSP version: %d.%d%d\n",dsp_vers>>8,(dsp_vers&0xff)/10,(dsp_vers&0xff)%10);
+
+																				// Allocate space for playback buffer
+	dma_buffer[0] = (BYTE VFAR *)VMALLOC(dma_bufferlen*2+5);
+	if(!dma_buffer[0]) {
+		sberr = nomem;
+		return(FALSE);
+	}
+	dma_buffer[1] = dma_buffer[0]+dma_bufferlen;
+
+
+																				// Allocate space for Mixing buffer
+	mix_buffer = (SHORT VFAR *)VMALLOC(dma_bufferlen*2+10);
+	if(!mix_buffer) {
+		sberr = nomem;
+		return(FALSE);
+	}
+																				// Silence the buffers
+	for(i = 0; i <= dma_bufferlen; i++) {
+		*(dma_buffer[0]+i) = 127;
+		*(dma_buffer[1]+i) = 127;
+		*(mix_buffer+i) = 127;
+	}
+	SetSampleRate(11000);                 // Set the sample rate
+
+	vinit=TRUE;
+
+	dbprintf("SBSetUp() - Processed BLASTER=A%X P%X I%u D%u T%u\n",io_addr,midi_mpuport,intnr,dma_ch,card_id);
+
+	return(TRUE);
+}
+
+
+/**************************************************************************
+	DWORD far2long(BYTE VFAR *adr)
+
+	DESCRIPTION: This is used by dmaset to convert a regular VFAR address
+							 to a 20 bit flat address.
+
+	RETURNS:
+		The converted flat address
+**************************************************************************/
+DWORD far2long(BYTE VFAR *adr)
+{
+	return(((DWORD)FP_SEG(adr)<<4)+FP_OFF(adr));
+}
+
+
+/**************************************************************************
+	void SetSampleRate(WORD rate)
+
+	DESCRIPTION:  Sets the sample rate (specified in hz).
+
+								Note:  The sample rate most likely will not be exactly
+								equal to the rate specified in the argument argument since
+								the Sound blaster can only accept rates in increments of
+								400 hz.
+
+	INPUTS:
+		rate    playback rate in hertz
+
+	RETURNS:
+		The actual value of the new sample rate.
+
+**************************************************************************/
+WORD SetSampleRate(WORD rate)
+{
+	DWORD val;
+
+	if(rate<4000) rate = 4000;          // 4000 is as slow as the SB can go
+																			// Calculate number for the sound card
+	if(rate>45000L) rate = (WORD)45000L;	// 45 Khz is the  praticle cutoff here.
+																			// 22 Khz is the cutoff for old sb's.
+	if(rate>22000L && dsp_vers < 0x200) rate = (WORD)22000L;
+
+	val=256-1000000L/rate;
+	DSPWrite(DSP_SAMPLE_RATE);
+	DSPWrite((BYTE)val);
+																			// This helps other functions
+																			// To know how fast the DSP is going
+	sample_rate = (WORD)(1000000L/(256-val));
+	return sample_rate;
+}
+
+/**************************************************************************
+	void dmaset(BYTE VFAR *sound_address,WORD len,BYTE channel)
+
+	DESCRIPTION:  This programs the DMA controller to start a single pass
+								output transfer.
+
+								(Draeden of VLA has provided some good information for
+								DMA programming in his INTRO to DMA document)
+
+	INPUTS:
+		sound_address   Regular address of the DMA playback buffer
+		len             length of the DMA buffer in bytes minus one
+		channel         DMA  channel to use
+
+**************************************************************************/
+void dmaset(BYTE VFAR *sound_address,WORD len,BYTE channel)
+{
+	WORD adr;
+	DWORD adrl;
+	BYTE page;
+
+	adrl = far2long(sound_address);     // convert address to 20 bit format
+	adr=(WORD)adrl;                     // extract page address
+	page=(BYTE)(adrl>>16);              // extract page number
+
+																			// PREPARE DMA.
+																			//   (Channels 0-3 have different
+																			//   command ports than 4-7.)
+
+																			// SET CHANNEL, MASK BIT AND MODE
+
+	if(channel <4) {                    // Chanels 0-3?
+		VOUTPORTB(0x0a,channel+4);          // write channel number with 3rd bit set
+		VOUTPORTB(0x0c,0);                  // Clear Byte Pointer
+
+																			// Set the mode.  The mode is determined
+																			// in GoVarmint().
+		VOUTPORTB(0x0b,dma_controlbyte+channel);
+	}
+	else {                              // channels 4-7
+		VOUTPORTB(0xd4,channel);            // write channel number
+		VOUTPORTB(0xd8,0);                  // Clear Byte Pointer
+
+																			// Set the mode.  The mode is determined
+																			// in GoVarmint().
+		VOUTPORTB(0xd6,dma_controlbyte+channel-4);
+	}
+																			// SET TRANSFER INFORMATION
+
+	VOUTPORTB(dma_adr[channel],adr&0xff);// Write address low byte
+	VOUTPORTB(dma_adr[channel],adr>>8);  // Write address high byte
+
+	VOUTPORTB(dma_len[channel],len&0xff);// Write length  low byte
+	VOUTPORTB(dma_len[channel],len>>8);  // Write length  high byte
+
+	VOUTPORTB(dma_page[channel],page);   // Write page
+
+																			// CLEAR MASK BITS
+	if(channel < 4) VOUTPORTB(0x0a,channel);
+	else VOUTPORTB(0xd4,channel & 0x03);
+
+}
+
+/**************************************************************************
+	void polldma(BYTE channel)
+
+	DESCRIPTION:  This function poles the DMA controller to find out how many
+								bytes are left in the current transfer.
+
+								As of version 0.4, this function is no longer used, but
+								I thought it might be useful to someone else, so I've only
+								commented it out.
+**************************************************************************/
+/*WORD polldma(BYTE channel)
+{
+	BYTE low1,high1,low2,high2;
+
+	disableint(intnr);             // Turn off the interrupt so we don't get
+																	// caught with our pants down.
+	asm {
+		mov dx,0x0c                   // Flip the master reset switch
+		mov al,0
+		out dx,al
+	}
+	_DX = dma_len[channel];         // Load in the counter address
+																	// read position twice, becasue sometimes
+																	// there is a problem
+	asm{
+		in al,dx                      // read the low byte first
+		mov low1,al
+		in al,dx                      // read the high byte next
+		mov high1,al
+
+		in al,dx                      // read the low byte first
+		mov low2,al
+		in al,dx                      // read the high byte next
+		mov high2,al
+
+	}
+	enableint(intnr);              // Done, so we'll put the interrupt back.
+
+																	// High bytes the same? Use second reading
+	if(high1 == high2)return((WORD)high2*256+low2);
+																	// else the First reading is accurate
+	return(high1*256+low1);
+
+}*/
+
+
+/**************************************************************************
+	void sbsetvector()
+
+	DESCRIPTION:  Installs the DMA interrupt vector.  This makes it so that
+								sbint() is called whenever a DMA transfer is finished
+
+**************************************************************************/
+void sbsetvector(void)
+{
+	orgirqint=_dos_getvect(int2vect(intnr));
+	_dos_setvect(int2vect(intnr),handlerint);     /* set vector to our routine */
+	enableint(intnr);                             /* enable sb interrupt */
+}
+
+
+/**************************************************************************
+	void sbremovevector()
+
+	DESCRIPTION:  Removes the DMA interrupt vector
+
+**************************************************************************/
+void sbremovevector(void)
+{
+	disableint(intnr);                            /* disable sb interrupt */
+	_dos_setvect(int2vect(intnr),orgirqint);      /* restore org intr vector */
+}
+
+/**************************************************************************
+	BYTE int2vect(BYTE intnr)
+
+	DESCRIPTION:  This function converts a PIC irq number to a true
+								interrupt vector number.  For PC's with a 286 or greater,
+								irq's 0-7  refer to interrupts 0x08 - 0x0F and
+								irq's 8-15 refer to interrupts 0x70 - 0x77.
+
+	INPUTS:
+		intnr   IRQ number
+
+	RETURNS:
+		Actual vector corresponding to the IRQ
+
+**************************************************************************/
+BYTE int2vect(BYTE intnr)
+{
+	if(intnr>7) return(intnr + 0x68);
+	else return(intnr+8);
+}
+
+
+/**************************************************************************
+	void enableint(BYTE nr)
+
+	DESCRIPTION:  Enables an IRQ interrupt using the Programmable
+								interrupt controller (PIC)
+
+								To enable a interrupt, you want to turn its PIC bit off.
+								Let's say that you want to turn on interrupt 3.  The
+								code works something like this:
+
+
+										BIT:                 76543210
+
+										1 << nr             00001000
+										~(1 << nr)          11110111 (mask)
+																				01001101 (setting)
+										setting & mask      01000101
+																						^
+																						|
+													Notice how bit 3 is set to zero.
+
+	INPUTS;
+		nr    IRQ number
+
+**************************************************************************/
+void enableint(BYTE nr)
+{
+	BYTE mask,setting;
+
+	if(nr<8) {                             // First controller?
+		mask = ~(1 << nr);                  // Create interrupt mask
+		setting = VINPORTB(0x21) & mask;     // Turn off the proper bit
+		VOUTPORTB(0x21,setting);             // Write back the result
+	}
+	else {                                // Second Controller?
+		mask = ~(1 << (nr-8));              // Create interrupt mask
+		setting = VINPORTB(0xa1) & mask;     // Turn off the proper bit
+		VOUTPORTB(0xa1,setting);             // Write back the result
+	}
+}
+
+
+/**************************************************************************
+	void disableint(BYTE nr)
+
+	DESCRIPTION:  Disables an IRQ interrupt using the Programmable
+								interrupt controller.
+
+								To disable a interrupt, you want to turn its PIC bit on.
+								Let's say that you want to turn off interrupt 3.  The
+								code works something like this:
+
+
+										BIT:                 76543210
+
+										1 << nr             00001000
+										~(1 << nr)          11110111 (mask)
+																				01000101 (setting)
+										~setting            10111010
+										(~setting) & mask    10110010 (new value of setting)
+										~setting            01001101
+
+																						^
+																						|
+													Notice how bit 3 is set to one.
+	INPUTS;
+		nr    IRQ number
+
+**************************************************************************/
+void disableint(BYTE nr)
+{
+	BYTE mask,setting;
+
+	if(nr<8) {                            // First controller?
+		mask = ~(1 << nr);                  // Create interrupt mask
+		setting = (~VINPORTB(0x21)) & mask;  // Turn on the proper bit
+		VOUTPORTB(0x21,~setting);            // Write back the result
+	}
+	else {                                // Second Controller?
+		mask = ~(1 << (nr-8));              // Create interrupt mask
+		setting = (~VINPORTB(0xa1)) & mask;  // Turn on the proper bit
+		VOUTPORTB(0xa1,~setting);            // Write back the result
+	}
+}
+void testdisableint(BYTE nr,BYTE *test)
+{
+	BYTE mask,setting;
+
+	mask = ~(1 << nr);                  // Create interrupt mask
+	setting = (~(*test)) & mask;  // Turn on the proper bit
+	*test = ~setting;            // Write back the result
+}
+
+
+/**************************************************************************
+	void VarmintVSync(void)
+
+	DESCRIPTION: This vsync function pays attention to vsyncclock so that we
+								 never miss a vsync.  The vsync can be missed if sbint
+								gets called while we are waiting for the retrace.
+
+								The variable vsync_toolong should be roughly equalt to
+								the number of times you expect sbint to get called between
+								vertical retraces.  The will be afffected by dma_bufferlen,
+								sample_rate, and the frequency of the VGA monitor
+
+**************************************************************************/
+void VarmintVSync(void)
+{
+	while(!(VINPORTB(0x3da)&0x08)) {     		// Wait for retrace to start
+		if(vsyncclock>vsync_toolong) break;   // Have we waited too long?
+	}
+
+	while(VINPORTB(0x3da)&0x08);          		// Wait for retrace to finish
+	vsyncclock = 0;                     		// reset the clock
+}
+
+
+/**************************************************************************
+	void TimeVSync(void)
+
+	DESCRIPTION:  This times a vertical retrace and sets the variable
+								vsynctoolong to an appropriate value based on the sample
+								rate and dma_bufferlen.
+
+								This should be called before GoVarmint();
+
+**************************************************************************/
+void TimeVSync(void)
+{
+	WORD i;
+	DWORD l=0;
+
+	vsync_toolong = 5;       	 			// Make sure this does not trip us up.
+																	// These are default values
+	vsyncclock = 0;
+
+	VarmintVSync();                	// Wait for a Vync to end
+
+	for(i = 0; i < 30; i++){       	// Average 30 retrace steps
+		TimerOn();                   	// Time the next vsync
+		VarmintVSync();
+		l += TimerOff();
+	}
+	l /= 30;
+	if(l < 100) l = 17000;         	// Sanity measure  (70hz refresh rate)
+
+																	// Figure how many vclock ticks will occur
+																	// During a retrace.
+	vsync_toolong =
+		(WORD)((l * sample_rate) / 1193000L / dma_bufferlen) + 1;
+
+}
+
+
+/**************************************************************************
+	WORD PercentOverhead(WORD ticks)
+
+	DESCRIPTION:  Calculates the Percentage CPU overhead that the
+								blaster interrupt consumes.
+
+	INPUTS:
+		ticks       Number of clock ticks that pass during the interrupt
+
+	RETURNS:
+		An interger percentage (* 10) based on dma_bufferlen and sample rate.
+		ie:  0 = 0% overhead, 1000 = 100.0% overhead
+
+
+**************************************************************************/
+WORD PercentOverhead(WORD ticks)
+{
+	return(WORD)((DWORD)ticks * sample_rate / (1193L * dma_bufferlen));
+}
+
+
+/**************************************************************************
+	void vdisable(void)
+
+	DESCRIPTION:  Special interrupt disable function for VAT.  THis is really
+								only designed for use once inside the varmint handler function
+
+**************************************************************************/
+void vdisable(void)
+{
+	if(disabled) {                 // Don't do anything if interrupts are
+		disabled++;                  // already disabled.
+		return;
+	}
+
+	_disable();                    // disable the interrupts
+	disabled++;
+}
+
+/**************************************************************************
+	void venable(void)
+
+	DESCRIPTION:  Special interrupt enable function for VAT
+
+**************************************************************************/
+void venable(void)
+{
+	disabled--;
+
+	if(!disabled) _enable();       // enable the interrupts if this is the
+																 // outermost enable.
+}
+
+/**************************************************************************
+	void dbprintf(CHAR *string,...)
+
+	DESCRIPTION:  Special printf function that writes to the debugging string.
+
+**************************************************************************/
+void dbprintf(CHAR *string,...)
+{
+	va_list ap;
+
+	va_start(ap, string);                  // sort out variable argument list
+	// ECODE vsprintf(vatapstr,string,ap);          // dump output to a string
+	// ECODE strcat(vatdebugstring,vatapstr);       // add string to debug string.
+
+	va_end(ap);                            // clean up
+}

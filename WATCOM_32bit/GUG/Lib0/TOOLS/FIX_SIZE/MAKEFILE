@@ -1,0 +1,3 @@
+fix_size.exe : fix_size.c
+  wcl386 -c -l=dos4g fix_size.c
+  wlink @link.cmd

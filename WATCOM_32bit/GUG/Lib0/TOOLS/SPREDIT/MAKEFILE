@@ -1,0 +1,7 @@
+spredit.exe : spredit.c controls.obj
+  wcl386 -c -l=dos4g    spredit.c
+  wlink @link.cmd
+
+controls.obj : controls.c
+  wcl386 -c -l=dos4g    controls.c
+

@@ -1,0 +1,8 @@
+# The demo program
+playflic.exe : playflic.c
+  wcl386 -c -l=dos4g playflic.c
+  wlink @link.cmd
+
+
+
+

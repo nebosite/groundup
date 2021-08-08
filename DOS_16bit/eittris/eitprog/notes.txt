@@ -1,0 +1,89 @@
+TODO:
+
+TODO for V 1.51
+---------------------------
+
+[x] Splash screen
+	[x] start button
+	[x] "Your ad could be here" button
+	[x] shoaw an AVI or bitmap from the cache
+	[x] Link from avi or bitmap
+[x] downloader app
+	[x] spawn app to look for new ads
+	[x] replaces guest ad only
+	[x] Does not try to establish a connection
+	[x] Downloads add from cgi script return, stores in cache
+[ ] Make a cooler fade grid	 animation
+[ ] Fix the psycho to not use DM_XOR
+[ ] Get wave volume/frequency adjustments working
+[ ] Get Font colors working
+[ ] Try adding a relinquish and EndDrawing where we call gameseg()
+[ ] More/better backgrounds
+
+
+NICE TO DO:
+[x] Add code to take snapshot
+[x] Change font load to load a saved font
+	[x] load from a resource!
+[x] Change configuration to be registry-based 
+[x] Catch CException in the outer loop.
+
+
+BUGS:
+[x] Some songs sound like they are missing samples
+	- this appears to be a volume problem for some channels
+[ ] Screen whites out on some video cards.  Check the top left pixel for a 
+	color change.  Maybe do a little animation to wait for the effect.
+[ ] Switch screens does not work
+[ ] psycho does not work
+[ ] Color printing is too slow during game
+[ ] Aborting while the game is paused crashes the game
+[ ] Keyboard starts clicking after a while
+[ ] S3M music does not fade out
+
+------------------------------	DONE -----------------
+[ ] Fix copyright info, web page pointers
+[ ] Add command-line key
+[ ] Graphics
+	[ ] Add transparency to blocks
+	[ ] Add a web page URL to the title bitmap
+	[ ] Create a splash map for brian
+[ ] Fix eddie in menus.cpp
+[ ] Get music working
+	[ ] Music volume line in gameseg
+	[ ] Work on music stop and fade-out in endround
+	[ ] Test error handling code for loading mod
+
+[ ] Do grid fade animation
+[ ] Kill the mouse and joystick request code
+[ ] Bail on DVinput fail
+[ ] Instead of a message box, dump exceptions to stdout
+[ ] Print "Varmint's EITtris Version x.xx\nInitializing DirectX..."  on start
+
+[ ] Add code to get a localkey value from the registry in setup()
+
+[ ] Fill in playersetup function
+[ ] Add a try-catch block in main();
+
+
+[ ] High score hash is not working
+[ ] Music errors get stuck in an infinite loop trying to load files
+[ ] Specials reappear too quickly after a player has been a computer player
+[ ] Crashes on 
+	[ ] 4 (jumble)
+	[ ] 6 (switch screen)
+[ ] keyboard run-away problems
+[ ] High score list is scatty-wampus
+[ ] Player config is scatty-wampus
+[ ] Randomization needs to be seeded
+[ ] Call flushkeyboard afer game is over
+[ ] Crash when a grid finishes
+[ ] Text is lopsided in high-score screen
+[ ] End of round screen colors are wrong					   
+[ ] Background Sprites are 1 pixel too small
+[ ] game flow is erratic
+[ ] Colors wrong in prepgrids
+	[ ] Lower box shadow is wrong
+[ ] Standard animation is erase two pixels to the right
+[ ] Name looks ugly in play grid
+[ ] nobody is printed twice in player grid

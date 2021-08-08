@@ -1,0 +1,4 @@
+# The demo program
+joygraph.exe : joygraph.c
+ wcl386 -c -l=dos4gw   joygraph.c
+  wlink @link.cmd

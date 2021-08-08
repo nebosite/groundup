@@ -1,0 +1,196 @@
+/*------------------ FLABBERGASTED TODO LIST ------------------------
+
+Fer Sure stuff:
+[ ] Take out beta refs.
+[ ] Take out expiration
+[ ] Create shortened music list
+[ ] Create shortened patch list
+[ ] Add a 5meg data chunk to demo
+
+[ ] Implment MIDI
+		[ ] Check for music types beforehand.
+[ ] Make it easier to turn off reverse mouse, mouse tiling
+[ ] Make it easier to quit
+		[ ] Alert the user on how to quit
+		[ ] Add a checkquit function to make sure we really want to quit
+[ ] Add a -hardquit feature to the command line
+[ ] Add a -musicon feature to the command line
+[ ] Complete screensaver functionality
+[ ] Load patches from a music goop file.
+[ ] Load munged midi format files
+[ ] Set version to beta 2
+[ ] Set date to march 1
+[ ] Suck out printf's to a verbose version
+[ ] Add verbose flag
+
+
+[x] Rearrange cannon.mid
+[x] Do a quick log scale for the fft (step by 1.1 or something)
+		- You might want to do an offset too to cut down on the noise.
+		- A quick square root might be more accurate.
+			- A quick square root could be implemented with an array
+[ ] Add a purple planet credit that dras flabbergasted logo
+[ ] -screensaver command line looks for a file while running to signal
+		an exit.
+		[x] Allow user to specifiy a speed for screen saver stuff.
+[x] Use all those wacky fonts!
+
+
+------------ BUGS ---------------------------------------------------
+
+[ ] Stop music/stop sound keys don't work for midi
+[ ] Even out volumes
+[ ] Cannon.zot is crashing Flabbergasted
+[ ] Tremolo is too much (vsexy.mid)
+[ ] Midi implementation messes up with FFT
+[ ] Midi implementation crashes with FFT  (Midi playnote with log func is killing us)
+
+------------ NEW VERSIONS -------------------------------------------
+
+[x] Instruments that mutate.
+[x] Add a little guy to tell them to hit a key and use the mouse
+[x] add Games
+	[x] poik
+	[x] painter
+	[x] letter bounce
+[x] Key ideas
+	[x] Tunnels
+	[x] a Key that draws a building
+	[x] Turn on "counter" which counts each extra shape.
+	[x] Push colors down to 0 while key is pressed.
+	[x] Color picked based on first dominant tone
+	[x] Key resets flabbergasted state
+	[x] Cave (stalagtite, mites)
+	[x] Grass
+	[x] Bouncing lines Brush
+[x] Screen animation ideas
+	[x] Drawings turn to gray then fade away....
+	[x] Real-time wave form editor
+DEL [x] Cursor Color based on current tone
+DEL [x] Rotating keystroke file
+DEL [x] "add to" function for keystroke file
+DEL [x] Persistent moving objects
+DEL [x] Generate noise based on what is being drawn
+
+------------- DONE 1.0 BETA1 ----------------------------------------------
+
+NEW FEATURES
+
+- Save screen saves to slots now
+- Load Screen (Ctrl-L)
+- ESC screen nows shows days left in evaluation, current version
+	and quit instructions
+- Added Watermark for demo version
+- Lots of new sounds.  All sounds sampled @ 22Khz
+- Reverse Sounds key (Keypad 6)
+- Randomize sounds key (Keypad Delete)
+- Added command-line switch for sample rate and music.cfg file
+- Sound card no longer required
+- Toggle between black and white background colors (Num Lock)
+- Toggle sounds on and off (keypad /)
+
+
+
+CHANGES
+
+- Save Screen Key is now Ctrl-S
+- Switch Coordinates key changed from 'l' to 'm'
+- Slight improvements to fireworks
+
+
+------------- DONE 0.1.b6 ----------------------------------------------
+
+CHANGES
+- Color Lock key is now the caps lock key (was left shift key)
+- Ctrl keys now work with music tempo change keys (keypad - and +)
+- Ctrl and shift keys now work with notes (keys 0-9,-,=)
+- Backspace now also stops music and all animation
+
+NEW FEATURES
+- Debugging measures
+  - Added stress modes (Ctrl-alt-pgup = different key each frame)
+                       (Ctrl-alt-pgdown = repeat a random key many times)
+  - Added keystroke to check memory (Scroll Lock)  This was to help
+    me find stray pointer problems.  I haven't seen a problem yet, but
+    i think it is a fun key to leave in anyway.
+- Spirals (up arrow)
+- Line    (pg up)
+- Line splat  (pg down)
+- Bouncing Balls (left arrow)
+- text typer (Keypad Enter)
+- All colors down (left arrow)
+- All colors up   (down arrow)
+
+BUG FIXES
+- Fixed Blue Monday crash problem.  (That was a devious little bug)
+- Fixed Clipping problem in Graphics lib that caused crashes
+
+------------- DONE 0.1.b5 ----------------------------------------------
+
+NEW FEATURES
+- Save the screen to mypic.pcx (little s, Big S)
+- Stop animation and autobrush functions (backspace)
+- plaid-type lines (] and ENTER keys)
+- Tile drawing mode (;)
+- Fireworks  (Keypad *)
+- Checkerboard on black (u)
+- Moire autobrush (keypad 0)
+- Fractal tree (t)
+- Argyle streak (y)
+- Backwards mouse (l)
+
+BUG FIXES:
+- Scan converted circles off the edge draw an annoying line on the edge
+
+
+------------- DONE 0.1.b4 ----------------------------------------------
+
+CHANGES
+- Improved FFT display
+
+NEW FEATURES
+
+- Previous song	(Delete Key)
+- Vortex (Keypad 3)
+- Hyper-Vortex (Keypad 2)
+- Crazy shade (Keypad 1)
+- Autobrush: Polar coordinate wave form (Keypad 5)
+- Autobrush: Mini FFT - two bars flying around (Keypad 4)
+
+BUG FIXES
+- Left and right raw channels are no longer identicle in FFT display
+- Fixed mouse tracking to be faster for slower computers
+- Music no longer stops after loading lots of music  files.
+
+------------- DONE 0.1.b3 ----------------------------------------------
+[ ] Add a keystroke/mouse recorder
+[ ] Add a log file
+[ ] add frame counter
+	[ ] Tempo keys
+	[ ] Turns mouse into paint bucket tool.
+	[ ] Circle
+	[ ] Square
+
+	[ ] Screen continually sliding off to one side
+	[ ] FFT graphic routine
+	[ ] snow
+	[ ] Blur
+	[ ] Alternate lines slide apart
+	[ ] Diffusion
+
+
+------------- DONE 0.1.b1 ----------------------------------------------
+	[ ] plasma
+	[ ] Lock 'n drag in mouse position
+	[ ] lock in current color
+[ ] Cone draw needs a floating increment.
+[ ] Put memory check at beginning
+[ ] Create a new GUGClipSprite function that takes a prealloced pointer
+[ ] Get the mouse working
+[ ] Add mouse cursors
+[ ] Implement samples as possible voices maybe pick the last sound
+		played when you press the voice slection key.
+[ ] Set up Gray scale palette fader
+[ ] Add in keyhandler
+[ ] Get all keyhandler funcs working
+[ ] Add animation routines

@@ -1,0 +1,22 @@
+#
+# Flabbergasted makefile
+#
+
+CC=wcl386
+
+# -c -l=dos4g
+# above is original gug options
+CCO=/zq /w5 /e5 -c -l=dos4g
+CCL=/"lib vat.lib"
+OBJ=
+
+
+flabber.exe : main.c sounds.c
+  $(CC) $(CCO) $(CCL) main.c sounds.c
+  wlink @link.cmd
+
+# A compiled ship sprite from spr2asm
+#ship_a.obj : ship_a.asm
+#  wasm ship_a.asm
+#ship_c.obj : ship_c.c
+#  wcl386 -c -l=causeway ship_c.c

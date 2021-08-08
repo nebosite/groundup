@@ -1,0 +1,1590 @@
+Warning: __stklen defined in module VAT.C is duplicated in library file C:\TC\LIB\CL.LIB in module STKLEN
+
+ Start  Stop   Length Name               Class
+
+ 00000H 03110H 03111H _TEXT              CODE
+ 03111H 03ECEH 00DBEH VAT_TEXT           CODE
+ 03ECFH 044F7H 00629H FM_TEXT            CODE
+ 044F8H 04977H 00480H HANDLER_TEXT       CODE
+ 04978H 05C77H 01300H MIDI_TEXT          CODE
+ 05C78H 08BC8H 02F51H MOD_TEXT           CODE
+ 08BC9H 0CD97H 041CFH S3M_TEXT           CODE
+ 0CD98H 0CFC5H 0022EH TIMER_TEXT         CODE
+ 0CFC6H 0E3AFH 013EAH WAV_TEXT           CODE
+ 0E3B0H 0E3B0H 00000H _FARDATA           FAR_DATA
+ 0E3B0H 0E567H 001B8H MOD5_DATA          FAR_DATA
+ 0E570H 0F32FH 00DC0H S3M5_DATA          FAR_DATA
+ 0F330H 0FBC7H 00898H WAV5_DATA          FAR_DATA
+ 0FBD0H 0FBD0H 00000H _FARBSS            FAR_BSS
+ 0FBD0H 0FBD0H 00000H _OVERLAY_          OVRINFO
+ 0FBD0H 0FBD0H 00000H _1STUB_            STUBSEG
+ 0FBD0H 12295H 026C6H _DATA              DATA
+ 12296H 12297H 00002H _CVTSEG            DATA
+ 12298H 1229DH 00006H _SCNSEG            DATA
+ 1229EH 1229EH 00000H _CONST             CONST
+ 1229EH 122A9H 0000CH _INIT_             INITDATA
+ 122AAH 122AAH 00000H _INITEND_          INITDATA
+ 122AAH 122AAH 00000H _EXIT_             EXITDATA
+ 122AAH 122AAH 00000H _EXITEND_          EXITDATA
+ 122AAH 126FBH 00452H _BSS               BSS
+ 126FCH 126FCH 00000H _BSSEND            BSSEND
+ 12700H 1277FH 00080H _STACK             STACK
+
+
+Detailed map of segments
+
+ 0000:0000 0295 C=CODE   S=_TEXT          G=(none)  M=c0.ASM     ACBP=28
+ 0000:0295 002D C=CODE   S=_TEXT          G=(none)  M=ATEXIT     ACBP=28
+ 0000:02C2 0000 C=CODE   S=_TEXT          G=(none)  M=CTYPE      ACBP=28
+ 0000:02C2 003D C=CODE   S=_TEXT          G=(none)  M=DOSFATTR   ACBP=28
+ 0000:02FF 0020 C=CODE   S=_TEXT          G=(none)  M=DOSVECT    ACBP=28
+ 0000:031F 0093 C=CODE   S=_TEXT          G=(none)  M=EXIT       ACBP=28
+ 0000:03B2 0000 C=CODE   S=_TEXT          G=(none)  M=FILES      ACBP=28
+ 0000:03B2 0000 C=CODE   S=_TEXT          G=(none)  M=FILES2     ACBP=28
+ 0000:03B2 0000 C=CODE   S=_TEXT          G=(none)  M=FMODE      ACBP=28
+ 0000:03B2 0017 C=CODE   S=_TEXT          G=(none)  M=F_LXMUL    ACBP=28
+ 0000:03C9 00AE C=CODE   S=_TEXT          G=(none)  M=H_LDIV     ACBP=28
+ 0000:0477 0021 C=CODE   S=_TEXT          G=(none)  M=H_LLSH     ACBP=28
+ 0000:0498 0060 C=CODE   S=_TEXT          G=(none)  M=H_PADD     ACBP=28
+ 0000:04F8 0028 C=CODE   S=_TEXT          G=(none)  M=INPORT     ACBP=28
+ 0000:0520 004B C=CODE   S=_TEXT          G=(none)  M=IOERROR    ACBP=28
+ 0000:056B 0011 C=CODE   S=_TEXT          G=(none)  M=ISATTY     ACBP=28
+ 0000:057C 00A2 C=CODE   S=_TEXT          G=(none)  M=LONGTOA    ACBP=28
+ 0000:061E 0029 C=CODE   S=_TEXT          G=(none)  M=LSEEK      ACBP=28
+ 0000:0647 00B6 C=CODE   S=_TEXT          G=(none)  M=MKNAME     ACBP=28
+ 0000:06FD 0017 C=CODE   S=_TEXT          G=(none)  M=N_LXMUL    ACBP=28
+ 0000:0714 0021 C=CODE   S=_TEXT          G=(none)  M=N_PCMP     ACBP=28
+ 0000:0735 002F C=CODE   S=_TEXT          G=(none)  M=READA      ACBP=28
+ 0000:0764 04F4 C=CODE   S=_TEXT          G=(none)  M=SCANNER    ACBP=28
+ 0000:0C58 01CD C=CODE   S=_TEXT          G=(none)  M=SCANTOL    ACBP=28
+ 0000:0E25 00BA C=CODE   S=_TEXT          G=(none)  M=SETUPIO    ACBP=28
+ 0000:0EDF 002C C=CODE   S=_TEXT          G=(none)  M=TOUPPER    ACBP=28
+ 0000:0F0B 0018 C=CODE   S=_TEXT          G=(none)  M=UNLINK     ACBP=28
+ 0000:0F23 04DB C=CODE   S=_TEXT          G=(none)  M=VPRINTER   ACBP=28
+ 0000:13FE 0034 C=CODE   S=_TEXT          G=(none)  M=_STPCPY    ACBP=28
+ 0000:1432 001F C=CODE   S=_TEXT          G=(none)  M=CVTFAK     ACBP=28
+ 0000:1451 0432 C=CODE   S=_TEXT          G=(none)  M=FARHEAP    ACBP=28
+ 0000:1883 0140 C=CODE   S=_TEXT          G=(none)  M=FBRK       ACBP=28
+ 0000:19C3 0029 C=CODE   S=_TEXT          G=(none)  M=IOCTL      ACBP=28
+ 0000:19EC 0004 C=CODE   S=_TEXT          G=(none)  M=REALCVT    ACBP=28
+ 0000:19F0 000C C=CODE   S=_TEXT          G=(none)  M=SCANTOD    ACBP=28
+ 0000:19FC 001C C=CODE   S=_TEXT          G=(none)  M=SETBLOCK   ACBP=28
+ 0000:1A18 0058 C=CODE   S=_TEXT          G=(none)  M=SETENVP    ACBP=28
+ 0000:1A70 001D C=CODE   S=_TEXT          G=(none)  M=CHMODA     ACBP=28
+ 0000:1A8D 0028 C=CODE   S=_TEXT          G=(none)  M=CLOSE      ACBP=28
+ 0000:1AB5 001E C=CODE   S=_TEXT          G=(none)  M=CLOSEA     ACBP=28
+ 0000:1AD3 0077 C=CODE   S=_TEXT          G=(none)  M=EOF        ACBP=28
+ 0000:1B4A 00B8 C=CODE   S=_TEXT          G=(none)  M=FCLOSE     ACBP=28
+ 0000:1C02 00CD C=CODE   S=_TEXT          G=(none)  M=FFLUSH     ACBP=28
+ 0000:1CCF 009C C=CODE   S=_TEXT          G=(none)  M=FGETS      ACBP=28
+ 0000:1D6B 0042 C=CODE   S=_TEXT          G=(none)  M=FLUSHALL   ACBP=28
+ 0000:1DAD 020C C=CODE   S=_TEXT          G=(none)  M=FOPEN      ACBP=28
+ 0000:1FB9 0182 C=CODE   S=_TEXT          G=(none)  M=FREAD      ACBP=28
+ 0000:213B 01E2 C=CODE   S=_TEXT          G=(none)  M=FSEEK      ACBP=28
+ 0000:231D 01C8 C=CODE   S=_TEXT          G=(none)  M=GETC       ACBP=28
+ 0000:24E5 0070 C=CODE   S=_TEXT          G=(none)  M=GETENV     ACBP=28
+ 0000:2555 0024 C=CODE   S=_TEXT          G=(none)  M=MEMCPY     ACBP=28
+ 0000:2579 019C C=CODE   S=_TEXT          G=(none)  M=OPEN       ACBP=28
+ 0000:2715 004F C=CODE   S=_TEXT          G=(none)  M=OPENA      ACBP=28
+ 0000:2764 001B C=CODE   S=_TEXT          G=(none)  M=PRINTF     ACBP=28
+ 0000:277F 03C8 C=CODE   S=_TEXT          G=(none)  M=PUTC       ACBP=28
+ 0000:2B47 00D1 C=CODE   S=_TEXT          G=(none)  M=READ       ACBP=28
+ 0000:2C18 0026 C=CODE   S=_TEXT          G=(none)  M=REWIND     ACBP=28
+ 0000:2C3E 011D C=CODE   S=_TEXT          G=(none)  M=SETVBUF    ACBP=28
+ 0000:2D5B 0083 C=CODE   S=_TEXT          G=(none)  M=SPRINTF    ACBP=28
+ 0000:2DDE 007A C=CODE   S=_TEXT          G=(none)  M=SSCANF     ACBP=28
+ 0000:2E58 003F C=CODE   S=_TEXT          G=(none)  M=STRCAT     ACBP=28
+ 0000:2E97 0030 C=CODE   S=_TEXT          G=(none)  M=STRCMP     ACBP=28
+ 0000:2EC7 0029 C=CODE   S=_TEXT          G=(none)  M=STRCPY     ACBP=28
+ 0000:2EF0 001F C=CODE   S=_TEXT          G=(none)  M=STRLEN     ACBP=28
+ 0000:2F0F 0151 C=CODE   S=_TEXT          G=(none)  M=WRITE      ACBP=28
+ 0000:3060 003C C=CODE   S=_TEXT          G=(none)  M=WRITEA     ACBP=28
+ 0000:309C 003D C=CODE   S=_TEXT          G=(none)  M=XFCLOSE    ACBP=28
+ 0000:30D9 0038 C=CODE   S=_TEXT          G=(none)  M=XFFLUSH    ACBP=28
+ 0311:0001 0DBE C=CODE   S=VAT_TEXT       G=(none)  M=VAT.C      ACBP=28
+ 03EC:000F 0629 C=CODE   S=FM_TEXT        G=(none)  M=FM.C       ACBP=28
+ 044F:0008 0480 C=CODE   S=HANDLER_TEXT   G=(none)  M=HANDLER.C  ACBP=28
+ 0497:0008 1300 C=CODE   S=MIDI_TEXT      G=(none)  M=MIDI.C     ACBP=28
+ 05C7:0008 2F51 C=CODE   S=MOD_TEXT       G=(none)  M=MOD.C      ACBP=28
+ 08BC:0009 41CF C=CODE   S=S3M_TEXT       G=(none)  M=S3M.C      ACBP=28
+ 0CD9:0008 022E C=CODE   S=TIMER_TEXT     G=(none)  M=TIMER.C    ACBP=28
+ 0CFC:0006 13EA C=CODE   S=WAV_TEXT       G=(none)  M=WAV.C      ACBP=28
+ 0E3B:0000 0000 C=FAR_DATA S=_FARDATA       G=(none)  M=c0.ASM     ACBP=68
+ 0E3B:0000 01B8 C=FAR_DATA S=MOD5_DATA      G=(none)  M=MOD.C      ACBP=68
+ 0E57:0000 0DC0 C=FAR_DATA S=S3M5_DATA      G=(none)  M=S3M.C      ACBP=68
+ 0F33:0000 0898 C=FAR_DATA S=WAV5_DATA      G=(none)  M=WAV.C      ACBP=68
+ 0FBD:0000 0000 C=FAR_BSS S=_FARBSS        G=(none)  M=c0.ASM     ACBP=68
+ 0FBD:0000 0000 C=OVRINFO S=_OVERLAY_      G=(none)  M=c0.ASM     ACBP=68
+ 0FBD:0000 0000 C=STUBSEG S=_1STUB_        G=(none)  M=c0.ASM     ACBP=68
+ 0FBD:0000 0093 C=DATA   S=_DATA          G=DGROUP  M=c0.ASM     ACBP=68
+ 0FBD:0094 185F C=DATA   S=_DATA          G=DGROUP  M=VAT.C      ACBP=48
+ 0FBD:18F4 0036 C=DATA   S=_DATA          G=DGROUP  M=FM.C       ACBP=48
+ 0FBD:192A 0000 C=DATA   S=_DATA          G=DGROUP  M=HANDLER.C  ACBP=48
+ 0FBD:192A 071F C=DATA   S=_DATA          G=DGROUP  M=MIDI.C     ACBP=48
+ 0FBD:204A 007D C=DATA   S=_DATA          G=DGROUP  M=MOD.C      ACBP=48
+ 0FBD:20C8 0109 C=DATA   S=_DATA          G=DGROUP  M=S3M.C      ACBP=48
+ 0FBD:21D2 002F C=DATA   S=_DATA          G=DGROUP  M=TIMER.C    ACBP=48
+ 0FBD:2202 006A C=DATA   S=_DATA          G=DGROUP  M=WAV.C      ACBP=48
+ 0FBD:226C 0002 C=DATA   S=_DATA          G=DGROUP  M=ATEXIT     ACBP=48
+ 0FBD:226E 0101 C=DATA   S=_DATA          G=DGROUP  M=CTYPE      ACBP=48
+ 0FBD:2370 0000 C=DATA   S=_DATA          G=DGROUP  M=DOSFATTR   ACBP=48
+ 0FBD:2370 0000 C=DATA   S=_DATA          G=DGROUP  M=DOSVECT    ACBP=48
+ 0FBD:2370 000C C=DATA   S=_DATA          G=DGROUP  M=EXIT       ACBP=48
+ 0FBD:237C 0190 C=DATA   S=_DATA          G=DGROUP  M=FILES      ACBP=48
+ 0FBD:250C 002A C=DATA   S=_DATA          G=DGROUP  M=FILES2     ACBP=48
+ 0FBD:2536 0004 C=DATA   S=_DATA          G=DGROUP  M=FMODE      ACBP=48
+ 0FBD:253A 0000 C=DATA   S=_DATA          G=DGROUP  M=F_LXMUL    ACBP=48
+ 0FBD:253A 0000 C=DATA   S=_DATA          G=DGROUP  M=H_LDIV     ACBP=48
+ 0FBD:253A 0000 C=DATA   S=_DATA          G=DGROUP  M=H_LLSH     ACBP=48
+ 0FBD:253A 0000 C=DATA   S=_DATA          G=DGROUP  M=H_PADD     ACBP=48
+ 0FBD:253A 0000 C=DATA   S=_DATA          G=DGROUP  M=INPORT     ACBP=48
+ 0FBD:253A 005B C=DATA   S=_DATA          G=DGROUP  M=IOERROR    ACBP=48
+ 0FBD:2596 0000 C=DATA   S=_DATA          G=DGROUP  M=ISATTY     ACBP=48
+ 0FBD:2596 0000 C=DATA   S=_DATA          G=DGROUP  M=LONGTOA    ACBP=48
+ 0FBD:2596 0000 C=DATA   S=_DATA          G=DGROUP  M=LSEEK      ACBP=48
+ 0FBD:2596 0009 C=DATA   S=_DATA          G=DGROUP  M=MKNAME     ACBP=48
+ 0FBD:25A0 0000 C=DATA   S=_DATA          G=DGROUP  M=N_LXMUL    ACBP=48
+ 0FBD:25A0 0000 C=DATA   S=_DATA          G=DGROUP  M=N_PCMP     ACBP=48
+ 0FBD:25A0 0000 C=DATA   S=_DATA          G=DGROUP  M=READA      ACBP=48
+ 0FBD:25A0 0080 C=DATA   S=_DATA          G=DGROUP  M=SCANNER    ACBP=48
+ 0FBD:2620 0000 C=DATA   S=_DATA          G=DGROUP  M=SCANTOL    ACBP=48
+ 0FBD:2620 0000 C=DATA   S=_DATA          G=DGROUP  M=SETUPIO    ACBP=48
+ 0FBD:2620 0000 C=DATA   S=_DATA          G=DGROUP  M=TOUPPER    ACBP=48
+ 0FBD:2620 0000 C=DATA   S=_DATA          G=DGROUP  M=UNLINK     ACBP=48
+ 0FBD:2620 0067 C=DATA   S=_DATA          G=DGROUP  M=VPRINTER   ACBP=48
+ 0FBD:2688 0000 C=DATA   S=_DATA          G=DGROUP  M=_STPCPY    ACBP=48
+ 0FBD:2688 0031 C=DATA   S=_DATA          G=DGROUP  M=CVTFAK     ACBP=48
+ 0FBD:26BA 0000 C=DATA   S=_DATA          G=DGROUP  M=FARHEAP    ACBP=48
+ 0FBD:26BA 0002 C=DATA   S=_DATA          G=DGROUP  M=FBRK       ACBP=48
+ 0FBD:26BC 0000 C=DATA   S=_DATA          G=DGROUP  M=IOCTL      ACBP=48
+ 0FBD:26BC 0000 C=DATA   S=_DATA          G=DGROUP  M=REALCVT    ACBP=48
+ 0FBD:26BC 0000 C=DATA   S=_DATA          G=DGROUP  M=SCANTOD    ACBP=48
+ 0FBD:26BC 0000 C=DATA   S=_DATA          G=DGROUP  M=SETBLOCK   ACBP=48
+ 0FBD:26BC 0004 C=DATA   S=_DATA          G=DGROUP  M=SETENVP    ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=CHMODA     ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=CLOSE      ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=CLOSEA     ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=EOF        ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=FCLOSE     ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=FFLUSH     ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=FGETS      ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=FLUSHALL   ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=FOPEN      ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=FREAD      ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=FSEEK      ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=GETC       ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=GETENV     ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=MEMCPY     ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=OPEN       ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=OPENA      ACBP=48
+ 0FBD:26C0 0000 C=DATA   S=_DATA          G=DGROUP  M=PRINTF     ACBP=48
+ 0FBD:26C0 0001 C=DATA   S=_DATA          G=DGROUP  M=PUTC       ACBP=48
+ 0FBD:26C2 0000 C=DATA   S=_DATA          G=DGROUP  M=READ       ACBP=48
+ 0FBD:26C2 0000 C=DATA   S=_DATA          G=DGROUP  M=REWIND     ACBP=48
+ 0FBD:26C2 0004 C=DATA   S=_DATA          G=DGROUP  M=SETVBUF    ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=SPRINTF    ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=SSCANF     ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=STRCAT     ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=STRCMP     ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=STRCPY     ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=STRLEN     ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=WRITE      ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=WRITEA     ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=XFCLOSE    ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_DATA          G=DGROUP  M=XFFLUSH    ACBP=48
+ 0FBD:26C6 0000 C=DATA   S=_CVTSEG        G=DGROUP  M=c0.ASM     ACBP=48
+ 0FBD:26C6 0002 C=DATA   S=_CVTSEG        G=DGROUP  M=CVTFAK     ACBP=48
+ 0FBD:26C8 0000 C=DATA   S=_CVTSEG        G=DGROUP  M=REALCVT    ACBP=48
+ 0FBD:26C8 0000 C=DATA   S=_SCNSEG        G=DGROUP  M=c0.ASM     ACBP=48
+ 0FBD:26C8 0006 C=DATA   S=_SCNSEG        G=DGROUP  M=CVTFAK     ACBP=48
+ 0FBD:26CE 0000 C=DATA   S=_SCNSEG        G=DGROUP  M=SCANTOD    ACBP=48
+ 0FBD:26CE 0000 C=CONST  S=_CONST         G=DGROUP  M=c0.ASM     ACBP=48
+ 0FBD:26CE 0000 C=INITDATA S=_INIT_         G=DGROUP  M=c0.ASM     ACBP=48
+ 0FBD:26CE 0006 C=INITDATA S=_INIT_         G=DGROUP  M=SETUPIO    ACBP=48
+ 0FBD:26D4 0006 C=INITDATA S=_INIT_         G=DGROUP  M=SETENVP    ACBP=48
+ 0FBD:26DA 0000 C=INITDATA S=_INITEND_      G=DGROUP  M=c0.ASM     ACBP=28
+ 0FBD:26DA 0000 C=EXITDATA S=_EXIT_         G=DGROUP  M=c0.ASM     ACBP=48
+ 0FBD:26DA 0000 C=EXITDATA S=_EXITEND_      G=DGROUP  M=c0.ASM     ACBP=28
+ 0FBD:26DA 0000 C=BSS    S=_BSS           G=DGROUP  M=c0.ASM     ACBP=48
+ 0FBD:26DA 0110 C=BSS    S=_BSS           G=DGROUP  M=VAT.C      ACBP=48
+ 0FBD:27EA 001B C=BSS    S=_BSS           G=DGROUP  M=FM.C       ACBP=48
+ 0FBD:2806 0000 C=BSS    S=_BSS           G=DGROUP  M=HANDLER.C  ACBP=48
+ 0FBD:2806 024C C=BSS    S=_BSS           G=DGROUP  M=MIDI.C     ACBP=48
+ 0FBD:2A52 000E C=BSS    S=_BSS           G=DGROUP  M=MOD.C      ACBP=48
+ 0FBD:2A60 002C C=BSS    S=_BSS           G=DGROUP  M=S3M.C      ACBP=48
+ 0FBD:2A8C 000E C=BSS    S=_BSS           G=DGROUP  M=TIMER.C    ACBP=48
+ 0FBD:2A9A 0000 C=BSS    S=_BSS           G=DGROUP  M=WAV.C      ACBP=48
+ 0FBD:2A9A 0080 C=BSS    S=_BSS           G=DGROUP  M=ATEXIT     ACBP=48
+ 0FBD:2B1A 0000 C=BSS    S=_BSS           G=DGROUP  M=DOSFATTR   ACBP=48
+ 0FBD:2B1A 0000 C=BSS    S=_BSS           G=DGROUP  M=DOSVECT    ACBP=48
+ 0FBD:2B1A 0000 C=BSS    S=_BSS           G=DGROUP  M=INPORT     ACBP=48
+ 0FBD:2B1A 0000 C=BSS    S=_BSS           G=DGROUP  M=IOERROR    ACBP=48
+ 0FBD:2B1A 0000 C=BSS    S=_BSS           G=DGROUP  M=ISATTY     ACBP=48
+ 0FBD:2B1A 0000 C=BSS    S=_BSS           G=DGROUP  M=LONGTOA    ACBP=48
+ 0FBD:2B1A 0000 C=BSS    S=_BSS           G=DGROUP  M=LSEEK      ACBP=48
+ 0FBD:2B1A 000D C=BSS    S=_BSS           G=DGROUP  M=MKNAME     ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=READA      ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=SCANNER    ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=SCANTOL    ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=SETUPIO    ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=UNLINK     ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=VPRINTER   ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=IOCTL      ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=SETBLOCK   ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=CHMODA     ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=CLOSEA     ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=EOF        ACBP=48
+ 0FBD:2B28 0000 C=BSS    S=_BSS           G=DGROUP  M=FREAD      ACBP=48
+ 0FBD:2B28 0001 C=BSS    S=_BSS           G=DGROUP  M=GETC       ACBP=48
+ 0FBD:2B2A 0000 C=BSS    S=_BSS           G=DGROUP  M=GETENV     ACBP=48
+ 0FBD:2B2A 0000 C=BSS    S=_BSS           G=DGROUP  M=MEMCPY     ACBP=48
+ 0FBD:2B2A 0000 C=BSS    S=_BSS           G=DGROUP  M=OPEN       ACBP=48
+ 0FBD:2B2A 0000 C=BSS    S=_BSS           G=DGROUP  M=OPENA      ACBP=48
+ 0FBD:2B2A 0001 C=BSS    S=_BSS           G=DGROUP  M=PUTC       ACBP=48
+ 0FBD:2B2C 0000 C=BSS    S=_BSS           G=DGROUP  M=READ       ACBP=48
+ 0FBD:2B2C 0000 C=BSS    S=_BSS           G=DGROUP  M=STRCAT     ACBP=48
+ 0FBD:2B2C 0000 C=BSS    S=_BSS           G=DGROUP  M=STRCMP     ACBP=48
+ 0FBD:2B2C 0000 C=BSS    S=_BSS           G=DGROUP  M=STRCPY     ACBP=48
+ 0FBD:2B2C 0000 C=BSS    S=_BSS           G=DGROUP  M=STRLEN     ACBP=48
+ 0FBD:2B2C 0000 C=BSS    S=_BSS           G=DGROUP  M=WRITEA     ACBP=48
+ 0FBD:2B2C 0000 C=BSSEND S=_BSSEND        G=DGROUP  M=c0.ASM     ACBP=28
+ 1270:0000 0080 C=STACK  S=_STACK         G=(none)  M=c0.ASM     ACBP=74
+
+  Address         Publics by Name
+
+ 0FBD:0000 idle  DATASEG@
+ 0000:0291 idle  DGROUP@
+ 0000:03CC       F_LDIV@
+ 0000:03DB       F_LMOD@
+ 0000:03D3       F_LUDIV@
+ 0000:03E3 idle  F_LUMOD@
+ 0000:047A       F_LXLSH@
+ 0000:03B2       F_LXMUL@
+ 0000:049B idle  F_PADD@
+ 0000:04CA idle  F_PSUB@
+ 0000:03CC idle  LDIV@
+ 0000:03DB idle  LMOD@
+ 0000:03D3 idle  LUDIV@
+ 0000:03E3 idle  LUMOD@
+ 0000:047A idle  LXLSH@
+ 0000:03B2 idle  LXMUL@
+ 0000:03C9 idle  N_LDIV@
+ 0000:03D8 idle  N_LMOD@
+ 0000:03D0 idle  N_LUDIV@
+ 0000:03E0 idle  N_LUMOD@
+ 0000:0477       N_LXLSH@
+ 0000:06FD       N_LXMUL@
+ 0000:0498       N_PADD@
+ 0000:0714       N_PCMP@
+ 0000:04C7 idle  N_PSUB@
+ 0000:049B idle  PADD@
+ 0000:04CA idle  PSUB@
+ 0000:027A       _abort
+ 0CFC:0A47 idle  _AddChainFunction
+ 0CFC:0AD9 idle  _AlterSoundEffect
+ 0000:0295 idle  _atexit
+ 0FBD:01F2       _bytes_per_synccheck
+ 05C7:0B51 idle  _calcvibrato
+ 0311:04FD idle  _cardcheck
+ 0FBD:00BA idle  _card_id
+ 0CFC:0968 idle  _ChainSoundEffect
+ 0FBD:2A88 idle  _channels
+ 0000:1A8D       _close
+ 0311:0D88       _dbprintf
+ 0FBD:01E4 idle  _debugnum
+ 0FBD:01EC idle  _debug_forceflipflop
+ 0FBD:01E8 idle  _debug_lowdsp
+ 0FBD:01EA       _debug_reverseflipflop
+ 0FBD:194D idle  _defaultfmpatchmap
+ 0FBD:193D idle  _defaultpatchmap
+ 0FBD:01EE idle  _disabled
+ 0311:0BEF idle  _disableint
+ 0311:0A48       _dmaset
+ 0FBD:0106       _dma_buffer
+ 0FBD:0104       _dma_bufferlen
+ 0FBD:00B8       _dma_ch
+ 0FBD:0102 idle  _dma_controlbyte
+ 0FBD:010E       _dma_currentbuffer
+ 05C7:1AE4 idle  _dodiv
+ 05C7:0BE0 idle  _dotick
+ 05C7:1A8B idle  _downsemitone
+ 0311:0151 idle  _DropDeadVarmint
+ 0311:0233 idle  _DSPGetVersion
+ 0311:01F2 idle  _DSPRead
+ 0311:0184 idle  _DSPReset
+ 0311:0212       _DSPWrite
+ 0FBD:01F0       _DSP_overhead
+ 0FBD:27E6       _dsp_vers
+ 0311:0BAE idle  _enableint
+ 0FBD:26BC       _environ
+ 0000:1AD3       _eof
+ 0FBD:00EE idle  _errname
+ 0FBD:007F       _errno
+ 0000:0377       _exit
+ 0311:09AD idle  _far2long
+ 0000:1591       _farfree
+ 0000:16A5       _farmalloc
+ 0000:1809 idle  _farrealloc
+ 0000:1B4A       _fclose
+ 0000:1C02       _fflush
+ 0000:23EB       _fgetc
+ 0000:24D9 idle  _fgetchar
+ 0000:1CCF       _fgets
+ 0000:1D6B       _flushall
+ 03EC:00C9       _FMDetect
+ 03EC:0600       _FMKeyOff
+ 03EC:05C5       _FMKeyOn
+ 03EC:007E       _FMReset
+ 03EC:05AA idle  _FMRythmOff
+ 03EC:0591 idle  _FMRythmOn
+ 03EC:033D idle  _FMSetFrequency
+ 03EC:0470       _FMSetNote
+ 03EC:0569 idle  _FMSetRythmMode
+ 03EC:0165       _FMSetVoice
+ 03EC:04DC       _FMSetVolume
+ 03EC:00B7 idle  _FMStatus
+ 03EC:000F idle  _FMWrite
+ 0FBD:27E8       _fm_addr
+ 0000:1F84       _fopen
+ 0000:279B idle  _fputc
+ 0000:2930 idle  _fputchar
+ 0000:20AD       _fread
+ 0000:1591       _free
+ 0497:1269 idle  _FreeMidi
+ 05C7:2E6D idle  _FreeMod
+ 08BC:4145 idle  _FreeS3M
+ 0CFC:064C idle  _freesound
+ 0CFC:1263 idle  _FreeWave
+ 0000:21BD       _fseek
+ 0000:223D idle  _ftell
+ 0000:24E5       _getenv
+ 0311:0259 idle  _getsbenv
+ 0497:0061 idle  _getvoice
+ 0311:0001 idle  _GoVarmint
+ 0CFC:0A82 idle  _grabsound
+ 0FBD:0094 idle  _handlerint
+ 0497:12AE       _initmid
+ 05C7:2F03       _initmod
+ 08BC:40DD       _inits3m
+ 0CD9:0008       _InitTimerFunctions
+ 0CFC:13A4       _initwav
+ 0000:0515 idle  _inp
+ 0000:04F8 idle  _inport
+ 0000:0501       _inportb
+ 0000:050C idle  _inpw
+ 0CD9:01A9 idle  _InstallTimer0
+ 0311:0B93 idle  _int2vect
+ 0FBD:00B6 idle  _intnr
+ 0000:19C3       _ioctl
+ 0FBD:00B4       _io_addr
+ 0000:056B       _isatty
+ 0497:11C0 idle  _LoadInstruments
+ 0497:0B2A idle  _LoadMidi
+ 05C7:27E9 idle  _LoadMod
+ 08BC:3221 idle  _LoadS3M
+ 0CFC:0C54 idle  _LoadWave
+ 0CFC:10FE idle  _LoadWaveFromMemory
+ 0000:061E       _lseek
+ 0000:169B       _malloc
+ 0CD9:0122       _mcalc
+ 0CD9:009F       _mdelay
+ 0CD9:0072 idle  _measure
+ 0000:2555       _memcpy
+ 0CD9:00F6 idle  _MicroDelay
+ 0497:0008 idle  _MidiCommand
+ 0497:0146       _midiplayer
+ 0497:11A5 idle  _MIDIWrite
+ 0FBD:01E2       _midi_callfreq
+ 0FBD:01DE       _midi_count
+ 0FBD:192A idle  _midi_data
+ 0FBD:1972 idle  _midi_divisions
+ 0FBD:1934 idle  _midi_fmout
+ 0FBD:2A4A idle  _midi_fmpatchmap
+ 0FBD:1976 idle  _midi_instrument
+ 0FBD:28E8 idle  _midi_lastevent
+ 0FBD:2806 idle  _midi_livetracks
+ 0FBD:1932 idle  _midi_mpuout
+ 0FBD:1936       _midi_mpuport
+ 0FBD:1974 idle  _midi_msperdiv
+ 0FBD:1930 idle  _midi_on
+ 0FBD:2A4E idle  _midi_patchmap
+ 0FBD:192E idle  _midi_reset
+ 0FBD:193A idle  _midi_tempoadjust
+ 0FBD:2808 idle  _midi_timer
+ 0FBD:2888 idle  _midi_trackloc
+ 0FBD:28C8 idle  _midi_trackon
+ 0FBD:1938       _midi_usertempo
+ 0FBD:2908 idle  _midi_voice
+ 0FBD:193C idle  _midi_volume
+ 0CD9:00BD       _MilliDelay
+ 0FBD:0110       _mix_buffer
+ 05C7:2EF6 idle  _ModChannels
+ 05C7:2794 idle  _ModCommand
+ 05C7:0008       _modplayer
+ 0FBD:205A       _mod_bytespertick
+ 0FBD:206E idle  _mod_channelselect
+ 0FBD:205E idle  _mod_currentbyte
+ 0FBD:2060 idle  _mod_currenttick
+ 0FBD:204A       _mod_data
+ 0FBD:2062 idle  _mod_divoffset
+ 0FBD:2066 idle  _mod_finetune
+ 0FBD:2064 idle  _mod_glissando
+ 0FBD:2058 idle  _mod_loopcount
+ 0FBD:2054 idle  _mod_loopspot
+ 0FBD:204E       _mod_on
+ 0FBD:2A5C idle  _mod_pattern
+ 0FBD:2068 idle  _mod_patterndelay
+ 0FBD:2A58 idle  _mod_pstop
+ 0FBD:2050 idle  _mod_reset
+ 0FBD:2052 idle  _mod_tablepos
+ 0FBD:205C idle  _mod_ticksperdivision
+ 0FBD:206C idle  _mod_vibratocount
+ 0FBD:206A idle  _mod_volume
+ 0497:103E idle  _MPUEnter
+ 0497:114C       _MPUExit
+ 0497:116C idle  _MPUWrite
+ 0FBD:196E idle  _mpu_available
+ 0FBD:1970 idle  _mpu_checked
+ 0FBD:2A48 idle  _mpu_timeout
+ 0FBD:27E2       _mue23
+ 0FBD:27E4       _mue3
+ 0CFC:0781 idle  _newsoundeffect
+ 0000:25A6       _open
+ 0311:0D31 idle  _PercentOverhead
+ 0CFC:0861 idle  _PlaySound
+ 0000:2764       _printf
+ 0497:0FD1 idle  _readlong
+ 0497:0FA5 idle  _readshort
+ 0497:0F26 idle  _readvarlen
+ 0000:1802 idle  _realloc
+ 0CD9:020A idle  _RemoveTimer0
+ 0000:2C18       _rewind
+ 08BC:40D0 idle  _S3MChannels
+ 08BC:4069 idle  _S3MCommand
+ 08BC:0009       _s3mplayer
+ 0FBD:2144       _s3m_bytespertick
+ 0FBD:215E idle  _s3m_channelselect
+ 0FBD:2A70 idle  _s3m_currentbyte
+ 0FBD:2A6C idle  _s3m_currenttick
+ 0FBD:2156       _s3m_data
+ 0FBD:214E idle  _s3m_divbytes
+ 0FBD:2A84 idle  _s3m_division
+ 0FBD:2A80 idle  _s3m_divspot
+ 0FBD:2138 idle  _s3m_loopcount
+ 0FBD:2152 idle  _s3m_loopspot
+ 0FBD:2148       _s3m_on
+ 0FBD:2A7C idle  _s3m_order
+ 0FBD:2A78 idle  _s3m_pattern
+ 0FBD:214A idle  _s3m_patterndelay
+ 0FBD:20C8 idle  _s3m_period
+ 0FBD:2A74 idle  _s3m_pstop
+ 0FBD:2140 idle  _s3m_reset
+ 0FBD:20F8 idle  _s3m_retvol
+ 0FBD:215A idle  _s3m_ticksperdivision
+ 0FBD:213C idle  _s3m_vibratocount
+ 0FBD:2146 idle  _s3m_volume
+ 0FBD:220C idle  _sampleid
+ 0FBD:0114       _sample_rate
+ 0311:0801 idle  _SBCleanUp
+ 0FBD:00EC idle  _sberr
+ 044F:0008       _sbint
+ 0311:0B63 idle  _sbremovevector
+ 0311:0835 idle  _SBSetUp
+ 0311:0B15 idle  _sbsetvector
+ 08BC:22BC idle  _scalcvibrato
+ 08BC:0DD6 idle  _sdodiv
+ 08BC:234D idle  _sdotick
+ 0000:19FC       _setblock
+ 0311:09C6 idle  _SetSampleRate
+ 0000:2C3E       _setvbuf
+ 0CFC:12C7 idle  _SoundActive
+ 0FBD:2208       _soundlist
+ 0FBD:2206 idle  _sounds_in_queue
+ 0F33:0000 idle  _soundtoken
+ 0000:2D9B       _sprintf
+ 0000:2E11       _sscanf
+ 0000:2E58       _strcat
+ 0000:2E97       _strcmp
+ 0000:2EC7       _strcpy
+ 0000:2EF0       _strlen
+ 0FBD:01F4       _syncbytecount
+ 0FBD:0200       _sync_on
+ 0311:0C38 idle  _testdisableint
+ 0CD9:0047       _TimerOff
+ 0CD9:0035       _TimerOn
+ 0311:0C8F idle  _TimeVSync
+ 0000:0EDF       _toupper
+ 0FBD:27E0 idle  _tst_cnt
+ 0000:0F0B       _unlink
+ 05C7:1A32 idle  _upsemitone
+ 0311:0C5F idle  _VarmintVSync
+ 0FBD:26E0 idle  _vatapstr
+ 0FBD:0201 idle  _vatdebugstring
+ 0FBD:01FA       _vclock
+ 0311:0D60       _vdisable
+ 0311:0D77       _venable
+ 0FBD:26DE       _vinit
+ 0FBD:0116       _vsin
+ 0000:2DBD       _vsprintf
+ 0000:2E34 idle  _vsscanf
+ 0FBD:01FE       _vsyncclock
+ 0FBD:01F8 idle  _vsync_toolong
+ 0FBD:2202 idle  _waveidseed
+ 0CFC:0006       _wavplayer
+ 0311:0776 idle  _whichcard
+ 0000:1000 idle  __AHINCR
+ 0000:000C idle  __AHSHIFT
+ 0FBD:226C       __atexitcnt
+ 0FBD:2A9A       __atexittbl
+ 0000:18F9       __brk
+ 0FBD:008B       __brklvl
+ 0FBD:006B idle  __C0argc
+ 0FBD:006D idle  __C0argv
+ 0FBD:0071       __C0environ
+ 0000:0398 idle  __cexit
+ 0000:016A       __checknull
+ 0000:1A70       __chmod
+ 0000:0157       __cleanup
+ 0000:1AB5       __close
+ 0FBD:226E       __ctype
+ 0000:0000  Abs  __cvtfak
+ 0000:03A6 idle  __c_exit
+ 0FBD:253A       __doserrno
+ 0000:0559       __DOSERROR
+ 0FBD:253C idle  __dosErrorToSV
+ 0000:02C2       __dos_getfileattr
+ 0000:02FF       __dos_getvect
+ 0000:02E2 idle  __dos_setfileattr
+ 0000:030E       __dos_setvect
+ 0FBD:0075       __envLng
+ 0FBD:0077       __envseg
+ 0FBD:0079       __envSize
+ 0000:0386       __exit
+ 0FBD:2370       __exitbuf
+ 0FBD:2374       __exitfopen
+ 0FBD:2378 idle  __exitopen
+ 0000:23D3       __fgetc
+ 0FBD:2536       __fmode
+ 0000:277F idle  __fputc
+ 0000:2944       __FPUTN
+ 0000:1F3A idle  __GETFP
+ 0FBD:0087       __heapbase
+ 0FBD:008F       __heaptop
+ 0FBD:005B idle  __Int0Vector
+ 0FBD:005F idle  __Int4Vector
+ 0FBD:0063 idle  __Int5Vector
+ 0FBD:0067 idle  __Int6Vector
+ 0000:0520       __IOERROR
+ 0000:057C       __LONGTOA
+ 0000:0647       __MKNAME
+ 0000:0293 idle  __MMODEL
+ 0000:23E8 idle  __Nfgetc
+ 0FBD:250C       __nfile
+ 0FBD:2538       __notUmask
+ 0000:2715       __open
+ 0FBD:250E       __openfd
+ 0000:1E69 idle  __OPENFP
+ 0FBD:007D idle  __osmajor
+ 0FBD:007E idle  __osminor
+ 0FBD:007D idle  __osversion
+ 0FBD:007B       __psp
+ 0000:0735       __read
+ 0000:19EC       __REALCVT
+ 0FBD:26C6       __RealCvtVector
+ 0000:01C0       __restorezero
+ 0000:1938       __sbrk
+ 0000:0764       __scanner
+ 0000:19F8       __scanpop
+ 0000:19F4       __scanrslt
+ 0000:19F0       __scantod
+ 0FBD:26C8       __ScanTodVector
+ 0000:0C83       __scantol
+ 0000:0000 idle  __setenvp__
+ 0000:0E25       __setupio
+ 0FBD:0081 idle  __StartTime
+ 0FBD:01F6       __stklen
+ 0000:13FE       __stpcpy
+ 0FBD:237C       __streams
+ 0000:016B       __terminate
+ 0000:06A4 idle  __TMPNAM
+ 0000:05FE       __UTOA
+ 0FBD:007D idle  __version
+ 0000:0F3B       __VPRINTER
+ 0000:3060       __write
+ 0000:309C       __xfclose
+ 0000:30D9       __xfflush
+ 0FBD:0085 idle  ___brklvl
+ 0000:1451 idle  ___first
+ 0000:1453 idle  ___last
+ 0000:2B47       ___read
+ 0000:1455 idle  ___rover
+ 0000:2F0F       ___write
+
+  Address         Publics by Value
+
+ 0000:0000  Abs  __cvtfak
+ 0000:0000 idle  __setenvp__
+ 0000:000C idle  __AHSHIFT
+ 0000:0157       __cleanup
+ 0000:016A       __checknull
+ 0000:016B       __terminate
+ 0000:01C0       __restorezero
+ 0000:027A       _abort
+ 0000:0291 idle  DGROUP@
+ 0000:0293 idle  __MMODEL
+ 0000:0295 idle  _atexit
+ 0000:02C2       __dos_getfileattr
+ 0000:02E2 idle  __dos_setfileattr
+ 0000:02FF       __dos_getvect
+ 0000:030E       __dos_setvect
+ 0000:0377       _exit
+ 0000:0386       __exit
+ 0000:0398 idle  __cexit
+ 0000:03A6 idle  __c_exit
+ 0000:03B2       F_LXMUL@
+ 0000:03B2 idle  LXMUL@
+ 0000:03C9 idle  N_LDIV@
+ 0000:03CC       F_LDIV@
+ 0000:03CC idle  LDIV@
+ 0000:03D0 idle  N_LUDIV@
+ 0000:03D3       F_LUDIV@
+ 0000:03D3 idle  LUDIV@
+ 0000:03D8 idle  N_LMOD@
+ 0000:03DB       F_LMOD@
+ 0000:03DB idle  LMOD@
+ 0000:03E0 idle  N_LUMOD@
+ 0000:03E3 idle  LUMOD@
+ 0000:03E3 idle  F_LUMOD@
+ 0000:0477       N_LXLSH@
+ 0000:047A       F_LXLSH@
+ 0000:047A idle  LXLSH@
+ 0000:0498       N_PADD@
+ 0000:049B idle  F_PADD@
+ 0000:049B idle  PADD@
+ 0000:04C7 idle  N_PSUB@
+ 0000:04CA idle  F_PSUB@
+ 0000:04CA idle  PSUB@
+ 0000:04F8 idle  _inport
+ 0000:0501       _inportb
+ 0000:050C idle  _inpw
+ 0000:0515 idle  _inp
+ 0000:0520       __IOERROR
+ 0000:0559       __DOSERROR
+ 0000:056B       _isatty
+ 0000:057C       __LONGTOA
+ 0000:05FE       __UTOA
+ 0000:061E       _lseek
+ 0000:0647       __MKNAME
+ 0000:06A4 idle  __TMPNAM
+ 0000:06FD       N_LXMUL@
+ 0000:0714       N_PCMP@
+ 0000:0735       __read
+ 0000:0764       __scanner
+ 0000:0C83       __scantol
+ 0000:0E25       __setupio
+ 0000:0EDF       _toupper
+ 0000:0F0B       _unlink
+ 0000:0F3B       __VPRINTER
+ 0000:1000 idle  __AHINCR
+ 0000:13FE       __stpcpy
+ 0000:1451 idle  ___first
+ 0000:1453 idle  ___last
+ 0000:1455 idle  ___rover
+ 0000:1591       _farfree
+ 0000:1591       _free
+ 0000:169B       _malloc
+ 0000:16A5       _farmalloc
+ 0000:1802 idle  _realloc
+ 0000:1809 idle  _farrealloc
+ 0000:18F9       __brk
+ 0000:1938       __sbrk
+ 0000:19C3       _ioctl
+ 0000:19EC       __REALCVT
+ 0000:19F0       __scantod
+ 0000:19F4       __scanrslt
+ 0000:19F8       __scanpop
+ 0000:19FC       _setblock
+ 0000:1A70       __chmod
+ 0000:1A8D       _close
+ 0000:1AB5       __close
+ 0000:1AD3       _eof
+ 0000:1B4A       _fclose
+ 0000:1C02       _fflush
+ 0000:1CCF       _fgets
+ 0000:1D6B       _flushall
+ 0000:1E69 idle  __OPENFP
+ 0000:1F3A idle  __GETFP
+ 0000:1F84       _fopen
+ 0000:20AD       _fread
+ 0000:21BD       _fseek
+ 0000:223D idle  _ftell
+ 0000:23D3       __fgetc
+ 0000:23E8 idle  __Nfgetc
+ 0000:23EB       _fgetc
+ 0000:24D9 idle  _fgetchar
+ 0000:24E5       _getenv
+ 0000:2555       _memcpy
+ 0000:25A6       _open
+ 0000:2715       __open
+ 0000:2764       _printf
+ 0000:277F idle  __fputc
+ 0000:279B idle  _fputc
+ 0000:2930 idle  _fputchar
+ 0000:2944       __FPUTN
+ 0000:2B47       ___read
+ 0000:2C18       _rewind
+ 0000:2C3E       _setvbuf
+ 0000:2D9B       _sprintf
+ 0000:2DBD       _vsprintf
+ 0000:2E11       _sscanf
+ 0000:2E34 idle  _vsscanf
+ 0000:2E58       _strcat
+ 0000:2E97       _strcmp
+ 0000:2EC7       _strcpy
+ 0000:2EF0       _strlen
+ 0000:2F0F       ___write
+ 0000:3060       __write
+ 0000:309C       __xfclose
+ 0000:30D9       __xfflush
+ 0311:0001 idle  _GoVarmint
+ 0311:0151 idle  _DropDeadVarmint
+ 0311:0184 idle  _DSPReset
+ 0311:01F2 idle  _DSPRead
+ 0311:0212       _DSPWrite
+ 0311:0233 idle  _DSPGetVersion
+ 0311:0259 idle  _getsbenv
+ 0311:04FD idle  _cardcheck
+ 0311:0776 idle  _whichcard
+ 0311:0801 idle  _SBCleanUp
+ 0311:0835 idle  _SBSetUp
+ 0311:09AD idle  _far2long
+ 0311:09C6 idle  _SetSampleRate
+ 0311:0A48       _dmaset
+ 0311:0B15 idle  _sbsetvector
+ 0311:0B63 idle  _sbremovevector
+ 0311:0B93 idle  _int2vect
+ 0311:0BAE idle  _enableint
+ 0311:0BEF idle  _disableint
+ 0311:0C38 idle  _testdisableint
+ 0311:0C5F idle  _VarmintVSync
+ 0311:0C8F idle  _TimeVSync
+ 0311:0D31 idle  _PercentOverhead
+ 0311:0D60       _vdisable
+ 0311:0D77       _venable
+ 0311:0D88       _dbprintf
+ 03EC:000F idle  _FMWrite
+ 03EC:007E       _FMReset
+ 03EC:00B7 idle  _FMStatus
+ 03EC:00C9       _FMDetect
+ 03EC:0165       _FMSetVoice
+ 03EC:033D idle  _FMSetFrequency
+ 03EC:0470       _FMSetNote
+ 03EC:04DC       _FMSetVolume
+ 03EC:0569 idle  _FMSetRythmMode
+ 03EC:0591 idle  _FMRythmOn
+ 03EC:05AA idle  _FMRythmOff
+ 03EC:05C5       _FMKeyOn
+ 03EC:0600       _FMKeyOff
+ 044F:0008       _sbint
+ 0497:0008 idle  _MidiCommand
+ 0497:0061 idle  _getvoice
+ 0497:0146       _midiplayer
+ 0497:0B2A idle  _LoadMidi
+ 0497:0F26 idle  _readvarlen
+ 0497:0FA5 idle  _readshort
+ 0497:0FD1 idle  _readlong
+ 0497:103E idle  _MPUEnter
+ 0497:114C       _MPUExit
+ 0497:116C idle  _MPUWrite
+ 0497:11A5 idle  _MIDIWrite
+ 0497:11C0 idle  _LoadInstruments
+ 0497:1269 idle  _FreeMidi
+ 0497:12AE       _initmid
+ 05C7:0008       _modplayer
+ 05C7:0B51 idle  _calcvibrato
+ 05C7:0BE0 idle  _dotick
+ 05C7:1A32 idle  _upsemitone
+ 05C7:1A8B idle  _downsemitone
+ 05C7:1AE4 idle  _dodiv
+ 05C7:2794 idle  _ModCommand
+ 05C7:27E9 idle  _LoadMod
+ 05C7:2E6D idle  _FreeMod
+ 05C7:2EF6 idle  _ModChannels
+ 05C7:2F03       _initmod
+ 08BC:0009       _s3mplayer
+ 08BC:0DD6 idle  _sdodiv
+ 08BC:22BC idle  _scalcvibrato
+ 08BC:234D idle  _sdotick
+ 08BC:3221 idle  _LoadS3M
+ 08BC:4069 idle  _S3MCommand
+ 08BC:40D0 idle  _S3MChannels
+ 08BC:40DD       _inits3m
+ 08BC:4145 idle  _FreeS3M
+ 0CD9:0008       _InitTimerFunctions
+ 0CD9:0035       _TimerOn
+ 0CD9:0047       _TimerOff
+ 0CD9:0072 idle  _measure
+ 0CD9:009F       _mdelay
+ 0CD9:00BD       _MilliDelay
+ 0CD9:00F6 idle  _MicroDelay
+ 0CD9:0122       _mcalc
+ 0CD9:01A9 idle  _InstallTimer0
+ 0CD9:020A idle  _RemoveTimer0
+ 0CFC:0006       _wavplayer
+ 0CFC:064C idle  _freesound
+ 0CFC:0781 idle  _newsoundeffect
+ 0CFC:0861 idle  _PlaySound
+ 0CFC:0968 idle  _ChainSoundEffect
+ 0CFC:0A47 idle  _AddChainFunction
+ 0CFC:0A82 idle  _grabsound
+ 0CFC:0AD9 idle  _AlterSoundEffect
+ 0CFC:0C54 idle  _LoadWave
+ 0CFC:10FE idle  _LoadWaveFromMemory
+ 0CFC:1263 idle  _FreeWave
+ 0CFC:12C7 idle  _SoundActive
+ 0CFC:13A4       _initwav
+ 0F33:0000 idle  _soundtoken
+ 0FBD:0000 idle  DATASEG@
+ 0FBD:005B idle  __Int0Vector
+ 0FBD:005F idle  __Int4Vector
+ 0FBD:0063 idle  __Int5Vector
+ 0FBD:0067 idle  __Int6Vector
+ 0FBD:006B idle  __C0argc
+ 0FBD:006D idle  __C0argv
+ 0FBD:0071       __C0environ
+ 0FBD:0075       __envLng
+ 0FBD:0077       __envseg
+ 0FBD:0079       __envSize
+ 0FBD:007B       __psp
+ 0FBD:007D idle  __osversion
+ 0FBD:007D idle  __osmajor
+ 0FBD:007D idle  __version
+ 0FBD:007E idle  __osminor
+ 0FBD:007F       _errno
+ 0FBD:0081 idle  __StartTime
+ 0FBD:0085 idle  ___brklvl
+ 0FBD:0087       __heapbase
+ 0FBD:008B       __brklvl
+ 0FBD:008F       __heaptop
+ 0FBD:0094 idle  _handlerint
+ 0FBD:00B4       _io_addr
+ 0FBD:00B6 idle  _intnr
+ 0FBD:00B8       _dma_ch
+ 0FBD:00BA idle  _card_id
+ 0FBD:00EC idle  _sberr
+ 0FBD:00EE idle  _errname
+ 0FBD:0102 idle  _dma_controlbyte
+ 0FBD:0104       _dma_bufferlen
+ 0FBD:0106       _dma_buffer
+ 0FBD:010E       _dma_currentbuffer
+ 0FBD:0110       _mix_buffer
+ 0FBD:0114       _sample_rate
+ 0FBD:0116       _vsin
+ 0FBD:01DE       _midi_count
+ 0FBD:01E2       _midi_callfreq
+ 0FBD:01E4 idle  _debugnum
+ 0FBD:01E8 idle  _debug_lowdsp
+ 0FBD:01EA       _debug_reverseflipflop
+ 0FBD:01EC idle  _debug_forceflipflop
+ 0FBD:01EE idle  _disabled
+ 0FBD:01F0       _DSP_overhead
+ 0FBD:01F2       _bytes_per_synccheck
+ 0FBD:01F4       _syncbytecount
+ 0FBD:01F6       __stklen
+ 0FBD:01F8 idle  _vsync_toolong
+ 0FBD:01FA       _vclock
+ 0FBD:01FE       _vsyncclock
+ 0FBD:0200       _sync_on
+ 0FBD:0201 idle  _vatdebugstring
+ 0FBD:192A idle  _midi_data
+ 0FBD:192E idle  _midi_reset
+ 0FBD:1930 idle  _midi_on
+ 0FBD:1932 idle  _midi_mpuout
+ 0FBD:1934 idle  _midi_fmout
+ 0FBD:1936       _midi_mpuport
+ 0FBD:1938       _midi_usertempo
+ 0FBD:193A idle  _midi_tempoadjust
+ 0FBD:193C idle  _midi_volume
+ 0FBD:193D idle  _defaultpatchmap
+ 0FBD:194D idle  _defaultfmpatchmap
+ 0FBD:196E idle  _mpu_available
+ 0FBD:1970 idle  _mpu_checked
+ 0FBD:1972 idle  _midi_divisions
+ 0FBD:1974 idle  _midi_msperdiv
+ 0FBD:1976 idle  _midi_instrument
+ 0FBD:204A       _mod_data
+ 0FBD:204E       _mod_on
+ 0FBD:2050 idle  _mod_reset
+ 0FBD:2052 idle  _mod_tablepos
+ 0FBD:2054 idle  _mod_loopspot
+ 0FBD:2058 idle  _mod_loopcount
+ 0FBD:205A       _mod_bytespertick
+ 0FBD:205C idle  _mod_ticksperdivision
+ 0FBD:205E idle  _mod_currentbyte
+ 0FBD:2060 idle  _mod_currenttick
+ 0FBD:2062 idle  _mod_divoffset
+ 0FBD:2064 idle  _mod_glissando
+ 0FBD:2066 idle  _mod_finetune
+ 0FBD:2068 idle  _mod_patterndelay
+ 0FBD:206A idle  _mod_volume
+ 0FBD:206C idle  _mod_vibratocount
+ 0FBD:206E idle  _mod_channelselect
+ 0FBD:20C8 idle  _s3m_period
+ 0FBD:20F8 idle  _s3m_retvol
+ 0FBD:2138 idle  _s3m_loopcount
+ 0FBD:213C idle  _s3m_vibratocount
+ 0FBD:2140 idle  _s3m_reset
+ 0FBD:2144       _s3m_bytespertick
+ 0FBD:2146 idle  _s3m_volume
+ 0FBD:2148       _s3m_on
+ 0FBD:214A idle  _s3m_patterndelay
+ 0FBD:214E idle  _s3m_divbytes
+ 0FBD:2152 idle  _s3m_loopspot
+ 0FBD:2156       _s3m_data
+ 0FBD:215A idle  _s3m_ticksperdivision
+ 0FBD:215E idle  _s3m_channelselect
+ 0FBD:2202 idle  _waveidseed
+ 0FBD:2206 idle  _sounds_in_queue
+ 0FBD:2208       _soundlist
+ 0FBD:220C idle  _sampleid
+ 0FBD:226C       __atexitcnt
+ 0FBD:226E       __ctype
+ 0FBD:2370       __exitbuf
+ 0FBD:2374       __exitfopen
+ 0FBD:2378 idle  __exitopen
+ 0FBD:237C       __streams
+ 0FBD:250C       __nfile
+ 0FBD:250E       __openfd
+ 0FBD:2536       __fmode
+ 0FBD:2538       __notUmask
+ 0FBD:253A       __doserrno
+ 0FBD:253C idle  __dosErrorToSV
+ 0FBD:26BC       _environ
+ 0FBD:26C6       __RealCvtVector
+ 0FBD:26C8       __ScanTodVector
+ 0FBD:26DE       _vinit
+ 0FBD:26E0 idle  _vatapstr
+ 0FBD:27E0 idle  _tst_cnt
+ 0FBD:27E2       _mue23
+ 0FBD:27E4       _mue3
+ 0FBD:27E6       _dsp_vers
+ 0FBD:27E8       _fm_addr
+ 0FBD:2806 idle  _midi_livetracks
+ 0FBD:2808 idle  _midi_timer
+ 0FBD:2888 idle  _midi_trackloc
+ 0FBD:28C8 idle  _midi_trackon
+ 0FBD:28E8 idle  _midi_lastevent
+ 0FBD:2908 idle  _midi_voice
+ 0FBD:2A48 idle  _mpu_timeout
+ 0FBD:2A4A idle  _midi_fmpatchmap
+ 0FBD:2A4E idle  _midi_patchmap
+ 0FBD:2A58 idle  _mod_pstop
+ 0FBD:2A5C idle  _mod_pattern
+ 0FBD:2A6C idle  _s3m_currenttick
+ 0FBD:2A70 idle  _s3m_currentbyte
+ 0FBD:2A74 idle  _s3m_pstop
+ 0FBD:2A78 idle  _s3m_pattern
+ 0FBD:2A7C idle  _s3m_order
+ 0FBD:2A80 idle  _s3m_divspot
+ 0FBD:2A84 idle  _s3m_division
+ 0FBD:2A88 idle  _channels
+ 0FBD:2A9A       __atexittbl
+
+Error: Undefined symbol _main in module c0.ASM
+Line numbers for VAT.OBJ(VAT.C) segment VAT_TEXT
+
+   192 0311:0001   194 0311:0004   196 0311:0009   201 0311:0016
+   202 0311:0024   205 0311:0031   207 0311:0039   208 0311:0054
+   210 0311:005F   211 0311:0069   212 0311:0079   214 0311:0089
+   215 0311:008C   217 0311:0094   218 0311:009E   219 0311:00AE
+   220 0311:00BE   222 0311:00D9   224 0311:00E4   225 0311:00E6
+   227 0311:00EE   228 0311:00F8   229 0311:0108   230 0311:0118
+   232 0311:0133   233 0311:013D   235 0311:013F   238 0311:0144
+   239 0311:014F   241 0311:0151   243 0311:0154   244 0311:015F
+   245 0311:0172   246 0311:017D   247 0311:0182   265 0311:0184
+   269 0311:018A   271 0311:0196   272 0311:01A2   273 0311:01AC
+   274 0311:01B8   277 0311:01C2   278 0311:01C9   279 0311:01D5
+   282 0311:01EC   283 0311:01F0   295 0311:01F2   299 0311:01F7
+   300 0311:0206   301 0311:0210   312 0311:0212   316 0311:0217
+   317 0311:0226   318 0311:0231   331 0311:0233   333 0311:0236
+   334 0311:0240   335 0311:0257   348 0311:0259   354 0311:0260
+   356 0311:0265   358 0311:0271   359 0311:0284   360 0311:028E
+   362 0311:02A4   365 0311:02B6   368 0311:02F5   369 0311:0319
+   370 0311:0328   371 0311:0343   374 0311:0358   375 0311:037C
+   378 0311:03A8   379 0311:03CC   380 0311:03DB   381 0311:03F6
+   382 0311:03FD   383 0311:0402   388 0311:0408   389 0311:042C
+   390 0311:043B   391 0311:0456   392 0311:0464   393 0311:0469
+   398 0311:046F   399 0311:0493   400 0311:04A2   401 0311:04BD
+   404 0311:04D0   406 0311:04F6   407 0311:04FB   424 0311:04FD
+   426 0311:0503   428 0311:0508   429 0311:0515   430 0311:0521
+   431 0311:0526   441 0311:0528   443 0311:0538   445 0311:053C
+   447 0311:0544   448 0311:054A   449 0311:054E   465 0311:0558
+   470 0311:055E   471 0311:057C   473 0311:0582   474 0311:0589
+   476 0311:0590   477 0311:0595   478 0311:059B   481 0311:059F
+   482 0311:05BC   483 0311:05C8   485 0311:05CD   487 0311:05D7
+   489 0311:05F1   491 0311:05F8   493 0311:0600   494 0311:0606
+   497 0311:060A   498 0311:060F   499 0311:061B   501 0311:063A
+   502 0311:0641   503 0311:0648   505 0311:064D   506 0311:065A
+   507 0311:065F   519 0311:0661   523 0311:0667   525 0311:0673
+   527 0311:0680   529 0311:0690   531 0311:0697   532 0311:06A3
+   533 0311:06B4   536 0311:06CA   538 0311:06D6   539 0311:06DA
+   551 0311:06DC   555 0311:06E2   557 0311:06EE   559 0311:06F5
+   561 0311:0702   563 0311:0708   564 0311:0710   565 0311:0716
+   567 0311:071A   569 0311:072A   570 0311:0730   571 0311:0739
+   572 0311:0742   573 0311:074B   574 0311:0751   577 0311:0755
+   579 0311:0765   581 0311:076A   582 0311:0770   583 0311:0774
+   596 0311:0776   598 0311:077C   601 0311:0781   603 0311:078D
+   604 0311:079C   606 0311:07A7   609 0311:07B3   611 0311:07BA
+   612 0311:07C6   614 0311:07D7   615 0311:07DE   617 0311:07EF
+   619 0311:07FB   620 0311:07FF   633 0311:0801   635 0311:0804
+   637 0311:080E   638 0311:081E   639 0311:082E   641 0311:0833
+   653 0311:0835   657 0311:083B   658 0311:084B   660 0311:0857
+   664 0311:085C   665 0311:0869   667 0311:0876   671 0311:0887
+   674 0311:0893   675 0311:089A   677 0311:08A4   680 0311:08D0
+   681 0311:08EA   682 0311:08F0   683 0311:08F6   685 0311:08FA
+   689 0311:090C   690 0311:0926   691 0311:092C   692 0311:0932
+   695 0311:0936   696 0311:093D   697 0311:0948   698 0311:0953
+   700 0311:096F   702 0311:097A   704 0311:0980   706 0311:09A6
+   707 0311:09AB   719 0311:09AD   721 0311:09B0   722 0311:09C4
+   742 0311:09C6   746 0311:09CC   748 0311:09D8   750 0311:09E4
+   752 0311:09F8   753 0311:0A16   754 0311:0A1F   757 0311:0A2A
+   758 0311:0A44   759 0311:0A46   776 0311:0A48   782 0311:0A4E
+   783 0311:0A61   784 0311:0A64   792 0311:0A6A   793 0311:0A70
+   794 0311:0A79   798 0311:0A7F   799 0311:0A89   801 0311:0A8B
+   802 0311:0A92   806 0311:0A98   810 0311:0AA4   811 0311:0AB7
+   813 0311:0AC7   814 0311:0ADA   816 0311:0AEA   819 0311:0AFB
+   820 0311:0B0A   822 0311:0B13   877 0311:0B15   879 0311:0B18
+   880 0311:0B36   881 0311:0B55   882 0311:0B61   891 0311:0B63
+   893 0311:0B66   894 0311:0B72   895 0311:0B91   912 0311:0B93
+   914 0311:0B96   915 0311:0BA5   916 0311:0BAC   944 0311:0BAE
+   948 0311:0BB4   949 0311:0BBA   950 0311:0BC6   951 0311:0BD0
+   952 0311:0BD1   954 0311:0BD3   955 0311:0BE2   956 0311:0BEC
+   958 0311:0BED   988 0311:0BEF   992 0311:0BF5   993 0311:0BFB
+   994 0311:0C07   995 0311:0C13   996 0311:0C16   998 0311:0C18
+   999 0311:0C27  1000 0311:0C33  1002 0311:0C36  1003 0311:0C38
+  1007 0311:0C3E  1008 0311:0C4A  1009 0311:0C58  1010 0311:0C5D
+  1026 0311:0C5F  1029 0311:0C64  1028 0311:0C6F  1032 0311:0C7C
+  1033 0311:0C87  1034 0311:0C8D  1047 0311:0C8F  1050 0311:0C95
+  1052 0311:0C9F  1054 0311:0CA5  1056 0311:0CAB  1058 0311:0CAF
+  1059 0311:0CB6  1060 0311:0CBB  1061 0311:0CBF  1063 0311:0CD4
+  1064 0311:0CE9  1068 0311:0D01  1069 0311:0D01  1071 0311:0D2F
+  1089 0311:0D31  1091 0311:0D34  1092 0311:0D5E  1102 0311:0D60
+  1104 0311:0D63  1105 0311:0D6A  1106 0311:0D6E  1109 0311:0D70
+  1110 0311:0D71  1111 0311:0D75  1119 0311:0D77  1121 0311:0D7A
+  1123 0311:0D7E  1125 0311:0D86  1133 0311:0D88  1137 0311:0D8E
+  1138 0311:0D97  1139 0311:0DAD  1141 0311:0DBD  1142 0311:0DBD
+Line numbers for FM.OBJ(FM.C) segment FM_TEXT
+
+    87 03EC:000F    91 03EC:0015    92 03EC:0021    94 03EC:0029
+    95 03EC:003B    96 03EC:0049    98 03EC:005B    99 03EC:006A
+   101 03EC:007C   111 03EC:007E   114 03EC:0084   115 03EC:00A1
+   116 03EC:00AB   117 03EC:00B5   128 03EC:00B7   130 03EC:00BA
+   132 03EC:00C7   143 03EC:00C9   145 03EC:00CC   147 03EC:00D6
+   148 03EC:00E0   149 03EC:00EA   151 03EC:00F6   152 03EC:0100
+   153 03EC:010A   154 03EC:0124   155 03EC:0138   157 03EC:014A
+   158 03EC:0154   159 03EC:015E   160 03EC:0163   189 03EC:0165
+   191 03EC:0168   193 03EC:0170   194 03EC:0185   196 03EC:019A
+   197 03EC:01BC   201 03EC:01DF   202 03EC:0215   205 03EC:024B
+   206 03EC:026E   207 03EC:0291   208 03EC:02B4   209 03EC:02D7
+   210 03EC:02F5   211 03EC:0318   212 03EC:033B   229 03EC:033D
+   232 03EC:0343   235 03EC:0348   237 03EC:0354   238 03EC:0361
+   239 03EC:036E   240 03EC:037C   241 03EC:038A   242 03EC:0398
+   243 03EC:03A6   244 03EC:03B4   246 03EC:03B9   247 03EC:03E5
+   248 03EC:03EC   249 03EC:03EF   250 03EC:03FA   253 03EC:0426
+   254 03EC:0432   256 03EC:043A   259 03EC:044F   260 03EC:0464
+   261 03EC:046E   273 03EC:0470   278 03EC:0476   279 03EC:047E
+   282 03EC:0484   283 03EC:048C   280 03EC:048F   286 03EC:0495
+   287 03EC:04B2   288 03EC:04D0   289 03EC:04DA   302 03EC:04DC
+   304 03EC:04DF   309 03EC:04E7   312 03EC:04FB   313 03EC:0531
+   315 03EC:0567   350 03EC:0569   354 03EC:056F   355 03EC:057C
+   357 03EC:0581   359 03EC:0587   360 03EC:058F   380 03EC:0591
+   382 03EC:0594   383 03EC:059D   384 03EC:05A8   403 03EC:05AA
+   405 03EC:05AD   406 03EC:05B8   407 03EC:05C3   423 03EC:05C5
+   427 03EC:05CB   429 03EC:05D3   430 03EC:05E1   431 03EC:05F4
+   432 03EC:05FE   449 03EC:0600   453 03EC:0606   455 03EC:060E
+   456 03EC:061C   457 03EC:062C   459 03EC:0636
+Line numbers for HANDLER.OBJ(HANDLER.C) segment HANDLER_TEXT
+
+   101 044F:0008   108 044F:001B   109 044F:0020   113 044F:0032
+   115 044F:004A   118 044F:006B   121 044F:00A3   122 044F:00E4
+   123 044F:00F5   124 044F:0103   120 044F:0112   119 044F:0116
+   127 044F:0142   129 044F:015A   130 044F:0167   131 044F:016C
+   132 044F:0171   133 044F:0176   134 044F:017B   139 044F:0187
+   141 044F:01A8   142 044F:01AF   145 044F:01D7   147 044F:01EC
+   150 044F:020D   151 044F:022E   153 044F:024F   154 044F:0271
+   158 044F:0293   160 044F:02A4   161 044F:02DD   162 044F:02FE
+   163 044F:0308   164 044F:031E   171 044F:0334   172 044F:0345
+   175 044F:034F   176 044F:0361   177 044F:037C   178 044F:0381
+   184 044F:03AF   185 044F:03BE   186 044F:03DA   187 044F:03F1
+   189 044F:0410   190 044F:0425   193 044F:0446   195 044F:0461
+   197 044F:046F   198 044F:0475   200 044F:0479   201 044F:047E
+Line numbers for MIDI.OBJ(MIDI.C) segment MIDI_TEXT
+
+   248 0497:0008   250 0497:000B   252 0497:001A   253 0497:0020
+   254 0497:0026   256 0497:0028   257 0497:002E   258 0497:0034
+   259 0497:0039   261 0497:003B   262 0497:0041   264 0497:0043
+   265 0497:0049   267 0497:004B   268 0497:0051   270 0497:0053
+   272 0497:0055   291 0497:0061   296 0497:0067   297 0497:006E
+   298 0497:008F   299 0497:00A3   301 0497:00A3   307 0497:00F5
+   308 0497:00FC   311 0497:011E   313 0497:013F   314 0497:0144
+   348 0497:0146   355 0497:014E   357 0497:016F   358 0497:0178
+   359 0497:017E   361 0497:0181   362 0497:018B   363 0497:0192
+   364 0497:01B3   365 0497:01BE   366 0497:01D0   367 0497:01D8
+   368 0497:01EE   370 0497:01FF   371 0497:0205   373 0497:0210
+   374 0497:0217   376 0497:0223   379 0497:0230   382 0497:023A
+   383 0497:0242   385 0497:0266   386 0497:0287   387 0497:02A8
+   389 0497:02B1   390 0497:02BA   391 0497:02DB   393 0497:02E4
+   394 0497:0312   396 0497:031B   397 0497:0362   400 0497:036F
+   402 0497:03C7   404 0497:0410   407 0497:0413   410 0497:0416
+   413 0497:0419   416 0497:041C   419 0497:041F   422 0497:0422
+   425 0497:0425   428 0497:0428   429 0497:043A   430 0497:0442
+   431 0497:0446   432 0497:044D   433 0497:0453   435 0497:0459
+   436 0497:0464   437 0497:046F   440 0497:0475   443 0497:048F
+   444 0497:049D   445 0497:04AC   447 0497:04B2   449 0497:04B5
+   451 0497:04B8   453 0497:0539   457 0497:0549   458 0497:0549
+   459 0497:0590   463 0497:0592   466 0497:0594   469 0497:0596
+   472 0497:0598   474 0497:059A   475 0497:05A6   476 0497:05A9
+   477 0497:05B5   479 0497:05E9   480 0497:05F5   483 0497:05F8
+   485 0497:0602   486 0497:0608   489 0497:0629   493 0497:0633
+   495 0497:0639   496 0497:0640   497 0497:0645   498 0497:0651
+   499 0497:065D   501 0497:0675   503 0497:0678   504 0497:0680
+   505 0497:0688   507 0497:069C   508 0497:06A3   509 0497:06C4
+   510 0497:06E6   511 0497:06ED   512 0497:06F9   513 0497:0705
+   516 0497:071D   517 0497:0725   518 0497:072D   519 0497:074A
+   520 0497:076B   523 0497:07AD   524 0497:07B7   526 0497:07BD
+   527 0497:07C9   528 0497:07EA   529 0497:07F8   530 0497:0808
+   532 0497:0829   536 0497:082C   537 0497:0836   538 0497:083F
+   539 0497:0850   540 0497:0860   541 0497:086C   542 0497:088D
+   543 0497:089B   544 0497:08BC   546 0497:08BF   547 0497:08D0
+   548 0497:08E5   549 0497:08FA   550 0497:090F   552 0497:0926
+   553 0497:0936   554 0497:093F   555 0497:094F   556 0497:0970
+   557 0497:0990   558 0497:099B   559 0497:09AB   560 0497:09CC
+   561 0497:09EE   562 0497:0A0F   563 0497:0A1B   568 0497:0A3C
+   571 0497:0A3E   572 0497:0A48   575 0497:0A4A   576 0497:0A54
+   579 0497:0A56   580 0497:0A5F   583 0497:0A61   584 0497:0A6A
+   587 0497:0A6C   588 0497:0A76   591 0497:0A78   592 0497:0A7E
+   597 0497:0A81   598 0497:0A8B   599 0497:0ABF   384 0497:0ADA
+   603 0497:0AF6   607 0497:0B1B   624 0497:0B2A   634 0497:0B32
+   635 0497:0B44   636 0497:0B49   637 0497:0B5B   640 0497:0B62
+   641 0497:0B71   642 0497:0B7D   644 0497:0B83   645 0497:0B9B
+   646 0497:0BA0   647 0497:0BB8   651 0497:0BBF   652 0497:0BD7
+   653 0497:0BDC   654 0497:0BF2   655 0497:0C04   656 0497:0C12
+   659 0497:0C19   660 0497:0C2D   661 0497:0C3C   662 0497:0C4A
+   663 0497:0C5C   664 0497:0C6A   668 0497:0C71   669 0497:0C82
+   670 0497:0C8E   671 0497:0C9C   672 0497:0CAE   673 0497:0CBC
+   676 0497:0CC3   678 0497:0CCC   679 0497:0CDD   680 0497:0CE9
+   681 0497:0CF7   682 0497:0D0C   683 0497:0D1A   685 0497:0D21
+   687 0497:0D2B   688 0497:0D3C   691 0497:0D48   692 0497:0D50
+   693 0497:0D68   694 0497:0D6D   695 0497:0D83   696 0497:0D91
+   697 0497:0DA6   698 0497:0DB4   701 0497:0DBB   704 0497:0DCF
+   705 0497:0DEC   707 0497:0E03   708 0497:0E06   706 0497:0E21
+   710 0497:0E27   711 0497:0E35   712 0497:0E47   713 0497:0E55
+   716 0497:0E5C   717 0497:0E8A   719 0497:0E9E   720 0497:0EA1
+   718 0497:0EBC   722 0497:0EC2   723 0497:0ED0   724 0497:0EE5
+   725 0497:0EF3   729 0497:0F0C   730 0497:0F1A   731 0497:0F23
+   749 0497:0F26   751 0497:0F2D   754 0497:0F32   755 0497:0F52
+   757 0497:0F5B   758 0497:0F5E   759 0497:0F95   761 0497:0F9B
+   762 0497:0FA2   777 0497:0FA5   779 0497:0FA8   780 0497:0FCF
+   794 0497:0FD1   797 0497:0FD7   799 0497:0FE1   801 0497:0FF8
+   802 0497:0FFF   805 0497:1034   806 0497:103C   822 0497:103E
+   824 0497:1044   827 0497:1049   829 0497:104E   833 0497:1057
+   834 0497:105F   836 0497:107A   837 0497:108A   839 0497:1090
+   842 0497:109A   843 0497:109E   841 0497:10AD   846 0497:10B5
+   847 0497:10C5   849 0497:10CB   850 0497:10D3   852 0497:10D6
+   831 0497:10E1   855 0497:10EA   856 0497:10F0   857 0497:10F6
+   858 0497:10FB   863 0497:1101   864 0497:1105   862 0497:1114
+   866 0497:111C   867 0497:112C   869 0497:1132   871 0497:113A
+   872 0497:1140   873 0497:1145   874 0497:114A   884 0497:114C
+   887 0497:114F   888 0497:1158   889 0497:115D   890 0497:1165
+   891 0497:116A   902 0497:116C   905 0497:116F   907 0497:1178
+   910 0497:1180   911 0497:1184   909 0497:1193   914 0497:119B
+   915 0497:11A3   927 0497:11A5   929 0497:11A8   930 0497:11B2
+   931 0497:11BE   960 0497:11C0   963 0497:11C7   966 0497:11CC
+   967 0497:11E4   970 0497:11EF   971 0497:122F   969 0497:1232
+   974 0497:1254   975 0497:1262   976 0497:1267   989 0497:1269
+   993 0497:126F   994 0497:12A0   995 0497:12AC  1004 0497:12AE
+  1006 0497:12B1  1007 0497:12BD  1008 0497:12C7  1009 0497:12D1
+  1010 0497:12DD  1011 0497:12E3  1012 0497:12E9  1013 0497:12EF
+  1014 0497:12F5  1015 0497:12FB  1016 0497:1301  1017 0497:1306
+Line numbers for MOD.OBJ(MOD.C) segment MOD_TEXT
+
+   102 05C7:0008   107 05C7:000E   108 05C7:0018   109 05C7:0021
+   110 05C7:003E   111 05C7:005B   112 05C7:0078   113 05C7:0095
+   114 05C7:00B2   115 05C7:00CF   116 05C7:00E4   117 05C7:00FA
+   118 05C7:0117   119 05C7:013F   120 05C7:015C   121 05C7:0179
+   122 05C7:018E   123 05C7:01A3   126 05C7:01C6   127 05C7:01E7
+   128 05C7:01F2   129 05C7:01F8   130 05C7:021D   131 05C7:0223
+   132 05C7:0229   133 05C7:022F   134 05C7:0235   143 05C7:023B
+   144 05C7:024D   150 05C7:0256   151 05C7:02B4   153 05C7:02D6
+   154 05C7:02DF   156 05C7:0320   161 05C7:0371   163 05C7:03A7
+   165 05C7:03EB   166 05C7:0412   167 05C7:044A   168 05C7:0467
+   169 05C7:04BA   171 05C7:04BC   177 05C7:04E2   178 05C7:04EF
+   200 05C7:04F2   201 05C7:04FB   202 05C7:0559   203 05C7:057B
+   204 05C7:0584   205 05C7:05C5   206 05C7:0616   208 05C7:064C
+   210 05C7:0690   211 05C7:06B7   212 05C7:06EF   213 05C7:070C
+   214 05C7:075F   215 05C7:0761   221 05C7:0781   224 05C7:0787
+   225 05C7:079A   226 05C7:07A0   228 05C7:07A5   229 05C7:07BE
+   232 05C7:07C2   233 05C7:07D3   234 05C7:07D9   236 05C7:07DF
+   237 05C7:07E7   238 05C7:07F4   241 05C7:07FA   244 05C7:0817
+   245 05C7:0827   246 05C7:0838   248 05C7:083E   250 05C7:0840
+   251 05C7:0869   254 05C7:0874   257 05C7:087A   259 05C7:0880
+   260 05C7:0884   263 05C7:0889   264 05C7:0892   265 05C7:08F0
+   266 05C7:0912   267 05C7:091B   268 05C7:095C   269 05C7:09AD
+   271 05C7:09E3   273 05C7:0A27   274 05C7:0A4E   275 05C7:0A86
+   276 05C7:0AA3   277 05C7:0AF6   278 05C7:0AF8   284 05C7:0B1E
+   287 05C7:0B2E   288 05C7:0B4F   305 05C7:0B51   309 05C7:0B57
+   312 05C7:0B69   314 05C7:0BA2   316 05C7:0BD0   317 05C7:0BDE
+   325 05C7:0BE0   331 05C7:0BE6   333 05C7:0BEA   334 05C7:0BF2
+   335 05C7:0C13   336 05C7:0C2A   338 05C7:0C41   340 05C7:0C5B
+   341 05C7:0C7D   342 05C7:0C9A   343 05C7:0CB7   347 05C7:0CF6
+   348 05C7:0D0D   351 05C7:0D3D   353 05C7:0D53   354 05C7:0D67
+   356 05C7:0D93   357 05C7:0DC9   359 05C7:0DCB   360 05C7:0E01
+   362 05C7:0E03   363 05C7:0E39   365 05C7:0E3B   368 05C7:0E3E
+   369 05C7:0E7D   371 05C7:0ECA   373 05C7:0F08   374 05C7:0F2E
+   375 05C7:0F6A   377 05C7:0F6D   379 05C7:0FAC   381 05C7:0FF9
+   383 05C7:1038   384 05C7:105E   385 05C7:109A   390 05C7:109D
+   391 05C7:10DF   392 05C7:111E   393 05C7:116B   394 05C7:11DD
+   395 05C7:11E0   396 05C7:1222   397 05C7:1261   398 05C7:12AE
+   401 05C7:1320   402 05C7:1346   403 05C7:1382   405 05C7:1385
+   406 05C7:1385   409 05C7:13CB   410 05C7:13DB   412 05C7:1417
+   414 05C7:141A   415 05C7:145C   416 05C7:1492   417 05C7:1504
+   418 05C7:1507   419 05C7:1549   420 05C7:157F   422 05C7:15F1
+   423 05C7:1617   425 05C7:1653   426 05C7:1693   427 05C7:16BF
+   428 05C7:16EB   430 05C7:16EE   432 05C7:1734   433 05C7:1744
+   435 05C7:1780   436 05C7:17C0   437 05C7:17EC   438 05C7:1818
+   442 05C7:181B   445 05C7:1863   446 05C7:188F   447 05C7:18BB
+   449 05C7:18BE   451 05C7:18FE   452 05C7:192A   453 05C7:1956
+   455 05C7:1958   461 05C7:1964   462 05C7:19A9   463 05C7:19C4
+   465 05C7:19C6   467 05C7:19C8   469 05C7:19CA   471 05C7:19CC
+   474 05C7:19CE   476 05C7:1A10   493 05C7:1A32   498 05C7:1A38
+   501 05C7:1A4C   502 05C7:1A6E   500 05C7:1A71   505 05C7:1A77
+   506 05C7:1A89   522 05C7:1A8B   527 05C7:1A91   530 05C7:1AA5
+   531 05C7:1AC7   529 05C7:1ACA   534 05C7:1AD0   535 05C7:1AE2
+   543 05C7:1AE4   546 05C7:1AEC   550 05C7:1AFB   551 05C7:1B03
+   552 05C7:1B24   553 05C7:1B39   555 05C7:1B4E   556 05C7:1B6C
+   557 05C7:1B82   558 05C7:1B8B   559 05C7:1B9A   561 05C7:1BA3
+   563 05C7:1BBE   564 05C7:1BD4   565 05C7:1C02   566 05C7:1C1F
+   568 05C7:1C3C   569 05C7:1C69   572 05C7:1C96   573 05C7:1CC3
+   575 05C7:1D14   579 05C7:1D33   581 05C7:1D45   582 05C7:1D45
+   584 05C7:1D8C   585 05C7:1D9E   590 05C7:1DDA   592 05C7:1E12
+   593 05C7:1E28   594 05C7:1E3E   596 05C7:1E54   598 05C7:1E6A
+   599 05C7:1EA0   600 05C7:1EDE   602 05C7:1F1C   603 05C7:1F32
+   605 05C7:1F35   606 05C7:1F62   608 05C7:1F65   609 05C7:1F92
+   611 05C7:1F95   612 05C7:1FCE   613 05C7:1FF4   624 05C7:1FF7
+   625 05C7:2009   626 05C7:2032   627 05C7:2096   633 05C7:2099
+   634 05C7:20D0   638 05C7:20F5   639 05C7:2131   650 05C7:2134
+   651 05C7:2161   652 05C7:218A   653 05C7:21B4   655 05C7:21B7
+   657 05C7:21BA   658 05C7:21FD   661 05C7:2200   662 05C7:2237
+   663 05C7:225C   664 05C7:2298   666 05C7:229B   667 05C7:22AD
+   668 05C7:22B2   670 05C7:22B5   671 05C7:22D1   673 05C7:22D4
+   674 05C7:22D9   676 05C7:22DC   679 05C7:22F2   682 05C7:22F5
+   683 05C7:2318   684 05C7:233E   685 05C7:237A   688 05C7:237D
+   689 05C7:23A0   690 05C7:23C6   691 05C7:2402   697 05C7:2405
+   698 05C7:240D   704 05C7:2410   706 05C7:2413   707 05C7:241B
+   708 05C7:2425   709 05C7:2448   713 05C7:244B   714 05C7:2452
+   716 05C7:2475   717 05C7:247E   718 05C7:24A7   719 05C7:24B0
+   721 05C7:24B5   722 05C7:24B7   723 05C7:24BD   724 05C7:24D2
+   725 05C7:24D7   727 05C7:24DB   729 05C7:24DE   731 05C7:24E1
+   733 05C7:24E4   735 05C7:24FA   737 05C7:24FD   738 05C7:252A
+   739 05C7:2556   741 05C7:2559   742 05C7:2586   743 05C7:25B2
+   745 05C7:25B5   746 05C7:25CB   748 05C7:25CD   749 05C7:25F0
+   750 05C7:2623   751 05C7:2638   753 05C7:263A   754 05C7:2642
+   758 05C7:2644   760 05C7:2646   762 05C7:2648   770 05C7:264A
+   771 05C7:265C   772 05C7:2662   773 05C7:266D   775 05C7:2673
+   777 05C7:2675   779 05C7:2677   782 05C7:2688   783 05C7:268E
+   784 05C7:269C   785 05C7:26A0   786 05C7:26A6   787 05C7:26AA
+   789 05C7:26C3   790 05C7:26EC   792 05C7:26F7   793 05C7:26FB
+   795 05C7:2701   797 05C7:271C   798 05C7:2745   801 05C7:2750
+   814 05C7:2794   816 05C7:2797   818 05C7:27A6   819 05C7:27AC
+   820 05C7:27B2   822 05C7:27B4   823 05C7:27BA   824 05C7:27C0
+   826 05C7:27C2   827 05C7:27C8   829 05C7:27CA   830 05C7:27D0
+   832 05C7:27D2   833 05C7:27D8   835 05C7:27DA   837 05C7:27DC
+   854 05C7:27E9   860 05C7:27F0   862 05C7:27F5   863 05C7:2808
+   864 05C7:280D   865 05C7:281F   868 05C7:2826   869 05C7:282D
+   870 05C7:2846   872 05C7:2860   873 05C7:2871   874 05C7:287F
+   876 05C7:2886   877 05C7:289E   878 05C7:28A3   879 05C7:28B1
+   880 05C7:28C9   883 05C7:28D0   886 05C7:28E5   887 05C7:28FC
+   888 05C7:2900   889 05C7:291C   890 05C7:2938   892 05C7:2952
+   894 05C7:2960   896 05C7:2978   898 05C7:2981   899 05C7:2989
+   901 05C7:29AF   902 05C7:29E3   903 05C7:29F7   904 05C7:2A01
+   906 05C7:2A0F   908 05C7:2A28   910 05C7:2A5C   911 05C7:2A90
+   917 05C7:2A9F   918 05C7:2ABA   919 05C7:2AC6   920 05C7:2AD0
+   921 05C7:2AD7   923 05C7:2AD9   927 05C7:2AF7   930 05C7:2B18
+   931 05C7:2B2E   932 05C7:2B3C   934 05C7:2B59   935 05C7:2B5F
+   936 05C7:2B7B   937 05C7:2B84   938 05C7:2B86   940 05C7:2B9C
+   942 05C7:2BA5   943 05C7:2BAC   946 05C7:2BDE   948 05C7:2C08
+   949 05C7:2C10   951 05C7:2C32   954 05C7:2C49   955 05C7:2C78
+   956 05C7:2C8A   957 05C7:2C98   959 05C7:2C9F   962 05C7:2CDC
+   964 05C7:2D05   965 05C7:2D0D   966 05C7:2D26   968 05C7:2D3B
+   970 05C7:2D6B   973 05C7:2D85   974 05C7:2DBB   975 05C7:2DEA
+   976 05C7:2DFC   977 05C7:2E0A   980 05C7:2E11   983 05C7:2E53
+   986 05C7:2E61   989 05C7:2E6A  1002 05C7:2E6D  1006 05C7:2E73
+  1007 05C7:2E7A  1009 05C7:2EAC  1010 05C7:2EB3  1012 05C7:2EE6
+  1014 05C7:2EF4  1023 05C7:2EF6  1025 05C7:2EF9  1026 05C7:2F01
+  1035 05C7:2F03  1039 05C7:2F09  1040 05C7:2F15  1041 05C7:2F1B
+  1042 05C7:2F21  1043 05C7:2F27  1044 05C7:2F2D  1045 05C7:2F33
+  1046 05C7:2F39  1047 05C7:2F3F  1048 05C7:2F57
+Line numbers for S3M.OBJ(S3M.C) segment S3M_TEXT
+
+   113 08BC:0009   118 08BC:000F   120 08BC:0038   121 08BC:0044
+   122 08BC:0057   123 08BC:0060   124 08BC:0089   125 08BC:00A6
+   126 08BC:00C3   127 08BC:00E0   128 08BC:00FD   129 08BC:011A
+   130 08BC:0137   131 08BC:014C   132 08BC:0162   133 08BC:017F
+   134 08BC:01A7   135 08BC:01C4   136 08BC:01E1   137 08BC:01F6
+   138 08BC:020B   139 08BC:0220   140 08BC:023D   143 08BC:0276
+   144 08BC:028E   145 08BC:02AB   147 08BC:02C3   148 08BC:02F1
+   150 08BC:0315   152 08BC:033E   153 08BC:0351   154 08BC:035D
+   155 08BC:0369   156 08BC:0375   157 08BC:0381   161 08BC:038D
+   162 08BC:03AB   163 08BC:03B4   164 08BC:03DD   165 08BC:043B
+   166 08BC:045D   167 08BC:0466   168 08BC:04AF   169 08BC:0500
+   170 08BC:0536   171 08BC:057A   173 08BC:0594   174 08BC:05E9
+   175 08BC:0606   176 08BC:063C   177 08BC:063E   182 08BC:0672
+   183 08BC:0684   189 08BC:0687   190 08BC:0690   191 08BC:06B9
+   192 08BC:0717   193 08BC:0739   194 08BC:0742   195 08BC:078B
+   196 08BC:07DC   197 08BC:0812   198 08BC:0856   200 08BC:0870
+   201 08BC:08C5   202 08BC:08E2   203 08BC:0918   204 08BC:091A
+   209 08BC:0954   210 08BC:0961   211 08BC:098F   212 08BC:099B
+   213 08BC:09A0   214 08BC:09AA   215 08BC:09C3   216 08BC:09CD
+   218 08BC:09D9   219 08BC:09F2   220 08BC:09F8   221 08BC:0A04
+   222 08BC:0A0C   223 08BC:0A19   226 08BC:0A1F   229 08BC:0A3C
+   230 08BC:0A4C   231 08BC:0A5D   234 08BC:0A63   236 08BC:0A65
+   237 08BC:0A8E   240 08BC:0AA6   242 08BC:0AB2   243 08BC:0ABD
+   244 08BC:0AC7   245 08BC:0ACC   247 08BC:0AD5   248 08BC:0AFE
+   249 08BC:0B5C   250 08BC:0B7E   251 08BC:0B87   252 08BC:0BD0
+   253 08BC:0C21   254 08BC:0C57   255 08BC:0C9B   257 08BC:0CB5
+   258 08BC:0D0A   259 08BC:0D27   260 08BC:0D5D   261 08BC:0D5F
+   266 08BC:0D93   268 08BC:0DAB   269 08BC:0DD4   279 08BC:0DD6
+   282 08BC:0DDC   287 08BC:0DFA   288 08BC:0E02   289 08BC:0E2B
+   290 08BC:0E40   291 08BC:0E4C   292 08BC:0E5A   293 08BC:0E61
+   294 08BC:0E68   295 08BC:0E6F   296 08BC:0E86   297 08BC:0E91
+   298 08BC:0E9C   299 08BC:0EA4   300 08BC:0EBB   301 08BC:0EC2
+   302 08BC:0ECE   305 08BC:0EE5   307 08BC:0EEF   308 08BC:0F0C
+   309 08BC:0F29   310 08BC:0F46   311 08BC:0F63   313 08BC:0F68
+   314 08BC:0F77   316 08BC:0F81   317 08BC:0F9D   318 08BC:0FD2
+   319 08BC:0FF8   320 08BC:1015   321 08BC:1032   322 08BC:1067
+   323 08BC:109C   324 08BC:10D1   325 08BC:111E   326 08BC:1125
+   328 08BC:114B   330 08BC:115F   332 08BC:115F   333 08BC:11E7
+   334 08BC:1211   335 08BC:124B   336 08BC:1268   338 08BC:1285
+   340 08BC:129C   341 08BC:12A9   343 08BC:12AC   344 08BC:12B9
+   345 08BC:12C3   347 08BC:12C6   348 08BC:12D2   349 08BC:12DC
+   353 08BC:12DF   354 08BC:12FC   355 08BC:1302   356 08BC:130E
+   357 08BC:1333   358 08BC:1350   359 08BC:136D   361 08BC:1370
+   362 08BC:1373   363 08BC:1379   364 08BC:1385   365 08BC:13A8
+   366 08BC:13C5   367 08BC:13E2   369 08BC:13E5   370 08BC:13E7
+   371 08BC:13EE   372 08BC:141B   373 08BC:143E   376 08BC:145B
+   377 08BC:1479   378 08BC:14B9   379 08BC:14E7   380 08BC:1513
+   382 08BC:1530   384 08BC:1533   385 08BC:153C   386 08BC:1565
+   387 08BC:158E   388 08BC:15B8   389 08BC:15F2   390 08BC:160F
+   391 08BC:162C   393 08BC:162F   394 08BC:1638   395 08BC:165B
+   396 08BC:167E   397 08BC:16A8   398 08BC:16E2   399 08BC:16FF
+   400 08BC:171C   402 08BC:171F   403 08BC:1726   404 08BC:174F
+   405 08BC:176C   406 08BC:176F   407 08BC:178D   408 08BC:17C3
+   409 08BC:17ED   410 08BC:1827   412 08BC:1844   414 08BC:1847
+   415 08BC:1850   416 08BC:1879   417 08BC:18A2   418 08BC:18CC
+   419 08BC:1906   420 08BC:1923   421 08BC:1940   423 08BC:1943
+   424 08BC:194C   425 08BC:196F   426 08BC:1992   427 08BC:19BC
+   428 08BC:19F6   429 08BC:1A13   430 08BC:1A30   432 08BC:1A33
+   433 08BC:1A3A   434 08BC:1A63   435 08BC:1A80   436 08BC:1A83
+   437 08BC:1AA1   438 08BC:1AD7   439 08BC:1B01   440 08BC:1B3B
+   442 08BC:1B58   446 08BC:1B5B   447 08BC:1B8B   449 08BC:1B95
+   450 08BC:1C1D   452 08BC:1C20   453 08BC:1C38   454 08BC:1C61
+   455 08BC:1CC5   458 08BC:1CC8   459 08BC:1CF5   460 08BC:1D18
+   462 08BC:1D1B   464 08BC:1D3D   466 08BC:1D77   465 08BC:1DCC
+   468 08BC:1E10   470 08BC:1E13   471 08BC:1E2F   472 08BC:1E5E
+   474 08BC:1E61   476 08BC:1E7A   478 08BC:1E7D   479 08BC:1E91
+   480 08BC:1E9A   481 08BC:1EB4   482 08BC:1EC8   484 08BC:1ECA
+   485 08BC:1ED3   486 08BC:1ED3   487 08BC:1EFC   489 08BC:1F08
+   490 08BC:1F16   492 08BC:1F20   493 08BC:1F22   494 08BC:1F28
+   496 08BC:1F3F   497 08BC:1F49   499 08BC:1F53   501 08BC:1F56
+   502 08BC:1F6C   504 08BC:1F6E   505 08BC:1F91   506 08BC:1FC4
+   507 08BC:1FD9   509 08BC:1FDB   510 08BC:1FE8   512 08BC:1FEA
+   514 08BC:1FEC   516 08BC:1FEF   517 08BC:2017   518 08BC:203B
+   520 08BC:203E   521 08BC:2056   522 08BC:207F   523 08BC:20ED
+   525 08BC:20EF   527 08BC:20F1   531 08BC:2113   532 08BC:2118
+   530 08BC:211B   534 08BC:212D   535 08BC:2135   536 08BC:2143
+   538 08BC:2151   539 08BC:215C   540 08BC:2166   541 08BC:217F
+   542 08BC:2185   543 08BC:2191   545 08BC:2193   546 08BC:21BC
+   547 08BC:21D3   548 08BC:21E6   551 08BC:21FE   552 08BC:2206
+   553 08BC:2221   554 08BC:2227   555 08BC:2233   557 08BC:2235
+   558 08BC:225E   559 08BC:2276   562 08BC:2282   574 08BC:22BC
+   578 08BC:22C2   581 08BC:22D4   583 08BC:230F   585 08BC:233D
+   586 08BC:234B   595 08BC:234D   599 08BC:2353   601 08BC:235D
+   603 08BC:2386   604 08BC:238E   606 08BC:23B8   607 08BC:23F8
+   608 08BC:2426   609 08BC:2452   611 08BC:2455   612 08BC:248B
+   613 08BC:24B5   614 08BC:24EF   616 08BC:24F2   617 08BC:2528
+   618 08BC:2552   619 08BC:258C   621 08BC:258F   622 08BC:25D1
+   623 08BC:2607   624 08BC:2679   625 08BC:267C   626 08BC:26BE
+   627 08BC:26F4   629 08BC:2766   630 08BC:27A4   631 08BC:27CE
+   632 08BC:2808   634 08BC:280B   635 08BC:2843   636 08BC:288E
+   637 08BC:28A3   638 08BC:28DD   640 08BC:28E0   641 08BC:2920
+   642 08BC:294E   643 08BC:297A   644 08BC:29B2   645 08BC:29FD
+   646 08BC:2A12   647 08BC:2A4C   649 08BC:2A4F   650 08BC:2A8F
+   651 08BC:2ABD   652 08BC:2AE9   653 08BC:2B2B   654 08BC:2B61
+   655 08BC:2BD3   656 08BC:2BD6   657 08BC:2C18   658 08BC:2C4E
+   660 08BC:2CC0   661 08BC:2CFE   662 08BC:2D28   663 08BC:2D62
+   666 08BC:2D65   667 08BC:2DA6   668 08BC:2DC3   671 08BC:2DE0
+   672 08BC:2E07   674 08BC:2E49   675 08BC:2E7C   677 08BC:2E7F
+   678 08BC:2EAF   680 08BC:2EB1   681 08BC:2EE7   683 08BC:2EE9
+   684 08BC:2F15   686 08BC:2F17   688 08BC:2F19   689 08BC:2F1B
+   691 08BC:2F5B   692 08BC:2F89   694 08BC:2FB5   696 08BC:2FB8
+   698 08BC:2FE1   699 08BC:301A   701 08BC:301D   702 08BC:3038
+   703 08BC:3055   704 08BC:3072   706 08BC:309C   707 08BC:30B7
+   709 08BC:30B9   712 08BC:30BB   713 08BC:30F3   714 08BC:313E
+   715 08BC:3153   716 08BC:318D   718 08BC:318F   720 08BC:3191
+   723 08BC:31E2   739 08BC:3221   741 08BC:3229   742 08BC:323D
+   754 08BC:3251   755 08BC:3258   756 08BC:326F   757 08BC:3286
+   761 08BC:32A7   762 08BC:32BA   763 08BC:32BF   764 08BC:32D1
+   766 08BC:32D8   767 08BC:32E9   768 08BC:32F7   770 08BC:32FE
+   771 08BC:3306   772 08BC:3318   773 08BC:3331   774 08BC:333D
+   775 08BC:3356   776 08BC:3364   777 08BC:3372   778 08BC:337E
+   780 08BC:33A3   784 08BC:33CD   785 08BC:33E5   786 08BC:33EA
+   787 08BC:33F8   788 08BC:3410   791 08BC:3417   793 08BC:342B
+   794 08BC:343C   795 08BC:3442   796 08BC:3450   797 08BC:3462
+   798 08BC:3474   799 08BC:3482   802 08BC:3489   804 08BC:3497
+   805 08BC:34AF   806 08BC:34C3   807 08BC:34D8   808 08BC:34E6
+   809 08BC:34FC   810 08BC:350A   811 08BC:3520   812 08BC:352E
+   814 08BC:3544   815 08BC:3558   818 08BC:356E   819 08BC:3584
+   820 08BC:359A   821 08BC:35B0   822 08BC:35C4   823 08BC:35CD
+   824 08BC:35D4   825 08BC:35E5   827 08BC:35FD   829 08BC:3604
+   830 08BC:3615   831 08BC:362C   833 08BC:3641   835 08BC:364C
+   836 08BC:366A   837 08BC:3671   839 08BC:36A3   840 08BC:36AA
+   842 08BC:36DC   843 08BC:36E1   844 08BC:36E9   845 08BC:3715
+   846 08BC:3726   847 08BC:372F   848 08BC:3732   849 08BC:3746
+   851 08BC:3766   852 08BC:378B   853 08BC:37B0   854 08BC:37D5
+   855 08BC:37EE   856 08BC:3802   857 08BC:3821   858 08BC:3846
+   859 08BC:387A   860 08BC:388E   863 08BC:38C9   864 08BC:38D1
+   865 08BC:38E9   875 08BC:3917   876 08BC:391F   877 08BC:391F
+   878 08BC:39AC   882 08BC:3A16   883 08BC:3A1E   884 08BC:3A1E
+   885 08BC:3AC1   889 08BC:3B29   890 08BC:3B3F   891 08BC:3B6E
+   892 08BC:3B85   893 08BC:3B97   894 08BC:3BA9   895 08BC:3BB7
+   897 08BC:3BBE   898 08BC:3BE8   899 08BC:3BF4   903 08BC:3C60
+   904 08BC:3C68   905 08BC:3C6D   909 08BC:3C7C   910 08BC:3C84
+   911 08BC:3CB0   912 08BC:3CC7   913 08BC:3CD0   914 08BC:3CD3
+   915 08BC:3CF9   916 08BC:3D10   917 08BC:3D3F   918 08BC:3D51
+   919 08BC:3D5F   920 08BC:3D6D   922 08BC:3D74   924 08BC:3D7C
+   925 08BC:3D93   926 08BC:3DB4   927 08BC:3DD5   928 08BC:3DF6
+   930 08BC:3E29   931 08BC:3E31   936 08BC:3E45   938 08BC:3E4E
+   939 08BC:3E93   941 08BC:3ED9   943 08BC:3EDF   944 08BC:3F25
+   948 08BC:3F27   950 08BC:3F5C   952 08BC:3F65   953 08BC:3FAB
+   955 08BC:3FF1   932 08BC:4002   958 08BC:4017   960 08BC:4019
+   964 08BC:4047   965 08BC:404F   966 08BC:405D   967 08BC:4066
+   978 08BC:4069   980 08BC:406C   982 08BC:407B   983 08BC:4087
+   984 08BC:408D   986 08BC:408F   987 08BC:4095   988 08BC:40A1
+   990 08BC:40A3   991 08BC:40A9   993 08BC:40AB   994 08BC:40B1
+   996 08BC:40B3   997 08BC:40BF   999 08BC:40C1  1001 08BC:40C3
+  1009 08BC:40D0  1011 08BC:40D3  1012 08BC:40DB  1021 08BC:40DD
+  1025 08BC:40E3  1026 08BC:40EF  1027 08BC:40FB  1028 08BC:4107
+  1029 08BC:410D  1030 08BC:4113  1031 08BC:411F  1032 08BC:412B
+  1033 08BC:4143  1044 08BC:4145  1048 08BC:414B  1050 08BC:4155
+  1051 08BC:415C  1053 08BC:418E  1054 08BC:4195  1056 08BC:41C8
+  1058 08BC:41D6
+Line numbers for TIMER.OBJ(TIMER.C) segment TIMER_TEXT
+
+    83 0CD9:0008    87 0CD9:000E    91 0CD9:0017    93 0CD9:001A
+    95 0CD9:001F    97 0CD9:0033   106 0CD9:0035   108 0CD9:0038
+   109 0CD9:003E   110 0CD9:0044   111 0CD9:0045   130 0CD9:0047
+   132 0CD9:004A   133 0CD9:0050   135 0CD9:0064   136 0CD9:006E
+   137 0CD9:0070   147 0CD9:0072   149 0CD9:0075   151 0CD9:007A
+   153 0CD9:007E   155 0CD9:0081   157 0CD9:0083   159 0CD9:008A
+   161 0CD9:008F   162 0CD9:009D   174 0CD9:009F   176 0CD9:00AB
+   178 0CD9:00AE   179 0CD9:00B0   193 0CD9:00BD   197 0CD9:00CC
+   198 0CD9:00E9   214 0CD9:00F6   216 0CD9:0102   217 0CD9:0115
+   234 0CD9:0122   238 0CD9:0128   243 0CD9:014A   244 0CD9:0162
+   245 0CD9:0167   273 0CD9:0169   276 0CD9:0179   277 0CD9:017D
+   282 0CD9:0181   284 0CD9:0188   285 0CD9:018F   286 0CD9:0194
+   289 0CD9:0196   290 0CD9:0198   292 0CD9:019A   293 0CD9:019F
+   307 0CD9:01A9   309 0CD9:01AC   310 0CD9:01B6   312 0CD9:01C3
+   313 0CD9:01D4   315 0CD9:01DA   316 0CD9:01DC   317 0CD9:01DE
+   318 0CD9:01E1   319 0CD9:01E3   320 0CD9:01E5   322 0CD9:01E7
+   323 0CD9:01F8   324 0CD9:0208   334 0CD9:020A   336 0CD9:020D
+   337 0CD9:0218   338 0CD9:021A   339 0CD9:021C   340 0CD9:021E
+   341 0CD9:0220   342 0CD9:0222   343 0CD9:0234
+Line numbers for WAV.OBJ(WAV.C) segment WAV_TEXT
+
+    85 0CFC:0006    90 0CFC:000D    96 0CFC:002E    98 0CFC:003E
+    99 0CFC:005F   100 0CFC:0070   101 0CFC:0084   102 0CFC:0097
+   103 0CFC:009E   105 0CFC:00D6   106 0CFC:00EB   108 0CFC:00EE
+   109 0CFC:00F5   112 0CFC:012E   113 0CFC:0142   114 0CFC:0155
+   115 0CFC:016B   116 0CFC:0188   118 0CFC:0193   119 0CFC:01A6
+   121 0CFC:01C0   122 0CFC:01E7   120 0CFC:01EA   124 0CFC:01F8
+   127 0CFC:01FC   128 0CFC:0223   129 0CFC:0226   126 0CFC:0238
+   132 0CFC:0245   133 0CFC:0248   135 0CFC:0252   136 0CFC:025C
+   137 0CFC:026F   138 0CFC:0281   139 0CFC:028D   142 0CFC:0291
+   143 0CFC:02A4   144 0CFC:02A7   146 0CFC:02A9   147 0CFC:02B7
+   148 0CFC:02D1   149 0CFC:02E7   150 0CFC:0304   154 0CFC:030F
+    97 0CFC:031B   156 0CFC:0326   163 0CFC:0347   165 0CFC:0357
+   166 0CFC:0378   167 0CFC:0389   168 0CFC:039D   169 0CFC:03A5
+   171 0CFC:03E6   172 0CFC:0409   173 0CFC:041D   174 0CFC:0430
+   175 0CFC:0446   176 0CFC:044F   179 0CFC:0471   180 0CFC:04AB
+   181 0CFC:04BB   178 0CFC:04BE   184 0CFC:04E9   185 0CFC:0509
+   186 0CFC:050C   188 0CFC:0516   189 0CFC:0520   190 0CFC:0533
+   191 0CFC:0545   192 0CFC:0551   195 0CFC:0555   196 0CFC:0568
+   197 0CFC:056B   199 0CFC:056D   200 0CFC:057B   201 0CFC:058A
+   202 0CFC:05A1   203 0CFC:05B7   207 0CFC:05D4   212 0CFC:060E
+   216 0CFC:0632   164 0CFC:063E   218 0CFC:0649   230 0CFC:064C
+   235 0CFC:0652   236 0CFC:065C   238 0CFC:066B   239 0CFC:068C
+   240 0CFC:0698   237 0CFC:06A9   243 0CFC:06C6   245 0CFC:06D0
+   246 0CFC:06D4   247 0CFC:06DD   249 0CFC:06E9   250 0CFC:06F1
+   251 0CFC:0700   254 0CFC:0702   256 0CFC:0718   258 0CFC:072B
+   259 0CFC:074C   260 0CFC:075D   261 0CFC:0763   262 0CFC:076F
+   257 0CFC:0775   264 0CFC:077D   265 0CFC:077F   295 0CFC:0781
+   300 0CFC:0787   301 0CFC:07AE   302 0CFC:07BA   304 0CFC:07CD
+   305 0CFC:07DB   306 0CFC:07E7   307 0CFC:07F3   308 0CFC:0804
+   309 0CFC:080A   310 0CFC:0810   311 0CFC:0815   312 0CFC:081A
+   313 0CFC:0833   314 0CFC:083F   315 0CFC:084B   316 0CFC:0857
+   317 0CFC:085F   335 0CFC:0861   339 0CFC:0867   341 0CFC:0871
+   344 0CFC:0872   346 0CFC:0879   347 0CFC:0888   348 0CFC:08B9
+   351 0CFC:08CB   352 0CFC:08D5   353 0CFC:08DA   354 0CFC:08DB
+   357 0CFC:08E1   358 0CFC:08F6   359 0CFC:0912   360 0CFC:0923
+   361 0CFC:092D   363 0CFC:093B   364 0CFC:094A   366 0CFC:0957
+   368 0CFC:095B   369 0CFC:095C   370 0CFC:0966   391 0CFC:0968
+   395 0CFC:096E   397 0CFC:0978   400 0CFC:0979   401 0CFC:098D
+   402 0CFC:0992   403 0CFC:0993   406 0CFC:0999   407 0CFC:09A3
+   408 0CFC:09A8   409 0CFC:09A9   412 0CFC:09AF   413 0CFC:09C4
+   414 0CFC:09E0   415 0CFC:09F1   416 0CFC:09FB   418 0CFC:0A0B
+   419 0CFC:0A29   421 0CFC:0A37   422 0CFC:0A38   423 0CFC:0A45
+   440 0CFC:0A47   444 0CFC:0A4D   445 0CFC:0A61   447 0CFC:0A6A
+   449 0CFC:0A7B   450 0CFC:0A80   461 0CFC:0A82   465 0CFC:0A88
+   466 0CFC:0ABB   468 0CFC:0AC7   469 0CFC:0AD7   482 0CFC:0AD9
+   486 0CFC:0ADF   488 0CFC:0AF2   490 0CFC:0AF9   492 0CFC:0B0B
+   493 0CFC:0B1A   494 0CFC:0B1F   495 0CFC:0B36   496 0CFC:0B4C
+   498 0CFC:0B4E   499 0CFC:0B5B   501 0CFC:0B5D   502 0CFC:0B65
+   504 0CFC:0B67   505 0CFC:0B6F   507 0CFC:0B71   508 0CFC:0B80
+   509 0CFC:0B97   510 0CFC:0BAD   512 0CFC:0BAF   515 0CFC:0BB9
+   517 0CFC:0BBB   518 0CFC:0BD1   519 0CFC:0BF4   521 0CFC:0BF6
+   522 0CFC:0C00   524 0CFC:0C02   525 0CFC:0C1A   526 0CFC:0C32
+   527 0CFC:0C3C   529 0CFC:0C3E   532 0CFC:0C40   551 0CFC:0C54
+   561 0CFC:0C5B   562 0CFC:0C73   563 0CFC:0C78   564 0CFC:0C90
+   568 0CFC:0C96   569 0CFC:0CAD   570 0CFC:0CB1   571 0CFC:0CC8
+   572 0CFC:0CDF   573 0CFC:0CE3   574 0CFC:0CF8   575 0CFC:0D06
+   576 0CFC:0D1E   579 0CFC:0D24   580 0CFC:0D3B   581 0CFC:0D3F
+   582 0CFC:0D56   585 0CFC:0D6F   586 0CFC:0D86   587 0CFC:0D9D
+   588 0CFC:0DB4   589 0CFC:0DCB   590 0CFC:0DE8   591 0CFC:0DFF
+   592 0CFC:0E03   595 0CFC:0E1A   596 0CFC:0E2C   597 0CFC:0E31
+   598 0CFC:0E3F   599 0CFC:0E51   601 0CFC:0E57   602 0CFC:0E63
+   604 0CFC:0E72   607 0CFC:0E81   608 0CFC:0E8B   610 0CFC:0EA6
+   611 0CFC:0EC7   612 0CFC:0ED1   613 0CFC:0EDF   615 0CFC:0EF3
+   616 0CFC:0F10   617 0CFC:0F1C   618 0CFC:0F2D   614 0CFC:0F3B
+   620 0CFC:0F43   624 0CFC:0F49   626 0CFC:0F67   627 0CFC:0F6E
+   630 0CFC:0F9E   631 0CFC:0FAF   632 0CFC:0FB6   633 0CFC:0FBD
+   634 0CFC:0FCB   635 0CFC:0FD9   638 0CFC:0FE7   639 0CFC:1003
+   640 0CFC:101A   641 0CFC:1024   642 0CFC:1032   644 0CFC:1046
+   645 0CFC:1063   646 0CFC:106F   647 0CFC:1080   643 0CFC:108E
+   649 0CFC:1096   651 0CFC:109C   652 0CFC:10AD   654 0CFC:10BC
+   606 0CFC:10C8   657 0CFC:10DC   658 0CFC:10EA   659 0CFC:10F4
+   660 0CFC:10FC   681 0CFC:10FE   685 0CFC:1104   686 0CFC:1116
+   689 0CFC:1121   690 0CFC:1132   691 0CFC:1140   695 0CFC:114C
+   696 0CFC:1154   697 0CFC:1162   698 0CFC:116C   699 0CFC:117A
+   700 0CFC:1188   702 0CFC:118B   704 0CFC:1199   705 0CFC:11B5
+   703 0CFC:11C3   707 0CFC:11CB   708 0CFC:11D9   710 0CFC:11F7
+   712 0CFC:1205   713 0CFC:1213   714 0CFC:1221   715 0CFC:1235
+   716 0CFC:1243   719 0CFC:1259   720 0CFC:1261   731 0CFC:1263
+   735 0CFC:1269   738 0CFC:1275   739 0CFC:1292   740 0CFC:129E
+   741 0CFC:12AF   737 0CFC:12BD   743 0CFC:12C5   760 0CFC:12C7
+   764 0CFC:12CD   765 0CFC:12DB   766 0CFC:12E2   767 0CFC:12E2
+   769 0CFC:1342   770 0CFC:1348   774 0CFC:134A   775 0CFC:1351
+   776 0CFC:1351   778 0CFC:139C   781 0CFC:13A2   790 0CFC:13A4
+   794 0CFC:13AA   795 0CFC:13D0   796 0CFC:13DC   797 0CFC:13E2
+   799 0CFC:13EE
+Program entry point at 0000:0000
+

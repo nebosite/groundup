@@ -1,0 +1,32 @@
+--------------------Configuration: flabsavr - Win32 Release--------------------
+Begining build with project "D:\WATCOM\projects\flabber\flabsavr\flabsavr.dsp", at root.
+Active configuration is Win32 (x86) Application (based on Win32 (x86) Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /Fp"Release/flabsavr.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c "
+			"OLE Type Library Maker" with flags "/nologo /D "NDEBUG" /mktyplib203 /o NUL /win32 "
+			"Win32 Resource Compiler" with flags "/l 0x409 /fo"Release/flabsavr.res" /d "NDEBUG" "
+			"Browser Database Maker" with flags "/nologo /o"Release/flabsavr.bsc" "
+			"COFF Linker for 80x86" with flags "kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/flabsavr.pdb" /machine:I386 /out:"Release/flabsavr.scr" "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating command line "rc.exe /l 0x409 /fo"Release/flabsavr.res" /d "NDEBUG" "D:\Watcom\projects\flabber\flabsavr\flabsavr.rc"" 
+Creating temp file "C:\WINDOWS\TEMP\RSPF262.TMP" with contents </nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /Fp"Release/flabsavr.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\Watcom\projects\flabber\flabsavr\main.cpp"
+>
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPF262.TMP" 
+Creating temp file "C:\WINDOWS\TEMP\RSPF263.TMP" with contents <kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/flabsavr.pdb" /machine:I386 /out:"Release/flabsavr.scr" 
+.\Release\main.obj
+.\Release\flabsavr.res>
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSPF263.TMP" 
+Compiling resources...
+Compiling...
+main.cpp
+D:\Watcom\projects\flabber\flabsavr\main.cpp(61) : warning C4101: 'dwType' : unreferenced local variable
+D:\Watcom\projects\flabber\flabsavr\main.cpp(131) : warning C4101: 'err' : unreferenced local variable
+Linking...
+
+
+
+flabsavr.scr - 0 error(s), 2 warning(s)

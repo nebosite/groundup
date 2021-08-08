@@ -1,0 +1,9 @@
+@echo off
+del main.obj
+del flabber.obj
+del dokey.obj
+del animfunc.obj
+del domouse.obj
+del miscfunc.obj
+del fft.obj
+call wmake

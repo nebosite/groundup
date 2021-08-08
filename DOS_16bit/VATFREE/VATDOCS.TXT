@@ -1,0 +1,750 @@
+															VARMINT'S AUDIO TOOLS
+																				
+																	 Version 0.61
+																				
+																	Documentation
+																				
+															 Eric Jorgensen 1995
+
+															- Ground Up Software -
+
+CONTENTS:
+
+	INTRODUCTION
+	THE AUTHOR
+	GETTING STARTED
+	FIRING UP VAT IN YOUR PROGRAM
+	DIGITIZED SOUND EFFECTS
+	MODS
+	MIDI
+	USING THE TIMERS
+	EXAMPLE CODE
+	SOUND.H
+	VAT FUNCTIONS
+
+
+
+-------------
+Introduction
+------------
+
+		 Varmint's Audio Tools is a C library designed to make the incorporation
+of sounds and music into DOS games as easy and painless as possible.  VAT
+takes advantage of the nearly ubiquitous Sound Blaster standard to deliver
+digital sound effects, digital music, FM synthesis, and MPU401 midi output.
+
+		 The purpose of this document is to give a description of all the
+functions, variables, and data that are part of Varmint's Audio Tools and to
+provide instructions on using them effectively.
+
+-----------
+The Author
+----------
+
+		 Eric Jorgensen is the primary author of Varmint's Audio tools.  All of
+the comments, examples, documentation, and the vast majority of the code were
+written by Eric, and he is the sole maintainer of the library.  All bug
+reports, questions, and comments should go to him at:
+
+																smeagol@rt66.com  
+																				
+																			 or
+																				
+														ejorgensen@rr5.intel.com
+
+		 Special mention should be made here of Peter Sprenger, the Author of
+SOUNDX, another sound library that was put on the internet as freeware in
+1993.  Varmint's Audio Tools was originally adapted from SOUNDX.  
+All beta versions of VAT have been offered to the internet as freeware in the 
+same generous spirit as Peter's offering of SOUNDX.  SOUNDX can still be 
+found at x2ftp.oulu.fi and Peter's email address is: Pete@amber.dinoco.de.
+
+----------------
+GETTING STARTED
+---------------
+
+		 Before you begin programming with VAT, you should read this section.  It
+contains information on what compiler settings to use and what situations can
+cause problems with VAT.  Currently, the items in this section pertain only
+to using VAT in real (as opposed to protected) mode.
+
+Compiler Settings:
+
+		 - Stack checking should be turned off
+		 - The default memory model for VAT is LARGE
+		 - register variables should be turned off
+		 - The setting for "assume SS == DS" should be "never".
+
+Linker Settings:
+
+		 - "No stack" warning should be turned off
+
+Watch out:
+
+		 - Previous versions of VAT did not work well on systems without
+			 floating point units.  This problem has been corrected in version
+			 0.61.
+		 - There have been some indications that text output functions,
+			 floating point operations, file operations, and memory allocation/
+			 deallocation operations are sensitive to being interrupted.  Once
+			 GoVarmint() has been called and the soundblaster interrupt is
+			 active, it is recommended that you protect these operations with
+			 code that deactivates interrupts. (See examples)
+
+------------------------------
+FIRING UP VAT IN YOUR PROGRAM
+------------------------------
+
+Most of VAT's functions will not work unless the sound engine is active. 
+Starting the sound engine is very simple:
+
+	1) call SBSetUp().  If it returns FALSE, then no sound blaster device
+		 was detected.
+	2) If it returns TRUE, then call GoVarmint().  This enables the sound
+		 engine. 
+	3) Do all of your sound stuff...
+	4) IMPORTANT:  Call DropDeadVarmint() before your end your program.
+
+
+------------------------
+DIGITIZED SOUND EFFECTS
+------------------------
+
+Here is how to play back WAV files in your program.
+
+	1) Create a SAMPLE datatype pointer, and a long int to hold the length
+		 of the sample in bytes.
+	2) Load the WAV file and allocate the pointer and length varaible 
+		 using LoadWave().
+	4) Use PlaySound() to put sounds on the playlist.  By default, VAT is
+		 programmed to handle 16 sounds simultaneously.  
+
+--------
+MODS
+--------
+
+To play a mod file, you need to go through these steps:
+
+	1) Create a MOD structure pointer.
+	2) Load the mod file and allocate the pointer using LoadMod().
+	3) assign mod_data the value fo your mod pointer.
+	4) Use ModCommand() to start/stop the music.
+
+The tempo of a mod file is altered by changing the value of mod_bytespertick.
+Smaller equals faster.
+
+The volume of a mod can be altered by changing the value of mod_volumebyte.
+Smaller equals louder.
+
+--------
+MIDI
+--------
+
+To play a midi file, you need to go through these steps:
+
+	1) Create a MIDI structure pointer.
+	2) Load the midi file and allocate the pointer using LoadMidi().
+	3) assign midi_data the value fo your midi pointer.
+	4) Use MidiCommand() to start/stop the music.
+
+VAT supports fm patchmaps.  A patchmap is a 32 byte array, one byte for 
+each track.  The value of each byte is an index into the array 
+midi_instrument.
+
+The varaible midi_instrument[128][11] is defaulted to contain definitions 
+for the following list of instruments.  Not all the patches are that hot, 
+but it should be enough to get you going.  Special thanks to Deren Hansen 
+for providing a large number of these patches.  
+
+(0) ACGPIANO     (1) ACPiano     (2) ELGPIANO     (3) HONKTONK
+(4) ELPIANO1     (5) ElPiano2    (6) HARPSCHD     (7) CLAVICHD
+(8) CELESTA      (9) GLOCK       (10) MUSICBOX    (11) VIBES
+(12) MARIMBA     (13) XYLOPHON   (14) TUBEBELL    (15) Dulcimer
+(16) DrawOrgn    (17) PRCORGAN   (18) ROCKORGN    (19) PIPEORGN
+(20) REEDORGN    (21) ACCORDN    (22) HARMNICA    (23) TANGOAcc
+(24) NYLONGtr    (25) STEELGtr   (26) JAXXGTR     (27) ELGTR 
+(28) ELGTRMut    (29) OVERDGtr   (30) DISTRGtr    (31) GtrHARMN
+(32) ACOUBASS    (33) ELBASSfn   (34) ELBASEpk    (35) FRETLESS
+(36) SLAPBAS1    (37) SLAPBAS2   (38) SYNTHBS1    (39) SYNTHBS2
+(40) VIOLIN      (41) VIOLA      (42) CELLO       (43) CNTBASS
+(44) StrTREM     (45) StrPIZZ    (46) StrHARP     (47) TIMPANI 
+(48) StrSEC1     (49) StrSEC2    (50) SYNTHST1    (51) SNYTHST2
+(52) AHHS        (53) OOHS       (54) VOXSYTHN    (55) ORCHHIT
+(56) TRUMPET     (57) TROMB      (58) TUBA        (59) SOFTRUMP
+(60) FRHORN      (61) BRASSECT   (62) SYNTHBR1    (63) SYNTHBR2
+(64) SOPRANSX    (65) ALTOSAX    (66) TENORSAX    (67) BARISAX
+(68) OBOE        (69) ENGHORN    (70) BASSOON     (71) CLARINET
+(72) PICCOLO     (73) FLUTE      (74) RECORDER    (75) PANPIPE
+(76) BOTTLE      (77) SHAKU      (78) WHISTLE     (79) OCARINA
+(80) SL1sqr      (81) SL2saw     (82) SL3call     (83) SL4chif
+(84) SL5char     (85) SL6vox     (86) SL7fifth    (87) SL8bs&ld
+(88) SP1new      (89) SP2warm    (90) SP3poly     (91) SP4choir
+(92) SP5bow      (93) SP6metal   (94) SP7halo     (95) SP8sweep
+(96) SE1rain     (97) SE2track   (98) SE3cryst    (99) SE4atmos
+(100) SE5brite   (101) SE6gobln  (102) SE7echo    (103) SE8sf
+(104) SITAR      (105) BANJO     (106) SHAMISEN   (107) KOTO
+(108) KALIMBA    (109) BAGPIPE   (110) FIDDL      (111) SHANAI
+(112) HANDBELL   (113) AGOGO     (114) STEELDRM   (115) WOODBLK
+(116) TAIKODRM   (117) MELDYDRM  (118) SYNTHDRM   (119) REVCYMB
+(120) FRET       (121) BREATH    (122) SEASHORE   (123) TWEET
+(124) RING       (125) HELICPTR  (126) APPLAUD    (127) GUNSHOT
+
+Tempo is controlled through the midi_usertempo variable. 100 is same 
+speed, smaller values are faster.  If a midi piece plays too slowly
+and does not respond to changes in midi_usertempo, then the Varmint 
+interrupt is too coarse.  Try setting dma_bufferlen to a smaller number.
+(The default value is 16).
+
+Volume is controlled through the varaible midi_volume.  This variable is
+defaulted to 22.
+
+-----------------
+USING THE TIMERS
+-----------------
+
+There are two good emthods for timing that come with VAT.  The first 
+is the global variable vclock, which is incremented every time that 
+the Varmint Interrupt is called.  To figure out the timer interval,
+Divide the sample rate by dma_bufferlen.  The defualt value is 
+appproximately 850 Hz.  You can use this for course timing in animation
+or whatever.
+
+
+The TimerOn() and TimerOff() functions can be used for microsecond 
+accuracy timings as long as they are shorter than 55 milliseconds.  To
+use them, call TimerOn() to start the timer, then call TimerOff() to 
+stop it.  TimerOff() returns and unsigned interger indicating how many 
+1.193 Mhz clock ticks have elapsed since TimerOn() was called.
+	
+-------------
+EXAMPLE CODE
+-------------
+
+This package comes with some example code to get you started:
+
+EXAMPLE1.C  Shows how to load and play WAV's
+EXAMPLE2.C  Midi example
+EXAMPLE3.C  Mod Demo
+VATDEMO.C   Source for the demo executable.  This implements nearly
+						every feature in VAT.
+
+
+--------
+SOUND.H
+--------
+
+		 This section will discuss parts of the header file for vat (sound.h) and
+describe the workings of various components.
+
+#define MAXSOUNDS 16
+
+			 VAT has the capability to play as many sounds simultaneously as you
+	want it too.  This definition provides a practical limit to the number of
+	active sounds so that VAT does not overload the CPU.
+
+
+#define FM_HIHAT                   0x01
+#define FM_TOPCYM                  0x02
+#define FM_TOMTOM                  0x04
+#define FM_SNARE                   0x08
+#define FM_BASS               0x10
+
+			 The previous definitions should be used when calling FMRythmOn and
+	fmRythmOff.
+
+typedef enum {fmerr=0,nodsperr,irqerr,dmacherr,nomem} SBERROR;
+
+			 The previous enumerations are used to help clarify error codes return from
+	SBSetUp().
+
+typedef enum {v_play,v_stop,v_pause,v_resume,v_rewind,v_setrepeat,v_setpos,
+							v_setrate,v_setvolume } VATCOMMAND;
+
+			 The previous enumerations are used with the interface functions 
+	that control active sound components in VAT. (See ModCommand(), 
+	MidiCommand(), PlaySound(), and AlterSoundEffect().)
+
+
+typedef struct mod {
+} MOD;
+
+typedef struct midi {
+	int repeat;
+	struct midi *chain;
+	void far (*chainfunc)(struct midi *);
+} MIDI;
+
+			 Structures for holding Mod and Midi data.  These are normally filled
+	by LoadMod() and LoadMidi().  Setting the repeat (repeatmusic in the mod
+	structure) variable to n will cause the music to repeat n times.  If n is
+	-1, it will repeat forever.  The chain variable points to another mod
+	or midi structure.  When the current mod or midi is finished playing, it
+	will try to play anything pointed to by chain.  Chainfunc is similar, but
+	it is a function that will get called when the music is finished.  Things
+	to note about using chain functions:
+
+		 - Their execution duration should be short to help prevent crashes
+			 and to prevent skips in any active sounds.
+		 - The sound blaster interrupt will be inactive while they are
+			 running.
+
+extern BYTE channel_select[4];
+
+			 Setting these array values to TRUE or FALSE allow you to turn MOD
+	channels on and off dynamically.
+
+extern int debug_lowdsp;
+
+			 Setting this to TRUE will force GoVarmint to think that it is using a
+	DSP older than version 2.0.  This may help with some compatibility issues,
+	but it also adds extra time to the sound blaster interrupt.
+
+extern int debug_reverseflipflop;
+
+			 Changing this value between TRUE and FLASE can resolve static problems
+	on some systems.
+
+extern WORD DSP_overhead;
+
+			 When this holds a value besides zero, timer functions inside the sound
+	blaster interrupt are used to measure the execution  time of the code in
+	the interrupt.  DSP_overhead will always hold the timing from the most
+	recent interrupt. Use the function PercentOverhead() to convert this number
+	to a percentage.
+
+extern char *errname[];
+
+			 Array of strings used to give English interpretations of sberr when
+	SBSetUp fails.
+
+extern MIDI far *midi_data;
+
+			 points to a filled MIDI data structure. This must be set so that the
+	sound kernel can have some midi data to play.
+
+extern int midi_fmout;
+
+		 If this is TRUE, MIDI music will be played through the fm chip.
+
+extern int midi_mpuout;
+
+		 If this is TRUE, MIDI music will be funneled to the MPU-401 chip.
+
+extern WORD midi_mpuport;
+
+			 This contains the port address of the MPU-401 chip.  This must be set
+	correctly in order to use the MPU functions.
+
+extern BYTE *midi_patchmap;
+
+			 points to a list of 16 bytes.  The bytes remap the MIDI channel
+	output.  i.e.:  {0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1}  will map channels 0-7 to
+	MID channel 0 and channels 8-15 to MIDI channel 1.  The default patchmap is
+	a 1:1 mapping.
+
+extern BYTE *midi_fmpatchmap;
+
+			 Points to a 32 byte array.  Each index in the array specifies 
+	which internal FM patchmap to use for that particular track.
+
+extern int midi_usertempo;
+
+			 This is used to control the tempo of an active MIDI selection.  100 =
+	normal speed, higher is slower.
+
+extern BYTE midi_volume;
+
+		 Controls the MIDI playback volume.  (0 to 63)
+
+extern int mod_bytespertick;
+
+			 Controls the tempo of the active MOD.  Higher is slower.  NOTE: if
+	dma_bufferlen is bigger than this number, MODS will not play.
+
+extern MOD far *mod_data;
+
+			 Similar to midi_data.  Tells the sound kernel where to look for the
+	current MOD it should be playing.
+
+extern int mod_volume;
+
+		 Controls the active Mod's volume.  7-8 is normal, smaller is louder.
+
+extern SBERROR sberr;
+
+		 Holds the error code when SBSetUp() fails.
+
+extern BYTE sync_on;
+
+			 This must be set to TRUE for VarmintVSync to work properly.  Setting
+	to FALSE will slightly decrease the CPU overhead required by the sound
+	kernel.
+
+extern DWORD vclock;
+
+			 VAT system clock.  The default tick rate is about 1000 Hz.   Actual
+	tick rate is equal to dma_bufferlen/sample_rate.
+
+extern WORD vsyncclock;
+
+			 Used to VarmintVSync to track time between retraces.  This should
+	normally be left alone.
+
+--------------
+VAT FUNCTIONS
+--------------
+
+		 In this section you will find descriptions for all externally available
+functions in sound.c.
+
+int AddChainFunction(DWORD id,void (*func)(SOUNDEFFECT far *))
+
+			 Attaches a function to a sound effect.  The function is called when
+	the sound effect is finished.  Since the function will be called within the
+	sound blaster interrupt, it should probably not do very much and you should
+	be aware that no sound or music will be active while the function is
+	executing.  Returns TRUE if successful.
+
+void AlterSoundEffect(DWORD id,VATCOMMAND c,double parameter)
+
+			 Alters items in the sound effect structure.  The id passed to the
+	function identifies the sound to be changed.  This is the same id passed
+	back by PlaySound() and ChainSoundEffect().  The parameter value is
+	normally ignored except for these VATCOMMANDS:
+
+		 COMMAND             paramater meaning
+		 ------------        -----------------
+		 v_setrepeat         # of repeats (-1 = infinity)
+		 v_setpos            Sample position (between 0 and sample length)
+		 v_setrate           Playback rate ratio (1.0 = no speed change)
+		 v_setvolume         Playback volume (0 - 32, 16  = normal)
+
+DWORD ChainSoundEffect(SAMPLE *data,length)
+
+			 Chains a new soundeffect to an active one.  The new sound effect will
+	be played when the first one is finished. On success, ChainSoundEffect()
+	returns a handle to the sound just chained.  This handle can be used later
+	to control the sound.  See also AlterSoundEffect().
+
+void DropDeadVarmint(void)
+
+			 Stops active sound Blaster interrupt that was started by GoVarmint().
+	WARNING: Letting your program end without calling DropDeadVarmint() when
+	the Sound Blaster Interrupt is active will compromise system integrity and
+	will probably crash your computer.
+
+WORD DSPGetVersion(void)
+
+			 Returns the version number of the DSP. High byte = major version, low
+	byte = minor version
+
+BYTE DSPRead(void)
+
+		 Reads a byte from the DSP data port.
+
+int DSPReset(void)
+
+			 Resets the Sound Blaster's digital signal processor.  DSPReset() can
+	be used to detect the presence of a DSP chip.  It returns TRUE if
+	successful.
+
+void DSPWrite(BYTE output)
+
+		 Sends a byte to the DSP.
+
+void FreeMidi(MIDI *m)
+
+			 Convenience function that frees a MIDI structure and associated data.
+
+void FreeMod(MOD *freeme)
+
+			 Convenience function that frees a MOD structure and associated data.
+
+int FMDetect(void)
+
+			 Detects the presence of an FM chip and returns a Boolean value
+	indicating whether or not test was successful.
+
+void FMKeyOff(BYTE voice)
+
+			 Unsets the key_on bit for an FM voice. Again, I've found that voices
+	are always on, and to turn them off you really need to just set the volume
+	to 0.  Turning off the Key_on bit may the voice for a trigger, though.
+
+void FMKeyOn(BYTE voice)
+
+			 Sets the key_on bit for an FM voice. This description is misleading,
+	since in my FM voices are always on.  This function really just triggers
+	the FM voice.
+
+void FMReset(void)
+
+			 Resets the FM chip by clearing all the registers then setting a few
+	appropriate bits.
+
+void FMRythmOff(BYTE inst)
+
+		 Opposite of FMRythmOn().
+
+void FMRythmOn(BYTE inst)
+
+			 Turns on a Specified  rhythm instrument.  These definitions in sound.h
+	should be used to pick the particular rhythm instrument:
+							 FM_HIHAT
+							 FM_TOPCYM
+							 FM_TOMTOM
+							 FM_SNARE
+							 FM_BASS
+
+void FMSetFrequency(BYTE voice,int freq)
+
+			 Allows you to specify a frequency that can be changed incrementally
+	(As opposed to FMSetNote() which only allows chromatic frequency changes).
+	The frequency input parameter to this function is actually a pseudo
+	frequency ranging from 0 to 65535.  This may eventually become a true
+	frequency input; but since FM chips have no means for inputting a direct
+	frequency value, the code to do this will be quite tricky.
+
+void FMSetNote(BYTE voice,BYTE note)
+
+			 Sets the frequency output of a particular voice to that of a chromatic
+	note. Input values for note range from 0 to 127.
+
+void FMSetRythmMode(BYTE bool)
+
+			 Turns the rhythm mode on or off based on the input parameter.
+
+		 A NOTE ABOUT RYTHM FUNCTIONS:
+
+			 I've only played around with these functions a little bit. Here are
+	some things that I've learned:
+
+		 - only channels 6,7,and 8 are affected by the rhythm mode.
+		 - You will need to develop special instrument definitions to get the
+			rhythm instruments to sound right.  The most important parameters in a
+			rhythm instrument definition are attack/decay/sustain rates and the
+			waveform (bytes 9 and 10).
+		 - channels 6,7, and 8 each behave differently in rhythm mode:
+
+					6 - Instrumental.  Sounds like a triangle
+					7 - White noise.  Sounds like a snare drum
+					8 - High white noise.  Sounds like a Cymbal.
+
+		 - If you want to add white noise effects to your program (Gun shots
+						engines, etc...)  channel 7 in rhythm  mode is a good source.
+
+
+void FMSetVoice(BYTE voice,BYTE *ins)
+
+			 Programs an FM voice from an 11 byte array passed as an argument.  If
+	you are interested in playing with the bytes yourself (as opposed to
+	loading them from an instrument file), here is what they do:
+
+		 BYTE    ID
+
+					0    Ampmod /vib /envtype /scale rate/ mod freq mult (oper 1)
+					1    Ampmod /vib /envtype /scale rate/ mod freq mult (oper 2)
+					2    Key level scaling/ total level (oper 1)
+					3    Key level scaling/ total level (oper 2)
+					4    Attack Rate/ Decay rate  (oper 1)
+					5    Attack Rate/ Decay rate  (oper 2)
+					6    Sustain Level/ Release rate (oper 1)
+					7    Sustain Level/ Release rate (oper 2)
+					8         Feedback / Algorythm (oper 1&2)
+					9    Wave Form  Select (oper 1)
+					10   Wave Form  Select (oper 2)
+
+void FMSetVolume(BYTE voice,BYTE vol)
+
+		 Used to change the output volume of a specified FM voice.  Valid values
+for volume are 0-63.  In practice, FM voices should be turned off by setting
+their volume to 0.
+
+BYTE FMStatus(void)
+
+		 Reads the status byte of the FM chip.
+
+void FMWrite(WORD data)
+
+			 Sends data to the FM chip.  The High byte in the variable data
+	contains the register number and the low byte contains the value to be
+	written.
+
+void GoVarmint(void)
+
+			 Starts up the sound blaster interrupt so that sounds and music can be
+	played.  SBSetup must be called before GoVarmint() and DropDeadVarmint()
+	should be called to deactivate the sound blaster interrupt before program
+	termination.  Not doing so can easily crash your system.
+	
+void InitTimerFunctions(void)
+
+			 Initializes the Timer 2 (speaker timer) routines in VAT.  SBSetUp()
+	calls this function, so you should never have to use it unless you don't
+	want to call SBSetUp() for some reason.  None of the timer or delay
+	functions will work properly unless InitTimerFunctions() is called.
+
+void InstallTimer0(WORD period,void far (*func)())
+
+			 Sets up timer0 to call you function at the specified period.  Your
+	function is called from an internal interrupt that also calls the original
+	timer0 interrupt at the proper frequency (18.2 Hz), so the system timer is
+	essentially untouched by the operation.
+
+			 CAUTION: Timer0 routines can cause a lot of headaches while debugging.
+	If you set your own interrupt and then stop the program before you call
+	RemoveTimer0(), you'd better reboot your computer, because very
+	unpredictable things will happen if InstallTimer0() is called again. My
+	suggestion is to get your interrupt working and then comment out the Timer0
+	routines until the rest of the program is written and debugged.
+
+void LoadInstruments(char *filename,BYTE inst[128][11])
+
+		 Loads instrument definitions from a file (128 total)
+
+		File format: 11 hex values followed by a name.  e.g.:
+
+			30 33 40 00 E1 E2 87 63 06 01 00 "Electric Piano 2"
+			33 34 00 00 92 C3 C3 B3 02 01 00 "Harpsichord"
+			32 32 00 00 92 C3 C3 B3 02 01 00 "Clavichord"
+			.
+			.
+			.
+
+		(Text after the 11th byte value is ignored.)
+
+		The hex values are dumped into an 2-D array.  The file can have
+		more or less than 128 defs without harm to this function.
+
+MIDI far *LoadMidi(char *filename, char *errstring)
+
+			 Reads a MIDI file and stores it to a MIDI data structure.  A pointer
+	to the new structure is passed as a return value.  If this value is NULL,
+	it means an error has occurred and an error message will be in errstring.
+	(Errstring should be allocated to at least 80 bytes before calling this
+	function.)
+
+MOD far  *LoadMod(char *filename,char *errstring)
+
+			 Reads a MOD file and stores it to a MOD data structure.  A pointer to
+	the new structure is passed as a return value.  If this value is NULL, it
+	means an error has occurred and an error message will be in errstring.
+	(Errstring should be allocated to at least 80 bytes before calling this
+	function.)
+
+SAMPLE *LoadWave(char *wavefile,unsigned long int *length)
+
+			 Reads a WAV file and stores it to a SAMPLE data structure and stores
+	the length in the pointer provided.  A pointer to the new SAMPLE is passed
+	as a return value.  NULL is returned on failure.
+
+void _saveregs MicroDelay(WORD delay)
+
+			 Pauses program execution of the specified number of microseconds. You
+	must call InitTimerFunctions() for this to work.
+
+void MidiCommand(VATCOMMAND c)
+
+		 Simple Interface for working With Midi playback. Valid VATCOMMANDS are:
+v_play,v_stop,v_pause,v_resume, and v_rewind.
+
+void ModCommand(VATCOMMAND c)
+
+		 Simple Interface for working With MOD playback.  Valid VATCOMMANDS are:
+v_play,v_stop,v_pause,v_resume, and v_rewind.
+
+
+void _saveregs MilliDelay(WORD delay)
+
+			 Pauses program execution of the specified number of milliseconds. You
+	must call InitTimerFunctions() for this to work.
+
+int MPUEnter(void)
+
+			 Resets the MPU-401 chip and starts UART transfer mode.  It returns
+	TRUE if successful.
+
+void MPUExit(void)
+
+			 Takes the MPU out of Uart mode.  In general, it is always a good idea
+	to put the MPU back in regular mode before you end your program.
+
+void MPUWrite(BYTE b)
+
+			 Writes a byte  the MPU data port.  The global variable mpu_timeout can
+	be compared to TIMEOUT to detect the running status of the MPU port.
+
+float PercentOverhead(WORD ticks)
+
+			 Calculates the Percentage CPU overhead that the blaster interrupt
+	consumes.  The input value should be the number of ticks elapsed during a
+	sound blaster interrupt.  See dsp_overhead in the sound.h section.  The
+	return value is a percentage.
+
+DWORD PlaySound(SAMPLE *data,DWORD length,VATPLAYTYPE type)
+
+			 This is the function you use to play sounds. It adds an sound to an
+	internal play list.  If the playlist is full, the oldest sound will be
+	removed to make room.  On success, PlaySound() returns a handle to the
+	sound just started.  This handle can be used later to control the sound.
+	See also ChainSoundEffect() and AlterSoundEffect().
+
+void RemoveTimer0(void)
+
+			 Restores the original Timer0 interrupt back to the way to was before
+	you messed with it.
+
+void SBCleanUp(void)
+
+		 Conveniently cleans up all the stuff done by SBSetUp() and other sound
+functions.  It is a good idea (but not necessary) to call SBCleanUp() before
+exiting a program that has called SBSetUp().
+
+int SBSetUp(void)
+
+			 Sets up the sound blaster and timer functions for action and allocates
+	scratchspace for the sound blaster interrupt.  This function should be
+	called before any other functions in VAT.  After calling this function, you
+	will be able to access the FM, DSP, and MPU routines, but the sound and
+	music functions will not work until you call GoVarmint().
+
+			 SBSetUp() returns a true of successful.  If it returns a false, you
+	can look at the global variable sberr to find out what went wrong.
+
+WORD SetSampleRate(WORD rate)
+
+			 Alters the DSP sample (and playback) rate, specified in hertz.  Valid
+	input values are from 4000 to 22000.  The DSP does not support a smooth
+	range of values for the sample rate, so this function returns the actual
+	sample rate that the DSP is using.
+
+WORD TimerOff(void)
+
+			 Turns off the timer and reports clicks elapsed.  This is used in
+	conjunction with TimerOn(). To convert to microseconds, multiply the return
+	value 0.838.  See TimerOn().  You must call InitTimerFunctions() for this
+	to work.
+
+void TimerOn(void)
+
+			 Starts the timer running for a time measurement.  The timer ticks at
+	about 1 MHz, so this function is only good for timing events faster then 54
+	Milliseconds.  See TimerOff(). You must call InitTimerFunctions() for this
+	to work.
+
+void TimeVSync(void)
+
+			 Times the monitor refresh rate so that VarmintVSync() will work
+	properly.  NOTE:  Make sure you call this function after you have set the
+	graphics video mode that you are going to work with.  This is because
+	different video modes have different refresh rates.
+
+void VarmintVSync(void)
+
+			 Halts program execution until the next vertical retrace finishes.
+	VarmintVSync is specially designed to work with VAT.  Normal retrace
+	monitors can be interrupted by the sound interrupt and miss a vertical
+	retrace.  This causes jerks in the animation.  TimeVSync() should be called
+	at the beginning of the program and the global variable sync_on should be
+	set to TRUE for this to work properly.
+

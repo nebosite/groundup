@@ -1,0 +1,4 @@
+sprited.exe : sprited.c
+  wcl386 -c -l=dos4g sprited.c
+  wlink @link.cmd
+

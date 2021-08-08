@@ -1,0 +1,28 @@
+TODO
+
+[ ] Handle long music.cfg file names
+[ ] Fixed GPF for missing install path
+[ ] Move days since install variable to HKCU
+
+
+[ ] Set info text for expiration
+[ ] Hide info window in normal, registered mode
+[ ] Set info text for unregistered version
+[ ] Spawn password screen saver when necessary
+[ ] Set system screensaver parameter when necessary.
+[ ] Write the registry on IDOK
+[ ] Change OK button for Screen Saver
+[ ] Skip dialog for screen saver (unless expired)
+[ ] Hide some options for the screen saver
+[ ] Verify that screensaver options are separate
+[ ] Change OK button for expired Demo
+[ ] Have OK spawn web site for expired demo
+[ ] Spawn Flabbergasted on IDOK
+[ ] Check for expiration
+[ ] Activate URL button
+[ ] Prevent multiple instances
+[ ] Add Nice mouse stuff
+[ ] Add Button Help
+[ ] Add a cancel button
+[ ] Get Working Directory from the install path
+

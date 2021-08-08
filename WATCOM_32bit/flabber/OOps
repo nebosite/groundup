@@ -1,0 +1,132 @@
+#
+# Flabbergasted makefile
+#
+
+CC=wcl386
+
+# -c -l=dos4g
+# above is original gug options
+CCO=/zq /w5 /e5 -c -l=dos4g
+CCL=/"lib vat.lib"
+OBJ= main.obj sounds.obj
+LNK=flabber.lnk
+lnk_dependencies = makefile 
+
+
+flabber.exe : $(OBJ) $(LNK)
+    wlink @$(LNK)
+    @%make bindit
+
+$(LNK) : $(lnk_dependencies)
+    %create $(LNK)
+    @%append $(LNK) system   dos4g
+    @%append $(LNK) option   caseexact
+    @%append $(LNK) option   stack=512000
+    @%append $(LNK) name     flabber
+    @%append $(LNK) lib      \watcom\gug\lib1\gug,\watcom\vat\vat
+
+.EXTENSIONS:
+.EXTENSIONS: .exe 
+.EXTENSIONS: .obj
+.EXTENSIONS: .c .h
+
+.c:.
+.h:..
+
+.c.obj :
+        $(CC) $(CCO) $(CCL) $[*
+	
+clean: .symbolic
+    @erase *.obj
+    @erase *.err
+    @erase *.exe
+    @erase *.lnk
+    @erase *.res
+    @erase *.rex
+    @erase *.lib
+
+#    @%append $(LNK) debug all
+#    @%append $(LNK) name $(name)
+#    @%append $(LNK) op map
+#    @%make linkit
+    @for %i in ($(OBJS)) do @%append $(LNK) file %i
+
+#system   dos4g
+#option   caseexact
+#option   stack=512000
+#name     flabber
+#lib      \watcom\gug\lib1\gug,\watcom\vat\vat
+#file     main
+
+# A compiled ship sprite from spr2asm
+#ship_a.obj : ship_a.asm
+#  wasm ship_a.asm
+#ship_c.obj : ship_c.c
+#  wcl386 -c -l=causeway ship_c.c
+
+#	LNK			the name of the linker command file
+#	OBJS			a list of the .obj files needed to build 
+#				the EXE
+#	resources		a list of all files the .res file is 
+#				dependent upon
+#	res1_flags		flags to be used by the resource compiler's
+#				first pass
+#	res2_flags		flags to be used by the resource compiler's
+#				second pass
+#	lnk_dependencies	a list of files the linker command file
+#				depends upon
+#
+# In addition the makefile must declare a procedure called linkit that
+# that can be used to add commands to the linker command file
+#name = watzee
+#CFLAGS += -i=..\..
+#res1_flags += -i=..\..
+#LNK = $(name).lnk        
+#OBJS = watzee.obj wdice.obj wdlg.obj wdraw.obj wfont.obj wglobal.obj wpc.obj
+#resources = watzee.ico dice1.bmp dice2.bmp dice3.bmp dice4.bmp &
+#            dice5.bmp dice6.bmp
+#lnk_dependencies = makefile ..\watzee.mif ..\..\master.mif
+
+
+#CFLAGS += -oaxt -d2 -w4 
+
+#$(name).exe : $(OBJS) $(name).res $(LNK)
+#    wlink @$(LNK)
+#    @%make bindit
+
+#$(name).res : $(name).rc $(resources)
+#    wrc -r -i=.. -fo=.\$(name).res $(res1_flags) $[@ 
+
+#$(LNK) : $(lnk_dependencies)
+#    %create $(LNK)
+#    @%append $(LNK) debug all
+#    @%append $(LNK) name $(name)
+#    @%append $(LNK) op map
+#    @%make linkit
+#    @for %i in ($(OBJS)) do @%append $(LNK) file %i
+
+
+.EXTENSIONS:
+.EXTENSIONS: .exe 
+.EXTENSIONS: .obj
+.EXTENSIONS: .c .h .dlg .rc .ico .bmp .cur
+
+.c:..;$(CDIR)
+.ico:..
+.bmp:..
+.cur:..
+.rc:..
+.dlg:..
+
+.c.obj :
+	$(CC) $(CFLAGS) $[*
+	
+clean: .symbolic
+    @erase *.obj
+    @erase *.err
+    @erase *.exe
+    @erase *.lnk
+    @erase *.res
+    @erase *.rex
+    @erase *.lib
+

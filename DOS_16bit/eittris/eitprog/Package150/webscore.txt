@@ -1,0 +1,5 @@
+High Score information.
+Enter this at http://www.eittris.com
+Score: 61634
+Rows: 41
+Validation code: 0126B79E4924

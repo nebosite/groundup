@@ -1,0 +1,6 @@
+pcx2c.exe : pcx2c.obj
+  wlink @link.cmd
+
+pcx2c.obj : pcx2c.c
+  wcl386 -c -l=dos4gw pcx2c.c
+

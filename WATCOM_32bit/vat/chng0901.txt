@@ -1,0 +1,84 @@
+/* Changes to VAT code made by Eric (01/09/97)
+
+=== vatdemo.c ========================================================
+
+Line 515: Moved this line:
+
+      tempo = S3MSetting (v_rate, GET_SETTING);
+
+  inside the input loop.  This prevents the tempo from going crazy the
+  first time the user tries to change it.
+
+
+Line 729:  Moved this line:
+
+      tempo = ModSetting (v_rate, GET_SETTING);
+
+  inside the input loop.
+
+Line 530:  Changed to this code:
+
+      else if(r == 'T') {                           // Tempo faster
+        tempo = S3MSetting (v_rate, tempo * .8 );
+
+  Noice the propotional temp shange
+
+Line 536:  More tempo code changes
+
+      else if(r == 't') {                           // Tempo slower
+        tempo = S3MSetting (v_rate, tempo * 1.25);
+
+Line 744:  Changed to this code:
+
+      else if(r == 'T') {                           // Tempo faster
+        tempo = ModSetting (v_rate, tempo * 0.8);
+
+  Noice the propotional temp shange
+
+Line 750:  More tempo code changes
+
+      else if(r == 't') {                           // Tempo slower
+        tempo = ModSetting (v_rate, tempo * 1.25);
+
+
+=== s3m.c ========================================================
+
+s3mplayer():  Changed the whole mixing part so that we can ignore the
+  old dma_bufferlen limitation to tempo.  The old mixing stuff is
+  commented out.
+
+s3msetting():  Commented out Tempo limitation
+
+sdodiv(): Added s3m_hardstop parameter to pattern break handler near the
+  end.
+
+Added global: s3m_hardstop  - This global is used to correct the
+  music stopping problem caused by the incorrect handling of
+  a pattern Break.
+
+In general:  Added commented function headers to help me find my way
+  around easier.
+
+
+=== mod.c ========================================================
+
+modplayer():  Changed the whole mixing part so that we can ignore the
+  old dma_bufferlen limitation to tempo.  The old mixing stuff is
+  commented out.
+
+modsetting():  Commented out Tempo limitation
+
+dodiv(): Added mod_hardstop parameter to pattern break handler near the
+  end.
+
+Added global: mod_hardstop  - This global is used to correct the
+  music stopping problem caused by the incorrect handling of
+  a pattern Break.
+
+In general:  Added commented function headers to help me find my way
+  around easier.
+
+
+
+
+

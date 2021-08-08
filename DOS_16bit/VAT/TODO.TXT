@@ -1,0 +1,152 @@
+/* TODO File for Varmint's Audio Tools
+
+------------------------ NET NOTES --------------------------------
+[x] put a text file with Vat to tell where to ftp music
+[x] Get some music from our guys for VAT
+[x] Create a discllusure for and put it in labrador
+[x] Give the guys real credit!!!
+[x] Add a note to warn aboiut DMA 1 and VESA cards
+
+
+[x] Kenneth Gram has some suggestions on how to deal with midi instrument tracking
+	You have email from him (Dec 29) at rt66
+[x] Check out mbsoft's MPU code! (Feb 6)
+
+here is the fix....  In the load_Load function
+
+Where we are finding the unique patterns...  This was fine, except what 
+happend if there are more patterns in the file that the song writer 
+didn't use....  This is what happened in prelude.mod  change the for loop 
+to search for the unique patterns to this...
+
+  for(i = 0; i < 127; i++) { // Find number of unique patterns
+    if(m->ptable[i] > m->maxpattern) m->maxpattern = m->ptable[i];
+  }
+
+This will fix it.  We were only looking at the number of patterns used in 
+the song.  not the number of unique patterns in the file...
+
+Weird Huh.  I tested it on every mod that I have and they ALL work :-)
+
+
+--------------------- TODO ---------------------------------
+
+[x] Add percusssion patchmap
+    [x] add a sound array stuff for MODI music
+[x] Implement MOD-type looping
+[x] Test new volume lookup.
+[x] mixing at 22 Khz, try doubling the buffer to see what kind of
+    speed improvement you get.
+[x] change mixer to write cross buffer fashion
+[x] Add a default play rate for fancy sounds
+[?] make it so you can disable SB interrupt only?
+	- Consider using DSP operations to halt the DMA
+[x] Do something about those sucky midi patches
+[x] Write the gladiator guys to make sure they are using VAT and tell them
+	the news.
+[x] Write the Bannanna guy to tell him about new vat
+[x] Improve looping abilities
+[x] Take out the flipflip code before the final release
+[?] Add a program change handler for MIDI
+		[x] Check to see of control and program changes are hit and what kind of
+				data we see from them
+[x] Add a part in the docs to specify the use of a project file.
+[x] Add documentation for MOD, S3M, MID, and WAV files
+[?] Add support for other instrument files
+[x] Mention in the docs that real mode vat can't play everything,
+		including MOD samples bigger than 64Kb
+[x] add that thing the guy suggested about his midi setup
+[x] Mention in the docs that MIDI is "general MIDI" (FM patchmap)
+[x] Also be explicit about MOD support (S3M and Protrakker)
+[?] add a command 8 hook for mods
+[?] add a MIDI event hook.
+[x] Make SetSampleRate uncallable after GoVarmint is called
+[x] Add user functions to VarmintVSync
+		[ ] Check Varmint Vsync to make sure it is working right.
+[?] Add code to check a config file
+	[?] add a sound configuration program
+[x] Spell check everything.
+[?] Move some of the GoVarmint code to SB setup
+[?] Set up control event code in midi
+
+----------------- NEW SINCE Version 0.61 -----------------------------------
+
+- 44 Khz support
+- Real mode wave files >  64 Kb
+- S3M player
+- New Wave structure
+- New Sound functions
+- Better Vsync code
+- static fixes
+- modularized code
+- C++ changes (should compile fine with C++ now)
+- General compatability changes
+- Midi turns off all the way on stop, uses program change.
+- optimized wav and music routines
+
+------------------------ Fixes --------------------------------------
+
+[x] MPU401 still has lots of bugs
+[x] MPU401 does not turn off voices.
+[?] fix 1.0 probs
+[x] Scanint does not update the debug string right
+[ ] Added Bryan's fix for voice allocation at the start of the MOD dodiv
+[ ] Added Bryan's prelude fix in LoadMod
+[ ] Added NULL check in FreeMod, FreeMidi
+[ ] Fixed memory leak in LoadS3M by adding FreeS3M() in two places
+
+---------------------- EXPERIMENTS ----------------------------------
+
+
+
+---------------------- CONCERNS/ CHANGES -------------------------------------
+[ ] changed version to 0.71
+[x] added MPUReset()
+[ ] Moved MPUparts around in Midi player
+		- added m and mpuloc
+--------------------------- CODE Fragments --------------------------
+Ok, try using a volume table with a loop like this.  I'm not very good 
+with C (I use asm/pascal), but here's how an inner loop could look:
+
+for (mixpos=0; mixpos < mixsize; mixpos++) {
+    temp = sample[position >> 16];
+    position += increment;
+    mixbuffer[mixpos] += volume_table[sample_volume, temp];
+}
+
+But you really do need separate variables for fractional position and 
+integer position.  In ASM, I'd do:
+
+add cx,dx       /* cx = position fraction, dx = increment fraction */
+adc si,bp       /* si = position integer,  bp = increment integer */
+
+but I have no idea how to add with a carry in C or any other high level 
+languages.
+
+------------------ MOD enhancement ----------------------------
+  bufpos = 0;
+  while(bufpos < dma-bufferlen) {
+    if(currentbyte < (dma_bufferlen-bufpos)) {    
+      mixto = bufpos + currentbyte;
+      bytestomix = currentbyte;     
+    }
+    else { 
+      mixto = dma_bufferlen;
+      bytestomix = dma_bufferlen-bufpos;
+    }
+
+    mix_from_bufpos_to_mixto();
+    currentbyte -= bytestomix;
+  
+    if(currentbyte <= 0 ) {
+      dotick();
+      if(end of division) dodiv();
+      if(end of pattern) endmusic();
+
+      currentbyte = bytespertick;
+    }
+    
+  }
+
+
+

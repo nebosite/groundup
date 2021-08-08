@@ -1,0 +1,65 @@
+                                  Ground Up
+                       Standard Nondisclosure Agreement
+
+This agreement applies to any source code or libraries attributed to or
+distributed by Ground Up. 
+
+TERMS:
+  
+1) I agree to keep confidential all source code, libraries, methodologies
+and knowledge of the internal workings of the system/source code
+attributed to or distributed by Ground Up or its members. 
+
+2) I understand that I have the right to use the systems/source code
+provided to me by Ground Up in my applications only.  I understand that I
+may not distribute Ground Up libraries or source code in any form. 
+
+3) I understand that as part of the terms of this agreement, I am expected
+to provide feedback on a timely basis to Ground Up or its representatives. 
+
+4) Any changes, enhancements, or bug fixes I make to Ground Up source code
+become the property of Ground Up.  I understand that I will be credited
+for my contributions to future releases of the software I have altered
+should those changes be used by Ground Up. 
+
+A PLAIN ENGLISH SUMMARY OF TERMS:
+
+Keep Ground Up stuff secret.  We are doing you a favor, so give us some
+feedback. We own any changes you make to our code, but we'll give you
+credit for them. 
+
+
+
+
+
+I, _______________________ agree to the terms of this contract with 
+Ground Up 
+and agree to be bound by them. 
+
+
+________________________  _____/_____/19___    
+Beta Tester Signature        Signed on
+
+
+________________________
+Ground Up Representative
+
+  Please print and sign this form. 
+  Return it to:
+
+  Neil B. Breeden II
+  Ground Up
+  1380 Rio Rancho Blvd. #314
+  Rio Rancho, NM  87124
+
+  -or-
+
+  Eric Jorgensen
+  Ground Up
+  PO Box 15391
+  Rio Rancho, NM 87124
+
+  Questions: email  nbreeden@groundup.com or smeagol@rt66.com
+
+
+                             Rev 1.1  12-27-95  NBBII

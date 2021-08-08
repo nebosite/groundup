@@ -1,0 +1,27 @@
+// MyBitmap.cpp: implementation of the CMyBitmap class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "fl.h"
+#include "MyBitmap.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+CMyBitmap::CMyBitmap()
+{
+
+}
+
+CMyBitmap::~CMyBitmap()
+{
+
+}

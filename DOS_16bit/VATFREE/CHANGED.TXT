@@ -1,0 +1,9 @@
+changes from vat 0.72
+
+- change sbcleanup()
+	- Added DSPREset();
+- Took Out TimerOn() in timerfunc
+- Better error checking in loadmod
+- changed slength to a dword in mod structure
+- Mind that applications share the same word alignment
+- Speed effect changed for both MOD and S3M

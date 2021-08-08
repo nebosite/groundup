@@ -1,0 +1,63 @@
+Survey for Varmint's Audio tools.
+
+Please email the completed survey to groundup@groundup.com
+Please do not send this file back bin-hexxed.  My whimpy mailer
+can't handle bin-hexxed files.
+-----------------------------------------------------------------------------
+VERSION 1.15
+
+1) What's your name and email address?
+
+
+2) How did you hear about Varmint's Audio tools and where did you find
+	 this copy?
+
+
+3) Did the demo work on your computer?  If not, please describe what happened.
+
+
+4) Have you tried earlier versions of VAT?  What versions?  Did the demos work?
+
+
+5) Have you been able to use VAT in your own programs?  What features made
+	 it easy or difficult to do so?
+
+
+6) Please describe your computer system:
+
+                CPU (eg: 386,486,Pentium):
+
+          Internal clock speed (eg:66Mhz):
+
+        Memory Manager (eg: QEMM, EMM386):
+
+  Operating system(eg: DOS/Windows, OS/2):
+
+        Sound card (eg: PAS16, GUS, SB16):
+
+
+7) Please add any additional praise or chastisement of Varmint's Audio Tools:
+
+---------- AUTO DIAGNOSTIC INFORMATION ---------
+Everything below here was written automatically by
+the VAT demo.  Please do not delete these lines.
+-------------------------------------------------
+
+BLASTER env variable: A220 I5 D1 H5 P330 T6
+*** DEBUGGING STRING ***
+Varmint's Audio Tools Version 1.15
+SBSetUp() - InitTimerFunctions
+SBSetUp() - measure [tval: 1277] [ms: 9256]
+SBSetUp() - mcalcs- [m3: 56] [m23: 430]
+whichcard() - <entry>
+getsbenv() - <entry>
+getsbenv() - Raw BLASTER=A220 I5 D1 H5 P330 T6
+getsbenv() - Processed BLASTER=A220 P330 I5 D1 T6
+checkhard() - <entry>
+DSPReset() - <entry>
+checkhard() - DSPreset: 1
+scanint() - <entry>
+checkhard() - scanint chose: 5
+checkhard() - FM address: 388
+SBSetUp() - DSP version: 4.13
+SBSetUp() - Processed BLASTER=A220 P330 I5 D1 T6

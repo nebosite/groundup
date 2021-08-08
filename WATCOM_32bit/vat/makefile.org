@@ -1,0 +1,177 @@
+CC=wcl386
+CCO=/zq /l=causeway
+OPT=/oneatx
+DBG=
+INC=vat.h
+OBJ=handler.obj wav.obj mod.obj s3m.obj midi.obj fm.obj mpu.obj &
+    mixer.obj timer.obj doink.obj wooeep.obj rumble.obj
+DBJ=vatlogo.obj varmint1.obj varmint2.obj
+
+#
+# Make vat.lib and vatdemo.exe without any restrictions.
+#
+def:    $(OBJ) vat.c vatdemo.c
+        @echo Removing installed header and library..
+        @del %WATCOM%\h\vat.h
+        @del %WATCOM%\lib386\dos\vat.lib
+        @echo Building unrestricted vat.lib..
+        $(CC) $(CCO) /c $(OPT) vat.c
+        @wlib /n /q /s /t vat.lib +vat.obj
+        @for %f in ($(OBJ)) do @wlib /q /s /t vat.lib +%f
+        @echo Building unrestricted vatdemo.exe..
+        $(CC) $(CCO) $(OPT) vatdemo.c /"lib vat.lib"
+        @echo Installing header and library..
+        @copy vat.h %WATCOM%\h
+        @copy vat.lib %WATCOM%\lib386\dos
+          # boneheaded Makefile 'error' avoidance
+        @wtouch /d 01-01-96 def
+
+#
+# Make vat.lib and vatdemo.exe without any restrictions in debug mode.
+#
+debug:  $(OBJ) vat.c vatdemo.c
+        @echo Removing installed header and library..
+        @del %WATCOM%\h\vat.h
+        @del %WATCOM%\lib386\dos\vat.lib
+        @echo Building unrestricted vat.lib..
+        $(CC) $(CCO) /c $(DBG) $(OPT) vat.c
+        @wlib /n /q vat.lib +vat.obj
+        @for %f in ($(OBJ)) do @wlib /q vat.lib +%f
+        @echo Building unrestricted vatdemo.exe..
+        $(CC) $(CCO) $(DBG) vatdemo.c /"lib vat.lib debug all"
+        @echo Installing header and library..
+        @copy vat.h %WATCOM%\h
+        @copy vat.lib %WATCOM%\lib386\dos
+          # boneheaded Makefile 'error' avoidance
+        @wtouch /d 01-01-96 debug
+
+#
+# Make vatdemo.exe with demo restrictions (demo announce) and
+# vat.lib with shareware restrictions (11kHz mono, demo announce).
+#
+demo:   $(OBJ) $(DBJ) vat.c vatdemo.c
+        @echo Removing installed header and library..
+        @del %WATCOM%\h\vat.h
+        @del %WATCOM%\lib386\dos\vat.lib
+        @del %WATCOM%\lib386\dos\vatdemo.lib
+        @echo Building DEMO vat.lib for vatdemo.exe..
+        $(CC) $(CCO) /c $(OPT) vat.c -DDEMO
+        @wlib /n /q /s /t vat.lib +vat.obj
+        @for %f in ($(OBJ)) do @wlib /q /s /t vat.lib +%f
+        @for %f in ($(DBJ)) do @wlib /q /s /t vat.lib +%f
+        @echo Building DEMO vatdemo.exe..
+        $(CC) $(CCO) $(OPT) vatdemo.c /"lib vat.lib"
+        @echo Installing demo version of library..
+        @copy vat.lib %WATCOM%\lib386\dos\vatdemo.lib
+        @echo Building SHAREWARE vat.lib..
+        $(CC) $(CCO) /c $(OPT) vat.c -DSHAREWARE
+        @wlib /q /s /t vat.lib -+vat.obj
+        @echo Installing header and library..
+        @copy vat.h %WATCOM%\h
+        @copy vat.lib %WATCOM%\lib386\dos
+          # boneheaded Makefile 'error' avoidance
+        @wtouch /d 01-01-96 demo
+
+#
+# Make unrestricted vatdemo.exe and vat.lib with commercial
+# restrictions (registration check).  Give vat.lib default registration.
+#
+comm:   $(OBJ) vat.c vatdemo.c register.exe
+        @echo Removing installed header and library..
+        @del %WATCOM%\h\vat.h
+        @del %WATCOM%\lib386\dos\vat.lib
+        @echo Building unrestricted vat.lib for vatdemo.exe..
+        $(CC) $(CCO) /c $(OPT) vat.c
+        @wlib /n /q /s /t vat.lib +vat.obj
+        @for %f in ($(OBJ)) do @wlib /q /s /t vat.lib +%f
+        @echo Building unrestricted vatdemo.exe..
+        $(CC) $(CCO) $(OPT) vatdemo.c /"lib vat.lib"
+        @echo Building COMMERCIAL vat.lib..
+        $(CC) $(CCO) /c $(OPT) vat.c -DCOMMERCIAL
+        @wlib /q /s /t vat.lib -+vat.obj
+        @echo Assigning default registration to vat.lib.
+        @register Ground Up Master:150
+        @echo Installing header and library..
+        @copy vat.h %WATCOM%\h
+        @copy vat.lib %WATCOM%\lib386\dos
+          # boneheaded Makefile 'error' avoidance
+        @wtouch /d 01-01-96 comm
+
+#
+# Remove all the objects, executables, and libs.
+#
+clean:  .SYMBOLIC
+        @echo Deleting objects..
+        @for %f in ($(OBJ) $(DBJ)) do @del %f
+        @for %f in (vat.obj vatdemo.obj wav2c.obj register.obj) do @del %f
+        @echo Deleting executables..
+        @for %f in (vatdemo.exe wav2c.exe register.exe) do @del %f
+        @echo Deleting vat.lib..
+        @for %f in (vat.lib) do @del %f
+        @echo Deleting miscellany..
+        @for %f in (def demo comm vat.bak survey.txt) do @del %f
+
+#
+# Make the wav2c program.  Note that everything in the current build
+# of the library is linked into the executable.  This should change.
+#
+wav2c.exe:      wav.obj wav2c.c
+                $(CC) $(CCO) wav2c.c /"lib vat.lib"
+
+#
+# Make the register program.
+#
+register.exe:   register.c
+                $(CC) $(CCO) register.c
+
+#
+# All the standard objects (OBJ).
+#
+handler.obj:    handler.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) handler.c
+
+wav.obj:        wav.c $(INC)
+                $(CC) $(CCO) /c $(DBG) /oneax  wav.c
+
+mod.obj:        mod.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) mod.c
+
+s3m.obj:        s3m.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) s3m.c
+
+midi.obj:       midi.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) midi.c
+
+fm.obj:         fm.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) fm.c
+
+mpu.obj:        mpu.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) mpu.c
+
+mixer.obj:      mixer.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) mixer.c
+
+timer.obj:      timer.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) timer.c
+
+doink.obj:      doink.c $(INC)
+                $(CC) $(CCO) /c $(DBG)         doink.c
+
+wooeep.obj:     wooeep.c $(INC)
+                $(CC) $(CCO) /c $(DBG)         wooeep.c
+
+rumble.obj:     rumble.c $(INC)
+                $(CC) $(CCO) /c $(DBG)         rumble.c
+
+#
+# All the demo objects (DBJ).
+#
+vatlogo.obj:    vatlogo.c $(INC)
+                $(CC) $(CCO) /c $(DBG)         vatlogo.c
+
+varmint1.obj:   varmint1.c $(INC)
+                $(CC) $(CCO) /c $(DBG)         varmint1.c
+
+varmint2.obj:   varmint2.c $(INC)
+                $(CC) $(CCO) /c $(DBG)         varmint2.c
+

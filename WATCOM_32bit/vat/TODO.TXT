@@ -1,0 +1,58 @@
+
+-------------- ERIC's TODO LIST ----------------------------------
+
+
+[x] Re-vamp midi to use samples
+		[ ] Add patch loader
+		[ ] Add patch player
+			[ ] implement Vibrato
+			[ ] implement Tremolo
+		[ ] Implement MIDI notes
+		[ ] Modify midi voice handler
+		[ ] Add percussion voices
+		[ ] Create default voices
+		[ ] Create default percussion
+		[ ] Do some time trials
+		[x] Add patch saver
+		[x] Separate FM and gravis patch handling better
+		[x] Add FM note handling
+		[x] Handle more advanced FM chips?
+		[x] Make one volume table for everything and put it in it's own source module
+		[x] Put the midi tempo control inside the midi player
+
+[x] Fix the LoadS3m code so that it really preallocates all the patterndata
+[x] Add MusicFileDetect function
+[ ] Add SaveWave()
+[x] Break out functions into smaller modules
+[x] Take out the position set command deep in the wave handler
+[x] Simplify the loadwav function. (don't use MAXCHUNKSIZE, make sure
+		we can load 16bit and stereo waves)
+[x] Make the handler keep function pointers instead of hard references to
+		the the players.  This will make things more flexible and modular.
+		[x] Have the init functions called form the player and not the handler
+
+-------------- BUGS ------------------------------------------
+
+[x] S3M and MOD tremolo need some work
+[x] Some MOD effects may need some work
+
+-------------- OLD TODO ------------------------------------------
+
+[ ] Add pause off parameter
+[x] Add save source parameter
+[ ] add color codes to usage
+[ ] Take out size and date sorting
+[x] Test watcom compiler (?) all options
+	[ ] OS
+	[ ] OD
+	[ ] OE
+	[ ] ON
+	[ ] P
+	[x] V
+	[x] L
+	[ ] I
+	[ ] D
+	[ ] Too many dirs
+	[ ] Just one dir
+	[ ] Wrong dir
+

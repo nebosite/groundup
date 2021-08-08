@@ -1,0 +1,30 @@
+
+[ ] Create a new ad for downloading		
+[x] Create a new package
+	[x] new music
+	[x] kill annoying mods
+	[x] include cache with ads
+
+[ ] Add buttons to splash
+	[ ] See internet high scores
+	[ ] Enter a high score
+	[ ] Edit configuration
+	[ ] Only get new ads if they press a button that goes to the internet
+[ ] Change cursor over hot spots
+[ ] fix grammar error "an groovy" in both original and resources bitmaps
+[ ] change coyright to use roman numerals
+[ ] Fix blank ad problem		
+
+[?] Fix redraw problem with arrow
+[x] fix alt-tab app name to not be DirectVarmint app
+[x] Does not come back after alt-tab
+
+
+------ DONE -----------
+
+[ ] Load a random ad at startup
+	[ ] verify checksum
+	[ ] fail on unverified checksum
+	[ ] fail on missing ads
+
+[ ] Send prototype to brian.

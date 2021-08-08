@@ -1,0 +1,343 @@
+/**************************************************************************
+												VARMINT'S AUDIO TOOLS 0.71
+
+	TIMER.C
+
+		This file contains source code far all Time and Timer related
+		functions in VAT.
+
+
+	Authors: Eric Jorgensen (smeagol@rt66.com)
+					 Bryan Wilkins  (bwilkins@rt66.com)
+
+	Copyright 1995 - Ground Up
+
+
+	NO-NONSENSE LISCENCE TERMS
+
+		- This code is for personal use only.  Don't give it to anyone else.
+
+		- You can use this code in your own applications, and you can even
+			distribute these applications without royalty fees (please send
+			us a copy!), but you can't include any of this source code with
+			the distribution.
+
+		- You may NOT use this code in your own libraires or programming tools
+			if you are going to distribute them.
+
+		- You are now responsible for this code.  If you put it in a game and
+			it crashes the US Department of Defense computer system, it's your
+			problem now, and not ours.
+
+			We would like to hear about bug reports, but now that you have the
+			code, it is not our responsibility to fix those bugs.
+
+		- Ground Up is not obligated to provide technical support for VAT.
+			(if you are willing to shell out a lot of clams, however, I am
+			sure that we would be happy to drop what we're doing and help you
+			out.)
+
+													 **** WARNING ****
+
+ Use Varmint's Audio Tools at your own risk.  We have tested VAT as much
+ as we can, but we will not garantee that it won't turn your hair blue,
+ rot your teeth, or send your love life spiraling even further into oblivion.
+
+ VAT has been found to cause cancer in laboratory rats.
+
+**************************************************************************/
+#include <stdio.h>
+#include <dos.h>
+#include "vat.h"
+
+
+//-------------------------------- External Functions
+
+void dbprintf(CHAR *string,...);
+void vdisable(void);
+void venable(void);
+
+
+//-------------------------------- Internal Functions
+
+void measure(void);
+WORD mcalc(WORD micro);
+
+
+//-------------------------------- Internal varaibles
+
+static WORD timer_val=11000,timer_hold,timer_diff,mue999;
+static WORD timadd,timsum;
+
+static void VFAR interrupt (*orgtick)(void)= NULL;
+static void VFAR           (*call_func)(void);
+
+
+
+/**************************************************************************
+	void InitTimerFunctions()
+
+	DESCRIPTION: Initializes speaker timer for timing operations.
+
+**************************************************************************/
+void InitTimerFunctions(void)
+{
+	BYTE b;
+
+	b = VINPORTB(0x61) & 0xfd;          // Read current port value.
+
+																		 // Disable speaker output, but keep
+																		 // timer 2 enabled.
+	VOUTPORTB(0x61,b | 0x01);
+
+	measure();                         // Setup for delay functions
+
+  dbprintf("SBSetUp() - measure [tval: %u] [ms: %u]\n",timer_val,mue999);
+
+}
+
+
+/**************************************************************************
+	void TimerOn()
+
+	DESCRIPTION: Turns on timer counter for a time measurement
+
+**************************************************************************/
+void TimerOn(void)
+{
+	VOUTPORTB(0x43,0xb0);                 // Set up the timer for countdown
+	VOUTPORTB(0x42,0xff);                // Least significant byte
+	VOUTPORTB(0x42,0xff);                // Most significant byte
+}
+
+
+/**************************************************************************
+	WORD TimerOff()
+
+	DESCRIPTION: Turns off time and reports clicks elapsed.  Note that this
+							 timer is so quick that it is wraps after only 56
+							 milliseconds.  If you want to timer longer stuff, I suggest
+							 using the global variable vclock.  It's tick frequency is
+							 sample_rate / dma_bufferlen.
+
+							 To convert to micro seconds, multiply the return value by
+							 0.838.
+
+	RETURNS:
+		Current timer count
+
+**************************************************************************/
+WORD TimerOff(void)
+{
+	VOUTPORTB(0x43,0xc0);                 // Read the timer countdown status
+	timer_hold = VINPORTB(0x42) + VINPORTB(0x42) * 256;
+
+	timer_diff = 0xffff - timer_hold;   // timer_diff is used later
+	return timer_diff;
+}
+
+
+
+/**************************************************************************
+	void measure()
+
+	DESCRIPTION: measures a standard delay loop for other delay functions
+
+**************************************************************************/
+void measure(void)
+{
+	vdisable();                       // Disable interrupts
+
+	TimerOn();                        // Start the timer
+
+	asm mov cx,10000                  /* internal test loop */
+loop1:
+	asm loop loop1
+
+	timer_val = TimerOff();           // read the timer
+
+	venable();                        // Enable interrupts
+
+	mue999 = mcalc(990);              // Calculate a millisecond
+}
+
+
+/**************************************************************************
+	void mdelay(WORD delay)
+
+	DESCRIPTION: Very tiny delay
+
+	INPUT:
+		Length of delay in processor counts
+
+**************************************************************************/
+void _saveregs mdelay(WORD delay)
+{
+	asm mov cx,delay
+loop1:
+	asm loop loop1
+}
+
+
+/**************************************************************************
+	void _saveregs MilliDelay(WORD delay)
+
+	DESCRIPTION:  Millisec delay.  When using this library, you should
+								use this delay for millisecond delays instead of the delay
+								function that comes with turbo C.
+
+	INPUTS:
+		delay       Length of delay in millisconds
+
+**************************************************************************/
+void _saveregs MilliDelay(WORD delay)
+{
+	WORD i;
+
+	for(i=0;i<delay;i++) mdelay(mue999); // mdelay(mue999) = 1 millisec
+}
+
+/**************************************************************************
+	void _saveregs MicroDelay(WORD delay)
+
+	DESCRIPTION:  Microsec delay.
+
+								Note: This function probably has around a 10-15
+								microsecond overhead, so I would only recommend it for
+								delays bigger than 50 microseconds and smaller than 5
+								milliseconds (5000 microseconds).
+
+	INPUTS:
+		delay       Length of delay in microsconds
+
+**************************************************************************/
+void _saveregs MicroDelay(WORD delay)
+{
+	mdelay(mcalc(delay));
+}
+
+
+/**************************************************************************
+	WORD mcalc(WORD micro)
+
+	DESCRIPTION:  Calculates number of ticks to send to mdelay for a specified
+	number of microseconds.
+
+	INPUTS:
+		micro   Number of microseconds
+
+	Returns:
+		Value to send to mdelay() that will generate the specified number of
+		microseconds.
+
+**************************************************************************/
+WORD mcalc(WORD micro)
+{
+	DWORD d;
+
+	d = ((DWORD)micro*11940/timer_val);
+																			//This clip is to prevent wrap around
+																			// That can occur when a computer is
+																			// too fast or the argument
+																			// is too big.
+	if(d > 0xffff) d = 0xffff;
+	return((WORD)d);
+}
+
+																			/********************************
+
+																								TIMER 0 STUFF
+
+
+
+
+																			*********************************/
+/* --------------------------------
+
+CAUTION: These routines can cause a lot of headaches while debugging.
+If you set your own interrupt and then stop the program before you call
+RemoveTimer0(), you'd better reboot your computer, because very
+unpredictable things will happen if InstallTimer0() is called again.
+My suggestion is to get your interrupt working and then comment out the
+Timer0 routines until the rest of the program is written and debugged.
+																			- Eric  */
+
+/**************************************************************************
+	static void interrupt timerint()
+
+	DESCRIPTION: THis is the actual interrupt function stored in the timer
+							 0 slot (int 08).   This calls the old int08 function
+							 at proper intervals as well as the user specified function
+
+**************************************************************************/
+static void interrupt timerint(void)
+{
+
+	TimerOn();                      // set timer for overhead calculation.
+	call_func();                     // user specified function
+
+																	 // Now let's do some fancy counting so
+																	 // we can call the system clock at the
+																	 // right moments.
+	if(timsum<100)
+	{
+		timsum+=timadd;
+		orgtick();
+	}
+	else
+	{
+		asm mov al,0x20;
+		asm out 0x20,al;
+	}
+	timsum-=100;                     // decrement our special timer
+}
+
+
+/**************************************************************************
+	void InstallTimer0(WORD period,void VFAR (*func)())
+
+	DESCRIPTION: This sets up timer0 to call your function at the specified
+							 period.
+
+	INPUTS:
+		period    period in system clock ticks.  (1 tick = 0.838 microsecs)
+		func      pointer to the function to install
+
+**************************************************************************/
+void InstallTimer0(WORD period,void VFAR (*func)(void))
+{
+	if(!func) return;       						// no valid func ptr?
+	call_func=func;
+
+	timadd= (WORD)(6553600L/period); 		// counting seed for timerint()
+	timsum=0;                 					// start counter at 0
+
+	asm mov al,0x36            					// program timer 0 with modus 3
+	asm out 0x43,al            					//	 and counter value of period
+	asm mov ax,period
+	asm out 0x40,al
+	asm mov al,ah
+	asm out 0x40,al
+
+	orgtick= _dos_getvect(8);       		// Remember the old interrupt
+	_dos_setvect(8,timerint);      			// put in a new one.
+}
+
+
+/**************************************************************************
+	void RemoveTimer0()
+
+	DESCRIPTION:  Removes your goofy interrupt, 'cause we didn't want
+								it anyway!  :P
+
+**************************************************************************/
+void RemoveTimer0(void)
+{
+	if(!orgtick) return;      			// Must have called InstallTimer0 first
+	asm mov al,0x36            			// program timer 0 with modus 3
+	asm out 0x43,al            			// and counter value of 0 (2^16)
+	asm mov al,0
+	asm out 0x40,al
+	asm out 0x40,al
+	_dos_setvect(8,orgtick);       // put back original vector
+}

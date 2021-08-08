@@ -1,0 +1,372 @@
+/* TODO File for Varmint's Audio Tools
+
+------------------------ NET NOTES --------------------------------
+<-------------------------------------------------------------------------->
+				if(*chan[i].pos>=chan[i].rlength) {
+								if(chan[i].sflag&0x1) {
+//                chan[i].position=chan[i].offset*256L;  <---------replace this
+
+									chan[i].position=(chan[i].offset+                //with this 
+																	 (*chan[i].pos%chan[i].rlength))*256L;
+
+				if(chan[i].position>chan[i].rlength*256L-1) {
+
+
+<-------------------------------------------------------------------------->
+
+
+--------------------- TODO ---------------------------------
+
+[?] Add a program change handler for MIDI
+[ ] Change vat version to 0.7
+[x] Update all of the headers
+[ ] Sample rate command line nmeeds implementing
+[x] Video synching needs work
+[ ] Make sure intro gets uncommented!
+[ ] Cahnnel display for s3m needs to be fixed to sheck sample rpogress
+[ ] Fix volume limit on mod and s3m volume
+[x] Fix intro screen to put information on command line stuff on another line.
+[ ] Fixed the retrig + volume slide in s3m code
+[ ] Fixed a weird looping bug in the s3m code
+[ ] Need to check the loop flag for repeating samples in s3ms
+		[ ] Double check to make sure mod code uses loop flag too.
+[x] Add a part in the docs to specify the use of a project file.
+[ ] Add a section to the debug code to turn off keychecks
+		- screen update only, keycheck only, then screen + keycheck
+[ ] Fixed rlength problem.
+[ ] Made sample loading faster for s3m files
+[x] Add documentation for MOD, S3M, MID, and WAV files
+[ ] Added code to NULL out sounds in new mods
+[ ] Add text in the main menu to mention you, Bryan, and groundup
+[x] Add big header comments to all the files
+[x] Add full command line options
+[ ] revamp demo opener screens
+[ ] Change default MOD and S3m volume to 31
+[ ] Change the part in the DSP demo where it talks about fancy sounds
+[ ] Implement Chunky Wav structure
+		[ ] test with a 200 Kb wave file
+		[ ] Loadwave should chop into chunks
+		[ ] Make repeats work on plain sounds
+		[ ] Add WaveActive() function
+				[ ] Make sure sound Id's are in signed format
+		[ ] Add freewav()
+		[ ] Add LoadWavFromMem()
+[x] Enable signed indices into the volume lookup table.
+[x] Comment the header
+[x] Add bryan's S3M fixes (if any)
+[ ] Add C++ header changes
+[ ] Fix SHORT references (and WORD refs?) in s3m.c
+[ ] Take out floating point remnants in s3m.c
+[ ] Fixed S3m loader to initilize s3m struct
+[ ] Added initilization functions to players
+[ ] Convert the farmallocs into defines and group all the compatability
+		defines into one place in the header file
+[x] Add DOSYNC lines to s3m.c
+[ ] create a sound struct:
+	int id;
+	SAMPLE *data;
+	struct sound *next;
+[ ] Take out reference to values.h
+[ ] Take out all includes in vat.h
+[ ] For version 1.0:  split up the code into component files.
+	 - Midi, Mod, FM, timer (?)
+[?] Add support for other instrument files
+[x] Add full instrument list
+[ ] Write a FreeS3m function patterned after the freemod?
+[ ] Add a part to the demo that shows the current pattern spot and tick
+[ ] Added dbprintf function to get rid of clumbsy debug string code.
+[x] Mention in the docs that real mode vat can't play anything,
+		including MOD samples bigger than 64Kb
+[x] add that thing the guy suggested about his midi setup
+[x] Mention in the docs that MIDI is "general MIDI" (FM patchmap)
+[x] Also be explicit about MOD support (S3M and Protrakker)
+[?] add a command 8 hook for mods
+[?] add a MIDI event hook.
+[x] Put in your own kbhit function that uses a proxy function to the keyboard
+		interrupt.  You will need to do  a kbhitflush() as well.
+[x] Make SetSampleRate uncallable after GoVarmint is called
+[x] Make SetSampleRate Set the DMABufferLength
+		[x] Put the bufferlength allocation in GoVarmint
+		[x] Make the standard bufferlength 32 instead of 16
+		[x] Add instructions to docs to tell MIDI people to use shorter buffers.
+		[x] Make SetSampleRate automatically set the buffer length.
+[ ] Take out DSP  1.0 forcing code from demo
+[x] Add user functions to VarmintVSync
+		[x] Check Varmint Vsync to make sure it is working right.
+[?] Add code to check a config file
+	[?] add a sound configuration program
+[x] Spell check everything.
+[x] Move some of the GoVarmint code to SB setup
+[?] Set up control event code in midi
+[ ] Add Bryan's S3m stuff
+[ ] Added MIDIWrite function
+		Replaced MPUWrite functions (left MPU stuff commented out)
+[ ] Put MPU stuff back in
+		[ ] Have SBcleanup automatically take down the MPU
+[ ] Took out some of the commented code
+[ ] took out useless function testenableint()
+[ ] Turn all the S3M data pointers into far pointers
+[ ] put mod_on,s3m_on,s3m_bytespertick and s3m_data in vat.h
+[ ] change mcount and mskip to a long int in sbint
+[ ] type cast everyhting to get rid of "Conversion may lose significant
+		digits" warning
+[ ] Added and implemented s3m channel select
+[ ] Add functions for getting pointers to MOD and S3M channels
+[ ] Added sample_rate to VAT.H
+[ ] Created a WAVPlayer function
+[ ] Abstract all interger declarations (no more ints, shorts, chars etc...
+		all interger types have been rewired through defines for
+		portability.)
+[ ] FIX word casts in the mod players
+
+
+----------------- SPLITUP CHANGES -----------------------------------
+
+[ ] Moved global varaible chunks to their respective modules
+
+------------------------ Fixes --------------------------------------
+
+[ ] Added fclose statesments to LoadS3m code
+[x] Midi v_stop does not silence voices.
+[x] MPU401 locks up.
+[ ] include 44Khz support
+[ ] Added a fix to the midi player to detect when the sbint is too course
+		to play a MIDI.
+[ ] Extend sounds to be larger than 32K
+		[?] Create  a sample structure to handle very big sounds
+[x] Extend MOD samples to be larger than 32K
+[ ] Fix MPU Stuff
+[ ] Add Bryan's MOD fixes
+[ ] Check for clean exits
+[x] fix 1.0 probs
+[ ] take out ecodes and fix MPU funcs
+[ ] Add commented out lines to sound.h for globals not normally accessible
+
+---------------------- EXPERIMENTS ----------------------------------
+
+[ ] Try running the MPU fix a little more rigorously this time.
+
+[ ] Try to get MPU working under windows
+
+[ ] Try older versions of VAT
+
+[ ] changed GoVarmint to not do highspeed DMA on 2.0 DSP's
+
+[ ] Added precalculated volume table
+
+---------------------- CONCERNS/ CHANGES -------------------------------------
+
+
+Functions I have touched:
+
+GoVarmint()
+	- Switch to high speed DMA
+
+SetSampleRate()
+	- Fixing some problems with this
+
+DSPOverhead()
+	- Cast to a DWORD
+	- Function returns a WORD
+
+LoadWave()
+	- added a varaible ii to use when converting sounds to signed format
+
+ALL MPU functions are new
+vatdemo mididemo ahs changed somewhat
+
+Other stuff:
+
+	sample_rate is now a WORD
+
+In VATDEMO:
+
+	- Changed overhead calcualtion in MOD demo
+	- Mididemo has lots of changes
+	- took out floating point protection in the intro
+
+
+Brian's changes I've done:
+
+[ ]  Set speed bug
+[ ]  Loop bug
+[ ]  I took the mod code out of sbint and made a modplayer function.
+[ ]  In the mod codes place, I added 2 lines that called the s3mplayer
+		 function if it needed to be called.
+[ ]  I made a Load_S3M function that loads the s3m exactly the same way
+		 as the load mod funtion works.
+[ ]  I made the s3mplayer function.  almost the same as the mod but for more
+		 channels.
+[ ]  I made the sdotick and the sdodov and the scalcvibrato functions that
+		 are specific to the s3m type.
+[ ]  I made the function S3M_Command that acts exactly like the mod and
+		 Midi command functions.
+[ ]  I added more stuff to the channel structure that is s3m specific.
+		 such as the fine and extra fine stuff for the ports and the
+		 volume sliders.
+
+--------------------- REAL MODE CONVERSION STUFF --------------------
+
+[ ] changed s3m_period to long int
+
+--------------------- NEW SINCE 0.61 --------------------------------
+
+[ ] Changed default dma_bufferlen to 64.
+
+--------------------------- CODE Fragments --------------------------
+Well, I am going to keep this file as sort of a diary to what I am doing
+to VAT.  I made a huge mistake by not making this file a LOT earlier.
+<Sorry eric :-(>
+
+These first entries are rather vague as to what changes I have made,
+also the bug fixes that I found in the past I guess we need to dig out of
+our e-mail. :-(
+
+In this release of the pmVat I have NOT implemented the fixed point
+routine for calculating the periods of the notes yet, it is currently
+floating point still.  I WILL get to it soon.
+
+This version has a lot of changes summarized as follows.
+
+1)  I took the mod code out of sbint and made a modplayer function.
+2)  In the mod codes place, I added 2 lines that called the s3mplayer
+		function if it needed to be called.
+3)  I made a Load_S3M function that loads the s3m exactly the same way
+		as the load mod funtion works.
+4)  I made the s3mplayer function.  almost the same as the mod but for more
+		channels.
+5)  I made the sdotick and the sdodov and the scalcvibrato functions that
+		are specific to the s3m type.
+6)  I made the function S3M_Command that acts exactly like the mod and
+		Midi command functions.
+7)  I added more stuff to the channel structure that is s3m specific.
+		such as the fine and extra fine stuff for the ports and the
+		volume sliders.
+
+All in All, I made the code to fit seamlessly into vat.  I kept the same
+conventions for the s3m as we have for the mod.  Hopefully implementing s3m
+code should be a breeze for people. <lets keep our fingers crossed>
+
+In the future, I will try and be more specific on the changes made. :-)
+
+-Have fun...
+-Bryan
+bwilkins@swcp.com
+Ground Up Software
+
+
+
+=============================================
+
+Eric:  I figured out the problem I was having with the pattern break.  I was
+wrong....  It was the set speed effect.  I don't know why, but the composer
+put in a sample number in with some set speed effects three and two ticks
+ahead of when the sample was really supposed to start...  This caused vat to
+start the 
+sample prematurely and it sounded like the sample was stuttering...  There
+was a sample where he calls out all of the names of the characters, and it
+sounded like he was saying "sc sc sc scorpion..." I think we need to
+modify the if in the do div procedure where the sample is called to be
+if(sample && e1!=3 && period) {
+.
+.
+.}
+This fixed the problem.  That way the only samples that get played are the ones
+that are supposed to be played.  I have played all of the mods that I have
+and they all work great...  A couple even sound better.
+
+
+
+==========================================
+
+I also found another mod that uses effect (14(6)) which is the looping
+effect, and we need to change two lines
+on this effect.  
+where we set the pattern, the line that sets the patter to the current
+pattern if e3 is 0, this sets
+the pattern and if the channel that is repeating for example is channel 3,
+the way we have it now it moves it to
+channel 1.  this caused vat to give me a page fault because when it got to
+the end, it went over the page of memory about 12 bytes.  :-)
+I changes that effect to the following < note, only 2 lines are changed>
+ 
+				 case 6:                         // Loop Pattern
+																						 // mod_loopcount is a global
+						if(mod_loopcount == -1) {
+---->              if(!e3) mod_loopspot = mod_pattern-((i)*4);   <----------
+							else {
+								if(!mod_loopspot) mod_loopspot =
+									mod_data->pattern_data[mod_data->ptable[mod_tablepos]];
+---->                mod_loopcount = e3-1;                       <----------
+								loop = TRUE;
+							}
+						}
+						else if(e3){
+	PINE 3.91   MESSAGE TEXT          <mail/[]> groundup  Msg 66 of 115 75%       
+
+							if(!mod_loopcount) mod_loopspot = NULL;
+							else loop = TRUE;
+							mod_loopcount--;
+						}
+						break;
+
+this fixed the problems with the loop command... :-)
+
+-=------------------------------------------------------------------------------
+Add this to your docs:
+
+>> 5) Have you been able to use VAT in your own programs?  What 
+>>    features made it easy or difficult to do so?
+>> 
+>> No, I was not able to successfully link the LIB file with the sample 
+>> programs.  Could you help me?  I'm using Borland C 3.1, is that a 
+>> problem?  
+>
+>A couple questions:
+>
+>1) What errors are you getting?
+>
+>2) Are you using project files?  (You need to in order to link VAT)
+>
+
+Hi,
+
+First, I'd like to thank you again for taking the time to respond to my 
+email.
+
+Second, a correction to my previous message.  Actually I was trying to 
+link your lib file together with some other code I had written, not the 
+C example programs.
+
+Third, the solution.  I was linking C++ code with your lib and the 
+external declarations of the vat functions in sound.h didn't have 
+extern "C" { ... } around them.
+
+To fix this, I made a couple of minor modifications to sound.h:
+
+after:
+//----------------------------------- FM functions
+
+added:
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+after:
+int     PercentOverhead(WORD ticks);
+
+added:
+#ifdef __cplusplus
+}
+#endif
+
+
+Sorry, I should've spent a little more time figuring it out before 
+bugging you.  You may want to include these the compiler directives in 
+your header file in the future, although they do mess with the look of 
+the code.
+
+jon
+jonlim@ix.netcom.com
+

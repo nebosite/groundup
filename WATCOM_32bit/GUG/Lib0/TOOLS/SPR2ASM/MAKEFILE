@@ -1,0 +1,5 @@
+spr2asm.exe : spr2asm.c
+  wcl386 -c -l=dos4g    spr2asm.c
+  wlink @link.cmd
+
+

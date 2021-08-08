@@ -1,0 +1,3053 @@
+
+                             Ground Up Graphics
+                             Neil B. Breeden II
+                             Beta Test Package
+                               Version 0.70b
+                                 04/20/97  
+
+          A Watcom 10.x PMode (DOS4G) Graphics Library and Tool Set
+
+                  Copyright 1995,1996 Ground Up Software
+
+   Note: This manual is NOT complete, it represents the current state of
+         GUG at the time the beta package was assembled.
+
+         GUG is a simple to use, robust graphics system. It is not meant
+         to be the end-all of graphics packages, nore is it meant to be the
+         fasted. It is designed to be easy to use, easy to understand
+         and easy to change. Overall GUG is very fast as general purpose
+         graphics system go!
+
+         Getting Help with GUG:
+            EMail:  nbreeden@swcp.com
+                    neilbii@aol.com (I'm neilbii on AOL)
+            SMail:  Neil Breeden II
+                    Ground Up
+                    1380 Rio Rancho Blvd. Suite #314
+                    Rio Rancho, NM  87124
+
+   Getting the latest version:
+
+      From my homepage:  http://www.groundup.com/~nbreeden/
+      From my FTP area:  ftp://ftp.groundup.com/
+
+
+
+Ground Up Graphics                   Page: ii
+
+       Index .............................................. Page   ii
+       Index continued .................................... Page   ii.i
+       Index continued .................................... Page   ii.ii
+       Change Log ......................................... Page  iii
+       Change Log continued ............................... Page  iii.i
+       Change Log continued ............................... Page  iii.ii
+       Disclaimer ......................................... Page   iv
+       Future Enhancements ................................ Page    v
+       Use with other Lib's ............................... Page    v
+       Files in this package .............................. Page   vi
+       Known Bugs - Planned changes ....................... Page  vii
+       Contributors ....................................... Page viii
+       Registration / Source Code ......................... Page   ix
+       CauseWay 386 DOS Extender .......................... Page    x
+
+     General Stuff You Should Know:
+       Introduction ....................................... Page 1.1
+       The Screen ......................................... Page 1.1 
+       Clipping ........................................... Page 1.1 
+       Compiling / Linking ................................ Page 1.2
+       Makefile ........................................... Page 1.2
+       Linker Command File ................................ Page 1.2
+       WCL386 and WASM environmental variables ............ Page 1.2
+       Error Checking in GUG .............................. Page 1.3
+       c++ and GUG ........................................ Page 1.4
+       Notes / Things we've learned about Watcom........... Page 1.5
+
+     The Graphics Functions:
+       How GUG Works with Memory and the VGA card ......... Page 2.1
+       The 'Video Working Page' ........................... Page 2.1
+       The '666 Color Palette' ............................ Page 2.1
+       Transparency (Color 0's special use) ............... Page 2.1
+       Initialization and Exit functions .................. Page 2.2
+       Screen Clear and Fill functions .................... Page 2.3
+       Video Sync ......................................... Page 2.4
+       Seeing what you've drawn ........................... Page 2.4
+       Saving the screen's contents ....................... Page 2.4
+                                                                   
+    Primitives:
+       Line and Rectangle Primitives ...................... Page 3.1
+       Circle Primitive ................................... Page 3.1
+       Sprite Primitives .................................. Page 3.2
+        Sprite Primitives continued ....................... Page 3.3
+        Sprite Primitives continued ....................... Page 3.4
+       Palette Functions .................................. Page 3.5
+       Pixel Primitives ................................... Page 3.6
+       Text Primitives .................................... Page 3.7.1
+       Font Primitives .................................... Page 3.7.2
+       Compiled Font's .................................... Page 3.8
+       320x200x256 PCX Primitives ......................... Page 3.9
+       General PCX Primitives ............................. Page 3.10
+       Timing Primitives .................................. Page 3.11
+       Assembly Functions ................................. Page 3.12
+       PIX Primitives ..................................... Page 3.13
+       Polygon Primitives ................................. Page 3.14
+       Screen Fade Primitives ............................. Page 3.15
+       Debugging Primitives ............................... Page 3.16
+
+
+
+Ground Up Graphics                   Page: ii.i
+
+     Index Continued:
+
+     Misc Functions:
+       Mouse Functions .................................... Page 4.1
+       Keyboard Functions ................................. Page 4.2
+       Joystick Functions ................................. page 4.3
+
+     Fixed Point Functions:
+       Assign an int to a fixed int ....................... Page 5.1
+       Assign a float to a fixed int ...................... Page 5.1
+       Multiply two fixed point values .................... Page 5.1
+       Add two fixed point values ......................... Page 5.1
+       Divide two fixed point values ...................... Page 5.1
+       Assign a fixed int to an int ....................... Page 5.1
+       Assign a fixed int to a float ...................... Page 5.1
+
+     Widgets:
+       Widget Descriptions ................................ Page 6.1
+       The widget header file ............................. Page 6.2
+       Widget Functions ................................... Page 6.2
+       Widget Functions continued ......................... Page 6.3
+       Widget Functions continued ......................... Page 6.4
+       Widget Functions continued ......................... Page 6.5
+       Widget Functions continued ......................... Page 6.6
+       Tweaking the Widget Palette ........................ Page 6.7
+
+     Tools:
+       ripper (sprite ripper) ............................. Page 7.1
+       Sprite Editor ...................................... Page 7.2
+       Sprite Editor continued ............................ Page 7.3
+**     World Editor (not yet released) .................... Page 7.4
+       spr2asm (sprite compiler) .......................... Page 7.5
+       pcx2c   (convert a PCX to c data) .................. Page 7.6
+       wav2c   (convert a WAV file to c data) ............. Page 7.7
+       tga2pcx (TARGA to PCX 666 Palette converter) ....... Page 7.8
+       rep_clr.exe (replace a color in a sprite file) ..... Page 7.9
+**     sprited (sprite point designator) .................. Page 7.10
+       bmark (GUG Benchmark Utility) ...................... Page 7.11
+       spr2666 (convert sprite to a 666 palette) .......... Page 7.12
+       pcx2666 (convert PCX file to 666 palette) .......... Page 7.13
+       spr2pcx (convert a SPR file to a PCX file) ......... Page 7.14
+       showpcx (display a PCX file) ....................... Page 7.15
+       spr2c (convert a sprite file to c code) ............ Page 7.16
+       Ground Up Installer ................................ Page 7.17
+       fix_size utility ................................... Page 7.18
+       GUG Font demo program .............................. Page 7.19
+
+     The Demo Programs:
+       TEST.C demo code ................................... Page 8.1
+       SPIN_1 Source code ................................. Page 8.1
+       JOYGRAPH Joystick Demo ............................. Page 8.1
+       BMARK Benchmarking Utility ......................... Page 8.1
+       BITM Image Warping Examples ........................ Page 8.1
+       SHOWPCX PCX display utility ........................ Page 8.1
+       SPIRO Example code...................................Page 8.1
+     Unzipping GUG ........................................ Page 8.2
+     GUG Directory Structure .............................. Page 8.2
+
+
+
+Ground Up Graphics                   Page: ii.ii
+
+     Index Continued:
+
+     Appendices:
+       Typical Program Flow ............................... Page  A
+       Sprite Formats ..................................... Page  B1      
+         RAW Storage Example .............................. Page  B1
+         Sprite Storage File Format ....................... Page  B2
+       Functions/Source Files ............................. Page  C1
+       Functions/Source Files continued ................... Page  C2
+       Functions/Source Files continued ................... Page  C3
+       Internal Functions / Reserved Names ................ Page  C4
+       Defined Values ..................................... Page  C5
+       Structure Names .................................... Page  C6
+
+
+
+Ground Up Graphics                   Page: iii
+
+   Change Log:
+
+     0.1  - Added the PCX loading function.
+            Added the Copy to Buffer function.
+            Added sprite clipping function.
+            Added sprite size calculation function.
+            Fixed bugs with the Sprite/Palette save functions - these 
+             worked OK in Borland/Failed in Watcom - OPEN() in Watcom
+             requires the 3rd parameter to set the new files' protections!
+            Major rework of the DOC file!
+
+     0.1  - FIRST Beta release!!!!
+
+     0.1a - Added widgets to the lib file. Created the widgets.h file,
+            updated docs.
+
+     0.1b - Fixed a bug in the gray scale palette generator in init.c
+            Changed the sprite editor quite a bit, rearranged the palette
+            selector controls and functionality, fixed a few bugs, added
+            code to save/load custom palettes, added 3D background, added
+            black rectangles around unselected sprites, updated docs.
+            Changed use if variable named new to nwp for c++ computability.
+            Modified the spr2asm (sprite compiler) to use an array of function
+            pointer instead of a case statement as this will be a bit faster.
+
+     0.1c - Added the GUGMessageBOX() function to widgets.
+            Added the Spin Button type to widgets.
+            Fixed a bug in widget - clicking outside a buttons was returning
+             control to the calling function.
+            Many more tweaks/additions to the sprite editor. Added several
+              message boxes to it. Updated it to use spin buttons.
+            Added missing keys to keydefs.h
+            As always updated the doc's!
+
+     0.1d - Changed GUGmake666 to GUGMake666
+            Updated the link.cmd files to enforce case checking.
+            Removed all debug switches from makefiles/linker cmd files.
+            Corrected several case bugs in the utilities and examples.
+            Added sprite shifting, flipping and 90 degree rotation.
+            Updated test.exe to hopefully reduce the mouse flickering.
+            Updated Doc's.
+
+     0.1e - Updated sprite routines (GUGPutFGSprite(), GUGPutBGSprite()
+            and GUGPutMNSprite()) which are about 10% faster.
+
+
+
+Ground Up Graphics                   Page: iii.i
+
+   Change Log continued:
+
+     0.1f - Changed to text output routine to treat the GLIPH ROM font
+            as an 8x7 font instead of an 8x8 font. This means capital's
+            will touch each other but it allows more than 40 characters
+            in one line.  (45 to be exact.)
+          - Major work on the sprite compiler. Several bugs due to
+            hibyte/lowbyte ordering were fixed. A bug in determining
+            the run length was also fixed. Output of a header file
+            for the 'c' code was added.
+          - REP_CLR.EXE utility added.
+          - Changes to the startup code to add a 'GUG' title screen.
+          - SPIN.EXE demo added. This is a demo game written using GUG
+            and the VAT audio library. It is included to show the
+            capabilities of GUG and VAT (Varmint's Audio Tools)
+          - RIPPER.EXE has added functionality.
+          - Added timing primitives - actually stole these from VAT!!!!
+
+     0.1g to 0.50a - No Versions released!
+
+     0.50b - Major changes:
+            - Support for sprites up to 320x200 pixels (was 32x32 pixels)
+              All tools except SPREDIT.EXE updated for 320x200 support
+            - MANY bug fixes
+            - Ton's of tuning
+            - Fixed Point Support
+            - Compiled Sprites routines tuned
+              X/Y Sprite Size arrays are generated
+            - Assembly Code functions for clear/copy functions
+            - Extensive use in the SPIN.EXE demo, code is much more
+               solid now!
+
+    0.50c - Minor Tweaks
+           - New Title Screen
+
+    0.50d - Minor Tweaks
+           - Cleaned up typo's in the DOC's
+           - Added bmark utility
+
+    0.50e - Joystick Support
+           - Auto Detection of joysticks
+           - Auto Calibrate Screen
+           - Joysticks normalized to range from 0-99
+           - Supports 1 or 2 standard joysticks
+          - Removed SPIN demo from the GUG ZIP file
+
+    0.50f - Warping Functions
+           - Rectangle to Rectangle
+           - Sprite to Rectangle
+           - Sprite to Sprite
+           - Added Warp Example code
+          - Tweaks to the Joystick Auto Calibration code
+          - Tested against CauseWay DOS Extender
+          - Identified problems with GUGFastCopy()!
+
+
+
+Ground Up Graphics                   Page: iii.ii
+
+   Change Log continued:
+
+   0.50g - Added Manual mode to the Joystick Calibrator
+         - Fixed? bugs in GUGFastCopy() and GUGFastClear()
+         - Added GUGSavePCX() function
+
+   0.50h - Added the GUGRemapPalette() function
+         - Added spr2666 palette conversion utility
+         - Added pcx2666 palette conversion utility
+         - Fixed a palette bug in GUGLoadPCX()
+
+   0.50i - Fixed bugs in vflip(), hflip() and rotate90()
+         - Fixed bugs in the sprite editors (see line above)
+
+   0.60a - Began adding code to support selected SVGA modes
+         - Added GROUND UP header info to the sprite load/save routines
+
+   0.60c - Added PIX functions (Pen Plotter Emulation)
+           Added GUGCircle() function (Slow first generation code)
+           Fixed a bug in GUGInitialize()
+           Added several new demo programs
+           Corrected errors in the DOC file (Mostly in the Widgets area)
+           Added spr2c utility.
+
+   0.60d - Added GUGFloodFill()
+           Added GUGRectToRect()
+           Edits to the Warping functions to make em faster
+           Added the SPIN_2 demo
+
+   0.60e to 0.65 - No versions released.
+
+   0.65a - Lots of small additions/changes
+           Added filled circles
+           Added polygon drawing routine
+           Added new sprite drawing functions to draw sprites flipped
+           Added new examples
+           Additional debugging on the Installer Shell code.
+           Updated GUGInitialize() to make the GU Logo zoom faster
+             on slower systems.
+           Updates for c++ support, updated spr2asm and spr2c for c++
+             compatibility.
+
+   0.65b - New PCX functions for PCX's of nearly any size
+           Added a new fade function to make screen->screen fades
+              look nicer.
+           Actually read this file and cleaned it up.
+
+   0.65c - Added Font support!!!!
+           Added a function to allow setting of a single palette entry.
+
+   0.65d - Fixed GUGReadPCX() and GUGWritePCX() to handle PCX's with
+             odd X-Byte counts.
+           Added functions to treat PCX images like sprites.
+           Changes to GUGPutnnSPR for optimization, about 18% faster now.
+           Corrected a possible BUG in the KBD handler.
+           Issues with GUGKeyHit() and GUGGetKey() being addressed.
+           Continued weirdness with the /ZU optimization!
+
+  0.70a - Minor bug tweaks.
+          Added first generation debug code.
+
+
+
+Ground Up Graphics                   Page: iv
+
+  Disclaimer:
+
+    This is Beta test software - expect bugs!!!!!!!!!!!!
+
+    By using this library and documentation you accept all damages and
+    consequences of it's use. Neither the authors nor Ground Up
+    can be help responsible for damages or problems that arise from the
+    use of this library and documentation. 
+
+    As far as the authors and Ground Up know this software is
+    NOT free from bugs*. The code has seen minimal testing and may contain
+    bugs and or deviations from the documentation. Neither the authors nor
+    Ground Up can be held responsible for damages or problems
+    due to bugs or errors.
+
+    *See the bug list for the current know bugs!
+
+    This software is presented as is, no warranties are made as to it's
+    usefulness in any form, the end user accepts all responsibility for
+    it's use and the consequences of that use.
+
+    The end use accepts all risk, if the end user cannot accept this policy 
+    they should refrain from it's use. 
+
+    Now... With that mouthful said let's get on with the code!
+
+
+
+Ground Up Graphics                  Page: v
+
+     Future additions:
+
+         Future version of GUG will include:
+
+             Sprite Designator
+             World Editor
+
+
+     Use with other libraries:
+       
+         GUG is being developed in parallel with Varmint's Audio Tools
+         by Bryan Wilkins. VAT is a great sound library for Sound Blaster
+         cards. It supports playing of MOD, S3M, MIDI and WAV files in the
+         background while your code concentrates on your game!!!!
+
+         VAT is available in both 16-bit and 32-bit (DOS4GW) versions.
+
+         For more info on VAT contract:
+
+            EMail:  bwilkins@rt66.com
+            SMail:  Bryan Wilkins
+                    Ground Up
+                    1380 Rio Rancho Blvd. Suite #314
+                    Rio Rancho, NM  87124
+
+
+
+Ground Up Graphics                   Page: vi
+
+   Files included in the BETA package:
+
+      widgets.h    -  Stuff to allow using the widgets.
+      keydefs.h    -  Used with the keyboard handler to provide the index
+                      into the GUG_key_table[] array for each key.
+      gug.h        -  The primary header file for GUG.
+      fixed.h      -  Stuff to support fixed point math (24.8 format) 
+      colors.h     -  666 palette standard color index numbers
+      pi.h         -  useful math constants
+      gug.lib      -  The GUG library file.
+      spredit.exe  -  The Sprite Editor for GUG.
+      ripper.exe   -  Rip Sprites from PCX file's.
+      rep_clr.exe  -  Change pixels of color x to color y in a SPR file. 
+      wav2c.exe    -  Convert a WAV file to 'c' data.
+      pcx2c.exe    -  Convert a PCX file to 'c' data.
+      test.dir     -  Complete demo code for the GUG demo/test utility.
+      spin_1.dir   -  Example of compiling sprites and using them in you code.
+                      Shows how to use GUG with c++ programs.
+      bmark.dir    -  GUG Benchmark Utility - Examples of calling a large
+                      number of GUG functions.
+      warp.dir     -  Example code for using the Warping functions
+      gug_doc.txt  -  Documentation in flat text format.
+      beta.txt     -  Standard form to report bugs, request enhancements etc.
+
+
+
+Ground Up Graphics                   Page: vii
+
+  Known Bugs:
+     a.) I'm seeing interaction with arrays define in the end user code
+           such as:   char mes[80];  float sn[360]; etc.
+         Strange page faults are the result. mallocing these arrays
+           instead seems to clear the problem.
+              char *mes;
+              mes = malloc(80);
+         I suspect this has to do with the Watcom optimizations.
+            Compiling user code with the /d2 option seems to pad
+            enough that most code runs OK????
+
+     A.) Is being caused by insufficient stack space. In the optimizer
+         versions I had disabled stack overflow checking!
+     B.) Is also affected by using the GUGFastCopy() function. I suggest
+         using GUGCopyToDisplay() instead until this bug is fixed.
+     C.) GUGFastClear() is also effected.
+         NOTE: 0.50f - GUGFastCopy()/GUGFastClear() have had a problem
+               fixed and seem to be working OK now. Still be careful
+               with them!
+
+  Long-term Planned Enhancements/Changes:
+     a) Currently GUG uses color index 0 (BLACK in the 666 palette) as the
+        transparent color in sprites. I plan to change this to index 255
+        so that there is a TRUE black in the 666 palette.
+
+  Possible problem with the KeyBoard handler:
+     a) I've seen lockups when using the keyboard handler with debugging
+        disabled. Adding the debug switch (/d1 or /d2) seems to fix this.
+
+
+
+Ground Up Graphics                   Page: viii
+
+  Contributors:
+
+     Original Inspiration from the DreamFX Library by Jason Richmond of
+        DreamPark Development, Jason is also a soul brother of mine!!!!!
+
+
+
+Ground Up Graphics                   Page: ix
+
+   GUG Registration / Source Code:
+
+   GUG may be registered for a $50 fee.
+
+     Registered users get access to the GUG source code via FTP access.
+
+     Registered version's do not display the GUG title screen at startup!
+
+     You will also get 1st priority support via Email - this support is
+     limited!!! For $50 what do you expect!
+
+   Register Via USPS mail:
+
+     Send a check or money order made out to 'Neil Breeden II' too:
+
+     Neil Breeden II
+     Ground Up
+     1380 Rio Rancho Blvd. #314
+     Rio Rancho, NM 87124
+
+
+
+Ground Up Graphics                   Page: x
+
+  CauseWay 386 DOS Extender.
+
+    I've switched from using the DOS4GW Extender to using the CauseWay
+    Extender. It has several advantages:
+
+        Binds to your EXE file - no separate extender file.
+        Full DPMI .9 function support
+        Redirects all HW interrupts
+        Error File created on application fault - VERY NICE!
+
+   It's fully tested against GUG and gets my seal of approval!
+
+   For more info:
+      Devore Software & Consulting
+      PO Box 4283
+      NaperVille, IL  60567-4283
+      USA
+
+      1-708-717-6369 - Voice
+      1-708-717-9679 - BBS
+
+      71540.62@compuserve.com
+
+
+Ground Up Graphics                   Page: 1.1
+
+  Introduction:
+
+    Ground Up Graphics (GUG) is a graphics library and tool set for use in
+    creating graphics based applications in VGA Mode 13h (320x200 256 color)
+    using Watcom c++ 10.x and the DOS4GW DOS Extender.
+
+    The system uses a set of function calls to provide the various graphics
+    functionality and support features.
+
+    Every function in the library is in the form   GUGFunctionName()
+
+    Most user callable functions are prototyped in 'GUG.H',
+    the widget functions are in 'WIDGETS.H', the keyboard definitions
+    are in 'KEYDEFS.H', the standard colors are defined in 'COLORS.H'
+    and the fixed point prototypes are in 'FIXED.H'
+
+    The library is named 'GUG.LIB' - you must link against this library!
+
+  The screen:
+
+    In mode 13h the screen is a continuous block of 64000 pixels layed
+    out 320 pixels wide by 200 pixels deep. Each pixel on the screen
+    is represented by one byte (8 bits) allowing 256 colors to be displayed.
+
+         0,  0 is located in the upper left  hand corner of the screen.
+       319,199 is located in the lower right hand corner of the screen.
+
+    Because we are in Protected mode we have a linear address space (no
+    segments). The screen starts at address 000A0000h which is the upper
+    left hand corner (pixel 0,0).
+
+                    000A0000h       000A013Fh
+                        \               /
+                         \0.........319/
+                        0 +-----------+   0
+                        . |           |   .
+                        . |           |   .
+                      199 +-----------+ 199
+                         /0.........319\
+                        /               \
+                    000A0F8C0h      000AF9FFh
+
+    Mode 13h has perhaps the easiest address map to screen layout there is,
+    one byte is one pixel and the address map is linear (no planes!)
+
+  Clipping:
+
+    The actual clipping scheme used seems to be unique to GUG. For a
+    sprite up to 320x200 pixels only 4 total comparison and two subtractions
+    are used to clip the sprite. This means 64000 bytes of data could be
+    written while only a few assembly instruction are used to provide
+    the clipping for ALL those 64000 pixels. 
+
+    On a 486DX4-100 VLB system GUG can draw a 32x32 pixel sprite with
+    transparent color and clipping in about 260uS (0.26mS), it is
+    even faster if the code is already in cache!!
+
+
+
+Ground Up Graphics                   Page: 1.2
+
+  Compiling / Linking
+
+    All source code using functions in the GUG library will need to include
+    the header file GUG.H
+
+    You will need to link against GUG.LIB
+
+  The Makefile and linker command file used for the test code is show below:
+
+  I make use of the SET WCL386 and SET WASM commands in my autoexec.bat to
+  set my default environment.
+
+    IE: SET WCL386=/oneatx /zp4 /5 /fp3 /e5 /d2 
+        SET WASM=/4pr
+
+  /d2 can be removed to disable debugging!
+
+  NOTE: These examples have the options for DOS4GW enabled, the
+        actual examples that ship with GUG may have to be edited to enable
+        DOS4GW support!
+
+
+                                The Make File
+                                 (Makefile)
+
+---------------------------------------
+# GUG "c" test makefile
+
+# The demo program
+test.exe : test.c ship_a.obj ship_c.obj 
+  wcl386 -c -l=dos4g    test.c
+# wcl386 -c -l-causeway test.c
+  wlink @link.cmd
+
+# A compiled ship sprite from spr2asm
+ship_a.obj : ship_a.asm
+  wasm ship_a.asm
+ship_c.obj : ship_c.c
+  wcl386 -c -l=dos4g    ship_c.c
+# wcl386 -c -l=causeway ship_c.c
+---------------------------------------
+
+
+                           The Linker Command File
+                                 (link.cmd)
+
+---------------------------------------
+system   dos4g
+option   map
+option   stack=32000
+debug    all
+name     test
+lib      lib1\gug
+file     test,ship_a,ship_c
+---------------------------------------
+
+
+Ground Up Graphics                   Page: 1.3
+
+  Error Handling and GUG:
+
+    In designing GUG I have done a minimal amount of error checking,
+    although most functions provide some level of error handling I
+    chose to do little or no error checking in the sprite functions
+    as it would slow them down. Pass an uninitialized pointer to the
+    sprite drawing functions and something will be drawn, it will
+    probably draw off the screen into system memory resulting in
+    page faults in DOS4GW if you are lucky or system lockups if you
+    are not.
+
+    Be sure the functions to draw sprites are passed pointers that actually
+    point to sprites. 
+
+    When loading sprites be sure the array of character pointers passed
+    to the loader is deep enough for all the sprites in the file. Loading
+    20 sprites from a disk file into an array 10 pointers deep is going
+    to give you all kinds of headaches till you figure it out.
+
+    The trade off here is speed, error checking equates to slower sprites.
+
+    Check you code and plan ahead, a few extra minutes up front will save
+    hours of debug time later. 
+
+
+
+Ground Up Graphics                   Page: 1.4
+
+  GUG and c++
+
+    Version 0.65a of GUG is the first version to directly support
+    c++ code.
+
+    Although GUG is still written in Watcom c code it is now callable
+    from c++ programs. The GUG.H header file has been updated to define
+    all the GUG functions as "C" functions.
+
+    The sprite compiler and sprite to c (spr2c) have both been updated
+    to add the necessary code in their output files to allow it to
+    be called from a c++ program.
+
+    The TEST example (TEST.DIR) has been updated to be seen as a c++
+    program, the compiled sprite file it uses is still a c module but
+    is in the new format generated by the version 0.4 and later of the
+    sprite compiler.
+
+
+
+Ground Up Graphics                   Page: 1.5
+
+  Notes on Watcom and DOS4GW:
+
+  Objects in Libraries:
+    You can place graphics and sound objects in libraries. I put my
+    compiled sprites (spr2asm) and sound files (wav2c) etc. in libraries.
+
+  Maximum Object size in a library is 64K:
+    I place all my compiled sprites in LIB files using the WLIB utility.
+    A problem here is the size of the object, if the OBJ file is larger
+    then 64K it will appear to load into the LIB and will link OK but
+    at run-time you get a page fault in DOS4GW? When I encountered this
+    I had 60 compiled sprites in one OBJ file, I broke it into two OBJ
+    files each with 30 sprites and it now works fine!
+                                                
+  Debugging under WIN95:
+    I can't get the debugger to run for DOS4GW executables under WIN95.
+    It runs OK though from DOS 7.0.
+
+  STACK size:
+    The only way I've found to increase the stack size is to use a linker
+    command file. Add  option stack=nnnn  to the linker file.  I've also
+    read that the /K switch can be used with WLINK to bump up the size.
+
+  Debugging:
+    Again I have to use a linker command file. Add option 'debug all' in it!
+    
+  -ZU compiler option:
+    This option seems to trash the STDIO library, fopen does strange
+    things. fprintf/sprintf/fscanf/sscanf all also fail?????
+
+  Mixing compiler options:
+    Compiling different sections of a project under different compiler
+    options seems to do strange things though I do not have a pattern
+    for it. I tend to use  -oneat  often and  -zu  from time to time also.
+
+  Creating a PMODE executable from the Windows IDE:
+    I've NEVER got this to work, any suggestions???
+
+
+
+Ground Up Graphics                   Page: 2.1
+  
+  How GUG works:
+
+    Double Buffering:
+
+      When GUG is initialized a buffer know as the 'video working page'
+      is created. All the graphics commands in GUG work against this buffer.
+      Once you have draw your graphics the contents of the 'video working
+      page' can be copied to the VGA cards memory to be displayed.
+
+      NOTE: If you are calling graphics functions in GUG and nothing
+      is being shown on the screen you have forgot to call the function
+      to copy the 'video working page' to the VGA cards memory so it
+      can be seen!  (GUGCopyToDisplay();)
+
+      The 'Video Working Page':
+        
+        As stated above this is a buffer the graphics functions
+        in GUG work against, it is NOT displayed on the computers monitor
+        until you call the function to copy it to the VGA card for display.
+
+    The 666 palette:
+
+        By default GUG uses the 666 palette, this is a GREAT palette 
+        as it contains a great set of colors for games and allows
+        some cool effects (such as transparent text) to be done. GUG always
+        sets this palette up when it is initialized.
+
+        The palette has 256 colors entries starting at color 0 and
+        ending at color 255, the 666 palette uses index 0 to
+        215 in the table. A gray scale area is generated in index
+        216 through 231. Index 232-255 can be used for effects such
+        as color cycling etc.
+
+        Index   0 to 215 is the 666 palette
+        Index 216 to 231 is a gray scale palette
+        Index 232 to 255 are for general use
+
+        A header file named 'COLORS.H' lists indexes into the palette for
+        the 666 palette and gray scale area.
+
+     Transparency:
+
+        Sprite's often have an area of transparency (where the background
+        can bee seen). Index 0 in the palette is used as the transparent
+        color!
+
+     Watcom's Graphic Functions:
+
+        At the Watcom functions work directly against the VGA cards
+        memory instead of the 'Video Working Page' they are not compatible
+        with the double buffered nature of GUG and should not be used.
+
+
+
+Ground Up Graphics                   Page: 2.2
+
+  Initialization and Exit functions:
+
+    int GUGInitialize(void);
+       GUGInitialize initializes the graphics system, places the VGA card
+       in mode 13x, clears the display and sets up the 666 palette.
+
+       This MUST be the first function called in the GUG library.
+
+       Returns 0 on error, 1 on success.
+
+    void GUGEnd(void);
+       GUGEnd restores the monitor to the initial graphics mode and
+       closes down the graphics system.
+
+       This should be the last function called in the GUG library.
+
+
+    char *GUGVersion();
+       Returns a char pointer to a string containing the version of GUG
+       you are using.  IE:  '0.50b'
+
+
+
+Ground Up Graphics                   Page: 2.3
+
+  Screen Clear and Fill functions:
+
+    void GUGClearDisplay(void);
+       Clears the video working page to color 0 which is BLACK in the
+          666 palette.
+
+    void GUGSetDisplay(int c);
+       Fills the video working page with color c.
+
+
+
+Ground Up Graphics                   Page: 2.4
+
+    Video Sync and Seeing what we've drawn:
+
+      Remember that all the graphics functions draw into a buffer area
+      and are NOT visible until copied to the VGA cards memory, before
+      doing the copy we need to wait till the monitor is in a vertical
+      retrace, this way there will not be any tearing/shearing effects
+      on the screen due to writing into the VGA cards memory at the same
+      time the image is being sent to the monitor.
+
+    int GUGVSync(void);
+       Wait for the vertical blanking pause, used to synchronize drawing
+       of graphics to the VGA's memory to stop screen flicker and tearing.
+
+       Returns the number of loops spent waiting for the VSync to occur.
+
+    Now that we've seen the Vertical Sync we can copy the buffer to
+    the VGA's memory, this function does 32bit copies and is very fast!
+
+    void GUGCopyToDisplay();
+       Copy the video working page to the VGA memory allowing it to be
+       displayed.
+    
+    Typically we would now jump back to the top of our game loop and begin
+    drawing the next frame of the game.
+
+    void GUGSaveDisplay(char *too);
+       Save the contents of the VGA cards memory into the buffer pointed to 
+       by char *too, which must be 64000 bytes in size.
+
+    void GUGRestoreDisplay(char *from);
+       Restore the contents of the VGA cards memory from the buffer pointed to
+       by char *from, which must be 64000 bytes in size.
+
+    void GUGCopyToBuffer(char *from);
+       The image pointed to by char *from is copied into the 'Video Working
+       Page'. This might be a background PCX file. The from buffer is expected
+       to be 64000 bytes in size.
+
+   void GUGCopyRectToRect(int xs1,int ys1,int xs2,int ys2);
+       Copy the rectangle xs1,ys1-xs2,ys2 from the BUFFER to the Video
+       memory at location xs2,ys2. The resulting rectangle will be the same
+       size as the source rectangle. See the SPIN_2 demo for an example
+       of using this.
+
+
+
+Ground Up Graphics                   Page: 3.1
+
+  Line Drawing Primitives:
+
+    void GUGLine(int XStart, int YStart, int XEnd, int YEnd, 
+                 int c);
+       Draw a line from XStart,YStart to XEnd,YEnd in color c.
+
+    void GUGVLine(int ystart, int ystop, int x, int c);
+       Draw a vertical line from X,YStart to X,YStop in color c.
+
+    void GUGHLine(int xstart, int xstop, int y, int c);
+       Draw a vertical line from XStart,y to XStop,y in color c.
+
+
+  Rectangle Drawing Primitives:
+
+    void GUGRectangle(int xstart, int ystart,
+                      int xstop,  int ystop,
+                      int c);
+       Draw a rectangle in color c.
+
+    void GUGFillRectangle(int xstart, int ystart,
+                          int xstop,  int ystop,
+                          int c);
+       Draw a filled rectangle in color c.
+
+                                        xstart
+                                    ystart +----------+
+                                           |          |
+                                           |          |
+                                           +----------+ ystop
+                                                    xstop
+
+    void GUGCircle(float r, int s, int color, int x, int y);
+
+       Draw a circle centered on x,y with radius r in color c. Use
+       s straight line segments, the higher s the smoother the circle
+       but the slower the code. 30 give a nice circle. c = 3, 4, 5 ,6
+       etc produce interesting shapes.
+
+    void GUGFillCircle(float r, int s, int color, int x, int y);
+
+       Draw a filled circle centered on x,y with radius r in color c.
+
+    void GUGFloodFill(int point_x, int point_y, int border, int color);
+
+      Flood fill an area in the buffer. point_x/point_y are the starting
+      location to fill from. border is the stopping color, it is used
+      to provide a border to keep the fill contained. color is the
+      color to fill with.
+
+      NOTE: This is a recursive function, it can use a TON of stack space.
+
+
+
+Ground Up Graphics                   Page: 3.2
+
+  Sprite Primitives:
+
+    void GUGPutFGSprite(int x, int y, char *sprite);
+       Puts a sprite into the video working page, color 0 is seen as the
+       transparent color so the background will not be disturbed.
+
+    void GUGPutBGSprite(int x, int y, char *sprite);
+       Puts a sprite into the video working page, no masking is done,
+       any background will be disturbed. Useful for background sprites
+       in tile based games.
+
+    void GUGPutMNSprite(int x, int y, int c, char *sprite);
+       Puts a sprite into the video working area, color 0 is seen as the
+       transparent color so the background will not be disturbed, all
+       pixels of the sprite are drawn in color c. Could be used to make
+       a sprite 'Flash' when an object collides with it.
+
+    int GUGLoadSprite(char *filename,char *sprites[]);
+       Load the sprite image/images from the file 'filename',
+       returns the number of sprites loaded. *sprites[] needs
+       to be defined big enough to hold pointers to all the
+       sprites in the file. 
+       Returns  -1 = Not able to open filename for read
+                -2 = Unable to read SIZE bytes
+                -3 = Unable to malloc area for sprite
+                -4 = Unable to read the sprite
+                >0 = Number of sprites read
+
+    int GUGSaveSprite(char *filename, char *sprites[], int count);
+       Save the sprites pointed to by *sprites[] to file 'filename'.
+       count controls how many sprites will be written. 
+       Returns  -1 = Not able to open filename for write
+                -2 = Unable to write sprite to file
+                -3 = Unable to write number of sprites to file
+                -4 = Unable to write size of sprite to file
+                 1 = successful
+
+   char *GUGClipSprite(int startx, int starty,
+                       int stopx,  int stopy);
+       Clips a sprite from the VGA card memory, the function will
+       malloc() ram to store the image and returns a pointer to the
+       memory block.
+
+    int GUGSpriteHeight(char *sprite);
+       Return the height of the sprite in pixels.
+  
+    int GUGSpriteWidth(char *sprite);
+       Return the width of the sprite in pixels.
+  
+    int GUGSpriteSize(char *sprite);
+       Return the size of the sprite in bytes.
+  
+    int GUGCalcSize(int x, int Y);
+       Return the size needed to store a sprite X*Y pixels including
+        the overhead bytes.
+
+
+Ground Up Graphics                   Page: 3.3
+
+  Sprite Primitives Continued:
+
+    void GUGShiftSpriteRight(char *sprite);
+      Shift the sprite to the right one pixel.
+
+    void GUGShiftSpriteLeft(char *sprite);
+      Shift the sprite to the left one pixel.
+
+    void GUGShiftSpriteUp(char *sprite);
+      Shift the sprite up one pixel.
+
+    void GUGShiftSpriteDown(char *sprite);
+      Shift the sprite down one pixel.
+
+    void GUGSpriteRotate90(char *sprite);
+      Rotate the sprite clockwise by 90 degrees.
+
+    void GUGSpriteVFlip(char *sprite);
+      Flip the sprite around it's vertical axis.
+
+    void GUGSpriteHFlip(char *sprite);
+      Flip the sprite around it's horizontal axis.
+
+    int  GUGGetSpritePixel(int xpos, int ypos, char *spr);
+      For the Sprite spr return the color of the pixel at location
+      xpos,ypos. Returns -1 if xpos,ypos is outside the sprite.
+
+    void GUGSetSpritePixel(int xpos, int ypos, int color, char *spr);
+      For the Sprite spr set the color of the pixel at location
+      xpos,ypos to color. Does nothing if xpos,ypos is outside the sprite.
+ 
+    void GUGResizeRectangle(int xs1,int ys1,int xs2,int ys2,
+                            int xd1,int yd1,int xd2,int yd2);
+      Warp the rectangle at (xs1,ys1)-(xs2,ys2) in the video buffer to a new
+      rectangle at (xd1,yd1)-(xd2,yd2) in the video buffer. The rectangle's 
+      should not overlap.
+
+    void GUGResizeSpriteToRectangle(char *spr,
+                                    int xd1,int yd1,int xd2,int yd2);
+      Warp the sprite spr into a rectangle at (xd1,yd1)-(xd2,yd2) in the video
+      buffer.
+
+    char *GUGResizeSpriteToSprite(char *fspr,int xsize,int ysize);
+      Warp the sprite spr into a new sprite that is xsize by ysize pixels
+      in size. The new sprite size must be between 2x2 min to 320x200 max.
+      A pointer to the new sprite is returned.
+
+
+
+Ground Up Graphics                   Page: 3.4
+
+  Sprite Primitives Continued:
+
+    void GUGFlipXFGSprite(int xb,int yb,char spr[]);
+      Draw a ForeGround sprite flipped around it's X axis, the original
+      sprite is unchanged, it is only draw flipped.
+
+    void GUGFlipXBGSprite(int xb,int yb,char spr[]);
+      Draw a BackGround sprite flipped around it's X axis, the original
+      sprite is unchanged, it is only draw flipped.
+
+    void GUGFlipXMNSprite(int xb,int yb,int color,char spr[]);
+      Draw a Monocolored sprite flipped around it's X axis, the original
+      sprite is unchanged, it is only draw flipped.
+
+    void GUGFlipYFGSprite(int xb,int yb,char spr[]);
+      Draw a ForeGround sprite flipped around it's Y axis, the original
+      sprite is unchanged, it is only draw flipped.
+
+    void GUGFlipYBGSprite(int xb,int yb,char spr[]);
+      Draw a BackGround sprite flipped around it's Y axis, the original
+      sprite is unchanged, it is only draw flipped.
+
+    void GUGFlipYMNSprite(int xb,int yb,int color,char spr[]);
+      Draw a Monocolored sprite flipped around it's Y axis, the original
+      sprite is unchanged, it is only draw flipped.
+
+    void GUGClipFGSprite(int x, int y,
+                         int cx1, int cly1,
+                         int cx2, int cly2,
+                         char *sprite);
+      Clips a sprite into the video working page, color 0 is seen as the
+      transparent color so the background will not be disturbed. The sprite
+      will be clipped to the rectangle defined by (cx1-cy1) to (cx2-cy2).
+
+    void GUGClipBGSprite(int x, int y,
+                         int cx1, int cly1,
+                         int cx2, int cly2,
+                         char *sprite);
+      Clips a sprite into the video working page, any background pixels
+      will be disturbed. The sprite will be clipped to the rectangle
+      defined by (cx1-cy1) to (cx2-cy2).
+
+    void GUGClipMNSprite(int x, int y,
+                         int cx1, int cly1,
+                         int cx2, int cly2,
+                         char color,
+                         char *sprite);
+      Clips a sprite into the video working page. It will be drawn in
+      the color specified. The sprite will be clipped to the rectangle
+      defined by (cx1-cy1) to (cx2-cy2).
+
+
+Ground Up Graphics                   Page: 3.5
+
+  Palette Functions
+
+    void GUGGetPalette(char *palette);
+       Get the current palette entries, char *palette is a char array
+       768 bytes long.
+
+    void GUGSetPalette(char *palette);
+       Set the current palette entries, char *palette is a char array
+       768 bytes long.
+
+    void GUGMake666Palette(char *palette);
+       Generate a 666 type palette in the char array defined by char *palette,
+       which must be 768 chars long.
+
+    int GUGLoadPalette(char *filename, char *palette);
+       Load the palette in file 'filename' into the buffer palette which
+         needs to be 768 bytes in size.
+       Returns  -1 = filename not found
+                -2 = couldn't read 768 bytes from filename
+                 1 = successful
+
+    int GUGSavePalette(char *filename, char *palette);
+       Save the palette into file 'filename'.
+       Returns  -1 = filename could not be created/opened for write
+                -2 = couldn't write 768 bytes to filename
+                 1 = successful
+
+    void GUGFadeToPalette(char *palette,int speed);
+       Fade from the current palette to this palette, the larger speed
+       is the slower the fade.
+
+    void GUGFadeToColor(int c,int speed);
+       Fade all entries in the palette to the color at index c,
+       the larger speed is the slower the fade. In the 666 palette you
+       can fade to black by fading to color 0.
+
+    void GUGCyclePalette(char *palette, int start, int stop);
+       Cycle (rotate) the entries in the palette starting at location
+       start (0-255) and ending at stop (0-255).
+         (start < stop) cycles from n to n+1 (rotates palette forward)
+         (start > stop) cycles from n to n-1 (rotates palette backward)
+       Automatically calls GUGSetPalette() after the rotate, the entries
+       in (char *palette) are modified each time this is called.
+
+    void GUGRemapPalette(int *xlate,char *from, char *too);
+       Remap the palette entries in from to the closest matches
+       in too. xlate is an array of 256 integers. Position 0-255
+       in xlate represent the palette entries in from, the value
+       stored in the position is the index in palette too.
+
+    void GUGSetPaletteEntry(int index,int red, int green, int blue);
+       Set palette entry number index (0-255) to the color specified
+       by red,green,blue, these values range from 0 to 63.
+
+
+
+
+Ground Up Graphics                   Page: 3.6
+
+  Pixel Primitives:
+
+    void GUGSetPixel(int xpos, int ypos, int c);
+      Set the pixel at xpos,ypos to color c
+
+    int GUGGetPixel(int xpos, int ypos);
+      Return the color of the pixel at xpos,ypos or a -1 if
+      xpos or ypos is off the screen
+
+    int GUGTestPixel(int xpos, int ypos, int c);
+      Return  1 if the pixel at xpos,ypos is color c or
+      return  0 is it's not color c or
+      return -1 if xpos or ypos is off the screen
+
+    void GUGFastSetPixel(int xpos, int ypos, int c);
+      Set the pixel at xpos,ypos to color c, no clipping is performed.
+      Uses shifts instead of multiplies thus it only works in 320x200
+      pixel mode.
+
+
+Ground Up Graphics                   Page: 3.7.1
+
+  Text Primitives:
+
+    Notes on fonts: By default the active font is the one in the
+    VGA BIOS ROM (Default VGA 8x8 glyph).
+
+    The current code only supports the glyph font!
+
+    Globals:
+
+      GUG_Font_Height  contains the height of the active font in pixels
+      GUG_Font_Width   contains the width of the active font in pixels
+
+    void GUGPutText(int xpos, int ypos, int c, char *str);
+      Display the text in str on the screen starting at xpos,ypos in 
+      color c.
+
+    void  GUGCenterText(int y, int c, char *txt);
+      Center the line of text along the X axis on row y.
+
+    void  GUGCenterFrameText(int y, int text_c, char *txt, int bg_color);
+      Center the line of text along the X axis on row y with a background
+      of color bg_color.
+
+    int GUGTextWidth(char *str);
+      Return the number of pixels that str will occupy on the screen.
+
+
+
+Ground Up Graphics                   Page: 3.7.2
+
+  Font Primitives:
+
+  GUG Fonts relay on the structure named GUG_FONT, it's members are
+  shown below:
+
+typedef struct
+{
+  int x_size;
+  int y_size;
+  char *chars[256];
+} GUG_FONT;
+
+    int GUGLoadFont(char *filename,GUG_FONT *myfont);
+       Loads the font in file 'filename', the font and it's X/Y
+       sizes are stored in the GUG_FONT structure named myfont.
+       The last font loaded becomes the default font for the various
+       font functions.
+
+       Returns: GUG_FONT_OK is the font loaded OK
+                GUG_FONT_FAIL if the font failed to load.
+
+    void GUGSetFont(GUG_FONT font);
+       The font named in font becomes the default font for the various
+       font functions. font must have been peviously loaded using
+       GUGLoadFont(). 
+
+    GUG_FONT *gug_font;
+       This is a global pointer that always points to the current font.
+
+    void GUGPrintFont(int x,int y,int clr,int bkg,char *txt);
+       Print the string in txt at location x/y in color clr. You
+       can specify a background color behind the text in bkg.If clr is
+       passed as GUG_NONE then the text is draw in the native font
+       file colors, this allows you to have multicolor fonts! If bkg
+       is passes as GUG_NONE then no background is drawn. If a font
+       has not been loaded then this routine will use the GLYPH font.
+
+    NOTE: If a font is NOT loaded and you pass GUG_NONE for the color NO
+          output will be displayed.
+
+    void GUGCenterFont(int y,int clr,int bkg,char *txt);
+       Works the same as GUGPrintFont except that the line is
+       centered on the screen.
+
+    There are three font files supplied with GUG, they are:
+
+        GF4X6.SPR   - a 4x6 font
+        GF6X8.SPR   - a 6x8 font
+        GF5X10.SPR  - a 5x10 font
+
+     GUG Fonts are stored as standard GUG font files, thus you can create
+     any font you want using the GUG sprite editor.
+
+     The sizes that are placed in the x_size/y_size members come from
+     the size of the first sprite in the file.
+
+
+Ground Up Graphics                   Page: 3.8
+
+  Compiled Fonts:
+
+    As the standard text primitives are rather slow I have created
+      3 fonts using compiled sprites. These are many times faster
+      than the standard text functions.
+
+   Sizes are 4x6, 6x8 and 5x10.
+
+   Colors are White, Red, Green, Blue, Yellow and Orange.
+
+   For the RED font we find 3 functions:
+
+      void GUGPrintRed4x6(int x, int y, char *txt);
+      void GUGPrintRed6x8(int x, int y, char *txt);
+      void GUGPrintRed5x10(int x, int y, char *txt);
+
+      Starting at location x,y print the text in 'txt' to the buffer.
+
+   Simply substitute 'Red' in the function name with one of the other
+     colors to get text of that color.
+
+
+Ground Up Graphics                   Page: 3.9
+
+  320x200x256 PCX Primitives:
+
+    int  GUGLoadPCX(char *file, char *buffer, char *palette);
+      Load the PCX from 'file' into a 64000 byte buffer, The palette
+      of the PCX is returned in palette.
+
+      Returns 0 on failure, 1 on success.
+
+      The PCX file MUST be a 320x200 256 color PCX image.
+
+      'buffer' must be at least 64000 bytes long.  i.e.: char buffer[64000];
+
+      'palette' must be 768 characters long.       i.e.: char palette[768];
+
+      If VGA_POINTER is passed to buffer then the PCX will be loaded
+      directly to the VGA card memory/screen.
+
+      If you supply the 64000 byte buffer then you can use the
+      GUGCopyToBuffer() function to copy the PCX image to the 'video
+      working area', you can then call other GUG functions to place
+      sprites etc. into the 'video working area'. This method would allow
+      you to have a static background image.
+
+      Return's 0 if the PCX is not found or an internal error occurs
+        in decoding the PCX or it's palette.
+
+    int  GUGSavePCX(char *file, char *buffer, char *palette);
+      Save the PCX from buffer into the file named 'file'.
+      Only saves 320x200x256 PCX files.
+
+      If VGA_POINTER is passed to buffer then the contents of
+        the screen will be saved.
+
+      Normally you will pass 'GUG_666_Palette' as the palette entry
+        to get a 666 palette.
+
+      The resulting PCX file is not RLE encoded at this time.
+
+
+
+Ground Up Graphics                   Page: 3.10
+
+  General PCX Primitives:
+  
+  The GUG_PCX structure is used to track PCX's loaded into GUG.
+  The structure lists the x and y sizes of the PCX, the PCX's palette
+  and a pointer to the PCX's image.
+
+    GUG_PCX *GUGReadPCX(char *file);
+      Read the PCX named by *name. Returns a GUG_PCX struct for the PCX.
+      If the returned GUG_PCX struct == NULL then an error occurred.
+
+    void GUGFreePCX(GUG_PCX *gug_pcx);
+      Free the memory used by GUGReadPCX();
+
+    void GUGShowPCX(int x,int y,GUG_PCX *gug_pcx);
+      Place the PCX contained the *gug_pcx into the 'Working Page'
+      starting at location x,y.
+
+    int  GUGWritePCX(char *file,
+                     int x_start, int y_start, 
+                     int x_size,  int y_size,
+                     unsigned char *palette);
+      Save a PCX file. It is named by *name. It is read from the VGA card
+      memory starting at pixel x_start,y_start. The resulting PCX will be
+      x_size by y_size pixels in size. Finally the palette pointed too
+      by *palette will be saved as the PCX's palette. The resulting PCX
+      file is not RLE encoded.
+
+    void GUGPutFGPCX(int xb,int yb,GUG_PCX *pcx);
+      Treat the PCX like a sprite, draw it in the double buffer at x,y.
+      It is draw as a Forgeground sprite, IE: with transparency.
+
+    void GUGPutBGPCX(int xb,int yb,GUG_PCX *pcx);
+      Treat the PCX like a sprite, draw it in the double buffer at x,y.
+      No transparecy checking is done.
+
+    void GUGPutMNPCX(int xb,int yb,int c,GUG_PCX *pcx);
+      Treat the PCX like a sprite, draw it in the double buffer at x,y.
+      It is drawn in color c.
+
+
+
+Ground Up Graphics                   Page: 3.11
+
+  Timing Primitives:
+
+    These were ripped from the VAT source, if you are using VAT please
+    use the VAT versions of these in your code!!!
+
+    void GUGInitTimer();
+
+      Initialize the timer, MUST be called before using the timer.
+
+    void GUGStartTimer();
+
+      Start the timer running.
+
+    int GUGStopTimer();
+
+      Stop the timer and return the tick count. Each tick is 0.8382
+      micro-seconds.
+
+    Overflows: If the counter overflows it's 16-bit field you will NOT
+               be notified. Be forewarned! This means the maximum time
+               it can measure is about 58mS.
+
+    You can divide the returned value by 1193 to convert it to units
+    of milliseconds (1000's of a second).
+
+    IE:  float rt;
+         GUGInitTimer();
+         GUGStartTimer();
+         // do some stuff
+         rt = GUGStopTimer();
+         rt = rt / 1193.0;
+         printf("Took %fmS to run\n",rt);
+
+
+Ground Up Graphics                   Page: 3.12
+
+  Assembly Functions:
+
+  Two functions using assembly language are now being provided. These
+    are slightly faster than the 'c' equivalents.
+
+    void GUGFastClear(char *buf);
+    void GUGFastCopy(char *buf);
+
+    Both MUST be passed the predefined pointed named 'VGA_START' to
+      work correctly.
+
+        IE:   GUGFastClear(VGA_START);
+              GUGFastCopy(VGA_START);
+
+
+Ground Up Graphics                   Page: 3.13
+
+  PIX Primitives:
+
+     The PIX routines were written to emulate a pen plotter. I added
+     them to make it easier to support some old code I had. The Spiro
+     demo uses these functions.
+
+        PIX Globals:  pix_x, pix_y  location of pen currently
+                      pix_c         color of current pen (0-255)
+
+        void GUGPIXSetColor(int c);
+           Set the pin to color c where c is a palette entry from 0-255
+
+        void GUGPIXErase(int c);
+           Clear the buffer to color c.
+
+        void GUGPIXSet(int x, int y);
+           Set the PEN to UP. Move to x,y then put the PEN down, draws
+           a single point at x,y.
+
+        void GUGPIXMove(int x, int y);
+          Set the PEN to UP. Move to x,y - leave the PEN UP.
+
+        void GUGPIXLine(x,y);
+          Set the PEN to DOWN if it is not already down. Move the PEN
+          to location x,y drawing a line.
+
+        void GUGPIXRGBLog(int i, float r, float g, float b);
+          Set color palette entry c (0-255) to a color set by the values
+          in r,g,b. r,g,b run from 0.0 to 100.0, 0 is off, 50.0 is 1/2
+          brightness, 100.0 is full brightness.
+
+
+
+Ground Up Graphics                   Page: 3.14
+
+  Polygon Primitives:
+
+        int  GUGFillPoly(int c, int count, GUGVertex poly[]);
+          Draw a filled polygon in color c, the vertex's are in the
+          poly array which has count points.
+
+          Returns:  0 = Successful
+                   -1 = count is incorrect
+                   -2 = insufficient memory to draw the polygon
+
+        void GUGPoly(int c, int count, GUGVertex poly[]);
+          Draw the outline of a polygon in color c, the vertex's are in the
+          poly array which has count points.
+
+        GUGVertex is defined in GUG.H, it is a simply structure containing
+        2 integers, one for the X and one for the Y pixel location.
+
+          typedef struct  {
+           int x; 
+           int y;
+          }GUGVertex;
+  
+       GUG_Poly_No_Cross is an external integer that flags GUGFillPoly()
+          if it has to worry about crossed lines in the polygon. Setting
+          this to 1 (GUGTrue) allows GUGFillPoly() to run about 30% faster
+          but may result in errors when drawing the polygon.
+
+     Example:
+
+       GUGVertex poly[4];
+
+       poly[0] = 10;
+       poly[0] = 10;
+       poly[1] = 20;
+       poly[1] = 10;
+       poly[2] = 20;
+       poly[2] = 20;
+       poly[3] = 10;
+       poly[3] = 20;
+
+       GUG_Poly_No_Cross = GUGTrue;  // Don't check for cross's
+       GUGDrawPoly(RED,4,poly);
+
+
+
+Ground Up Graphics                   Page: 3.15
+
+  Screen Fade Primitives:
+
+
+     GUG provides several ways to fade the 'Working Buffer' to the VGA
+     card memory. These fades make transitions between screens much more
+     visually attractive.
+
+     The following FADES are defined in gug.h
+
+       GUG_NO_FADE      - Do a normal copy
+       GUG_RECT_FADE    - Fade using random 10x10 pixel rectangles
+       GUG_PIXEL_FADE   - Fade using random pixels
+       GUG_SWIRL_FADE   - Fade with a 10x10 rect swirling around the screen
+       GUG_SLIDEX_FADE  - Fade in from the Top/Bottom of the screen
+       GUG_SLIDEY_FADE  - Fade in from the edges of the screen
+       GUG_PALETTE_FADE - Fade to a random color, then to the new screen
+       GUG_RANDOM_FADE  - Pick one of the above randomly
+ 
+     void GUGFadeToDisplay(int type);
+
+       type is one of the predefined types listed above.
+
+
+
+Ground Up Graphics                   Page: 3.15
+
+  Debugging Primitives Primitives:
+
+    GUGDebugString(char *str);
+
+      The string in str is written to 0xb0000, the Mono monitor's normal
+      memory area, as you can mix both VGA and Mono monitors in most PC's
+      this gives you an easy way to write information out on the mono
+      monitor as your app run's on the VGA monitor.
+
+   GUGDebugStringAtLine(char *str,int line);
+      
+      The string is str is printed at row 'line', the row is cleared out
+      first. Text beyond 80 characters in str will be ignored.
+
+   GUGDebugStringAtXY(char *str,int col, int line);
+
+      The string in str is printed at column 'col' in row 'line', this
+      function will not wrap to the next line.
+
+   GUGDebugClear();
+
+      Clear all text from the Mono monitors display.
+
+   GUGDebugVSync();
+
+      I wrote this to see how much time was being wasted waiting for the
+      VSync to occur. As it waits for the VSync it starts filling all all
+      black pixels in the VGA card's memory with a color. The more of the
+      pixels filled in the longer it waited for the VSync. It fills with
+      RED the first time called, Yellow the second time then back to RED
+      then YELLOW etc.
+
+
+
+Ground Up Graphics                   Page: 4.1
+
+    The Mouse:
+
+      GUG supports a wide range of mouse functions, the minimum set
+      required to use the mouse are listed here, see the header file
+      (GUG.H) for the remaining functions calls.
+
+    void GUGMouseReset(int *mstatus, unsigned int *nbutton);
+      Resets the mouse driver if it is installed.
+      mstatus  0 = failure, no mouse driver loaded
+              -1 = mouse driver installed and reset
+      nbutton    = number of buttons on the mouse
+
+      The mouse is reset to the following state:
+          Mouse position  =  Centered on screen
+          Mouse is hidden (not visible)
+          Mouse will is in graphics mode (as we are in mode 13x)
+          Interrupt call mask is all 0's
+          Horizontal Mickey's =  8/8
+          Vertical Mickey's   = 16/8
+
+    void GUGMouseShow(void);
+      Make the mouse cursor visible.
+
+    void GUGMouseHide(void);
+      Hide the mouse cursor.
+
+    void GUGMousePosition(unsigned int *mpressed, unsigned int *mx,
+                          unsigned int *my);
+      Get the current mouse status:
+        mpressed = button(s) pressed, IE:  1 = button 1
+                                           2 = button 2
+                                           4 = button 3
+                                           3 = button 1 and 2
+                                           7 = button 1,2 and 3
+
+        mx = mouse x position, scaled to the screen (0-319)
+        my = mouse y position, scaled to the screen (0-199) 
+
+    void GUGMouseHorizontalLimit(unsigned int min, unsigned int max);
+      Set the x mouse limits, normally set to 0,311
+
+    void GUGMouseVerticalLimit(unsigned int min, unsigned int max);
+      Set the y mouse limits, normally set to 0,199
+
+
+
+Ground Up Graphics                   Page: 4.2
+
+  The Keyboard handler:
+
+    GUG's keyboard handler allow you to detect multiple key presses/releases
+    easily. Once you install the handler you will have access to a 128
+    character array, each entry in this array represents a key, a 1 at
+    a location indicates the key is down, a 0 indicates the key is up.
+
+      unsigned char GUG_key_table[128];
+
+      This is the global character array.
+
+      GUG.H also defines two constants that can be used to test if a key
+      is up or down:
+
+          KEY_IS_UP
+          KEY_IS_DOWN
+
+          IE:  if (GUG_key_table[SPACE] == KEY_IS_DOWN) {
+                 printf("The SPACE-BAR is pressed!\n")
+               };
+
+    void GUGStartKeyboard(void);
+      Install the GUG keyboard handler.
+
+    void GUGStopKeyboard(void);
+      Restore the normal keyboard handler.
+
+    int GUGKeyHit(void);
+      Returns 1 if a key is hit, 0 if none are hit, works only for the
+      standard alpha-numeric keys.
+
+    int GUGKeyDown(void);
+      Returns 1 if any key is down, 0 if none are down.
+
+    char GUGGetKey(void);
+      Get the ASCII value of the key hit.
+
+   void GUGWaitForKey(void);
+      Wait for a keypress then return. This function works with both
+      the standard keyboard handler and the GUG keyboard handler.
+
+   extern int GUG_KBD_Installed;
+      0 indicates the standard keyboard handler is installed,
+      1 indicates the GUG handler is installed. 
+
+
+
+Ground Up Graphics                   Page: 4.3
+
+  The Joystick handler:
+
+  The Joystick functions provide two globals:
+    extern int GUGX1Active;  // 0 = Joystick 1 not installed
+    extern int GUGX2Active;  // 0 = Joystick 2 not installed
+    You need to call GUGJoystickCalibrate() before these globals
+    will be set.
+
+  int GUGJoystickCalibrate();
+    Autodetects if joysticks are installed and provides a calibration
+    screen allowing the user to calibrate the joysticks.
+
+    Returns the number of joysticks detected (1 or 2) or 0 if
+    no joysticks are installed.
+ 
+  int GUGDetectX1(); // Detect 1st joystick
+  int GUGDetectX2(); // Detect 2nd joystick
+    Return's 1 if the joystick is installed, 0 if it is not.
+
+  int GUGReadX1Axis(); // Joystick 1 X value
+  int GUGReadY1Axis(); // Joystick 1 Y value
+  int GUGReadX2Axis(); // Joystick 2 X value
+  int GUGReadY2Axis(); // Joystick 2 Y value
+    Returns the RAW values. You do NOT need to call GUGJoystickCalibrate()
+    before using these. If you call one and that joystick is NOT installed
+    the program will hang in an infinite loop!
+
+  int GUGScaleX1Axis(); // Joystick 1 X value
+  int GUGScaleY1Axis(); // Joystick 1 Y value
+  int GUGScaleX2Axis(); // Joystick 2 X value
+  int GUGScaleY2Axis(); // Joystick 2 Y value
+    Returns the SCALED values (0-99), GUGJoystickCalibrate() must
+    be called first for these to work. These sense the state of
+    GUGX1Active/GUGX2Active, thus they can be called without a joystick
+    installed without adverse effects. If a joystick is NOT installed
+    they will return 0.
+
+  int GUGReadButtons();
+    Return the button state for both joysticks.
+      b = GUGReadButtons();
+      if (b & J1_B1) // then Joystick 1 Button 1 is down
+      if (b & J1_B2) // then Joystick 1 Button 2 is down
+      if (b & J2_B1) // then Joystick 2 Button 1 is down
+      if (b & J2_B2) // then Joystick 2 Button 2 is down
+
+     NOTE: J1_B1 - J2_B2 are constants defined in gug.h
+
+  WARNING:
+
+    If you read joystick axis's back to back without a delay you
+    will get bogus results. You need to have a few mS's delay between
+    reads. I use a method where I read the X value on the first frame
+    then the Y value on the next. Alternating the axis each frame adds
+    enough delay. See the JOYGRAPH.C example for more info.
+
+
+
+Ground Up Graphics                   Page: 5.1
+
+  Fixed Point Support:
+
+    Fixed point support for (24.8) formatted fixed is provided in the
+       following functions.
+
+    NOTE: You MUST include 'fixed.h' in your code for these functions
+       to work correctly!
+
+    int GUGFPAssignInt(int i);
+      Convert a normal int to 24.8 format and return it.
+
+    int GUGFPAssignFloat(float f);
+      Convert a normal float to 24.8 format and return it.
+
+    int GUGFPMul(int i1, int i2);
+      Multiply two 24.8 format values and return the result in 24.8 format.
+
+    int GUGFPAdd(int i1, int i2);
+      Add two 24.8 format values and return the result in 24.8 format.
+
+    int GUGFPDiv(int i1, int i2);
+      Divide two 24.8 format values and return the result in 24.8 format.
+
+    int GUGFPGetInt(int i);
+      Convert a 24.8 format int to normal int format and return it.
+
+    float GUGFPGetFloat(int i);
+      Convert a 24.8 format int to a float and return it.
+
+    DEFINES:
+      The #define's  SHIFT  and  MULTI  are also defined.
+
+      You can use SHIFT to shift int's as need into/out of 24.8 format.
+
+      IE: int   x = 12;
+          float f = 12.0;
+          x <= SHIFT;   // Into 24.8 format
+          x >= SHIFT;   // Out of 24.8 format
+          x = (int)(f * MULTI);
+      
+
+
+Ground Up Graphics                   Page: 6.1
+
+  Widgets:
+
+    GUG Supports a basic set of widgets, these widgets have several different
+    uses, the sprite editor (spredit.exe) is a good example of the widgets.
+
+    Control Buttons:
+      A 'Control Button' is a virtual button on the screen, when the user
+        places the mouse pointer on it and clicks the button appears to
+        depress into the screen.
+
+      Text Control Buttons:
+        The 'SAVE', 'ABRT' and 'EXIT' buttons in the sprite editor are
+        examples of this button type. A single line of text can be displayed
+        in the button. The button will size automatically to the width of
+        the text inside it.
+
+      Sprite Control Buttons:
+        Most of the other buttons in the sprite editor are examples of this
+        button type. A sprite is displayed on the button, again the button
+        will size automatically to the width and height of the sprite.
+
+    Radio Buttons:
+      A 'Radio Button' is a virtual button on the screen, when the user
+        places the mouse pointer on it and clicks the button appears to
+        depress into the screen. What makes a Radio Button different from 
+        a control button is that a radio button belongs to a group of
+        radio buttons, only ONE of the buttons can be selected at a time,
+        selecting a radio button will automatically deselect all the other
+        buttons in the same group.
+
+      Text Radio Buttons:
+        The Text Radio Button will have a little selector indicator on the
+        left side, if the selector is filled in the option is selected,
+        if it is not filled it is not selected.
+
+      Sprite Radio Buttons:
+        Sprite Radio buttons depress like Control Buttons. Only one button
+        in the group can be selected.
+
+    Hidden Controls:
+      A hidden control is a rectangular area on the screen that, when
+      clicked in will return a message allowing you to do some type
+      of processing. This is used extensively in the sprite editor in
+      the Palette Selectors. The Graphics in the Palette selectors are 
+      not part of the Widget system, they are draw by the sprite code, 
+      an invisible rectangle is defined under the palette areas, clicking 
+      in these rectangles returns a message to the code which then uses the 
+      x/y location of the click to determine what color the user clicked on 
+      in the palette.
+
+    Draw Controls:
+      A draw control is like a 'Hidden Control' except for 1 crucial
+      difference. All controls up to this point returned the button
+      they were clicked on AFTER the user released the mouse button,
+      a Draw Control returns the message on the button down event,
+      this is used in the large sprite drawing area in the sprite editor
+      so that you can draw lines, rectangles etc. in the area.
+
+
+Ground Up Graphics                   Page: 6.2
+
+    Spin Controls:
+      Spin controls also return when the mouse button is pressed down,
+      they activate the control in question, delay a short period of
+      time then repeat over and over the message until the mouse is released.
+      Several of the sprite editor controls are spin controls.
+
+  The WIDGET Header File:
+
+      Included with GUG is a file named widgets.h, this file has all the
+      bindings and definitions you will need to use these widgets. Include
+      it in your code.
+
+  The WIDGET control structure:
+
+      In WIDGETS.H is a definition for a structure named GUG_cntrl, this
+      structure is at the heart of the widget system. All controls to
+      appear on one screen are collected into an array of this struct type.
+
+      You can have multiple arrays of this struct type, the one passed
+      to the widget handling functions will determine which set of
+      control to display.
+
+      When you define an array of GUG_cntrl in your code you should define
+      it as an array of pointers:
+
+          IE:  struct GUG_cntrl *my_controls[100];  // this is correct
+
+          IE:  struct GUG_cntrl more_controls[10];  // Will not work!!!!
+
+          The second example is NOT an array of pointers and will not work!  
+
+  Using the WIDGET functions:
+
+      There are four types of functions in the widget library, the first
+      one allows you to initialize an array of GUG_cntrl pointers, the next
+      allows you to register a control (make it know to the system), the
+      third one allows you to process an array of GUG_cntrl pointers, the
+      last is a group of functions such as message boxes.
+
+  Widget Initialize Functions:
+
+    After an array of GUG_cntrl pointers is created it needs to be
+    initialized before being used in any of the other widget functions.
+
+    void GUGInitControl(struct GUG_cntrl *controls, int max_count);
+
+      IE:  #define MAX 50
+           struct GUG_cntrl *my_controls[MAX];
+           GUGInitControl(my_control,MAX);
+
+
+
+Ground Up Graphics                   Page: 6.3
+
+    Each widget function expects to be passed a message ID number, this
+    is the message that is returned by the processing functions when
+    a widget is clicked. This message should be unique for each registered
+    widget. I prefer to use #define to define them, this way I can also
+    use the define name in the switch() statement that processes the
+    messages.  
+
+    int GUGRegControlText(int x, int y, int message, char *text, int color,
+              struct GUG_cntrl *controls);
+       x/y define the upper left corner of the button.
+
+              X
+             Y+--------+   The 'Text' will be offset 3 pixels in the X and Y
+              |+------+|   location from the defined X/Y spot as there is a
+              ||+----+||   3 pixel wide frame and border around the 'text'.
+              |||Exit|||
+              ||+----+||
+              |+------+|
+              +--------+
+
+       message is a code that will be returned when this button is activated.
+         NOTE: The message is sent on the BUTTON UP event.
+       text is the actual line of text to show in the button.
+       color is the color the text should be (palette index from 0-255)
+       controls is the array of GUG_cntrl pointers.
+
+    int GUGRegControlSprite(int x, int y, int message, char *sprite
+                            struct GUG_cntrl *controls);
+       This is very much like GUGRegControlText() except that it's passed
+       a pointer to a sprite and no color id is specified.
+
+    int GUGRegSpinSprite(int x, int y, int message, char *sprite
+                         int delay, int repeat, struct GUG_cntrl *controls);
+       This is very much like GUGRegControlText() except that it's passed
+       a pointer to a sprite and no color id is specified. This is also a
+       spin control type, as long as the button is held down it will
+       repeat the message. delay sets the initial delay in mS from the
+       mouse down until auto repeat starts. repeat sets the repeat rate
+       in mS.
+
+
+
+Ground Up Graphics                   Page: 6.4
+
+    int GUGRegRadioText(int x, int y, int message, char *text, int color,
+                        int group, int state, struct GUG_cntrl *controls);
+       Again this is like GUGRegControlText() except for two additional fields:
+         group - this is the group ID, all RadioText buttons that affect
+                 each other should be placed in the same group, this is
+                 simply some integer value that is unique for each group.
+         state - This is the initial state of the button, the standard
+                 state definitions are in widgets.h, they are
+                  GUG_SELECTED
+                  GUG_UNSELECTED
+
+    int GUGRegRadioSprite(int x, int y, int message, char *sprite,
+                          int group, int state, struct GUG_cntrl *controls);
+       This is very much like GUGRegRadioSprite() except that it's passed
+       a pointer to a sprite and no color id is specified.
+
+    int GUGRegDraw(int x, int y, int x_size, int y_size, int message,
+                   struct GUG_cntrl *controls);
+       x/y define the upper left corner of the button.
+       x_size/y_size define the size of the rectangle in pixels.
+       message is a code that will be returned when this button is activated.
+         NOTE: The message is sent on the BUTTON down event.
+       
+    int GUGRegHidden(int x, int y, int x_size, int y_size, int message,
+                     struct GUG_cntrl *controls);
+       This is exactly like GUGRegDraw() except that the message is
+        sent on the BUTTON UP event.
+
+    int GUGRegHotKey(int key_code, int message,
+                     struct GUG_cntrl *controls);
+      This function allows you to use the keyboard to trigger an event.
+      If is passed an index into the GUG_key_table array to watch for and
+      the message to return if the key is pressed. It assumes that the
+      GUG keyboard handler has been installed in your application. 
+
+    Each widget registration function returns a handle to the button just
+    registered. For radio buttons we need to know which button is active,
+    a function is supplied to do this for us, the handle is passed to the
+    functions.
+
+    int GUGGetRadioStatus(int handle, struct GUG_cntrl *controls);
+      Returns  GUG_SELECTED  or  GUG_UNSELCTED
+
+  Widget Processing Function:
+
+    int GUGProcessControls(struct GUG_cntrl *controls,
+                           unsigned int *mx,
+                           unsigned int *my,
+                           unsigned int *mb);
+
+    Returns the message code of the button/object selected. mx/my/mb contain
+    the mouse's x/y location and the button status of the mouse.
+
+
+
+Ground Up Graphics                   Page: 6.5
+
+  Other Functions:
+
+    int GUGMessageBox(char *message, char *buttons);
+
+    Display a message box on the screen, the text in message is displayed,
+    the text in buttons is used to generate the buttons.
+
+    Up to 5 lines of text with up to 30 characters can be displayed.
+    Up to 3 control buttons with up to 10 characters can be displayed.
+
+    To generate multiple lines of text separate each line with a '|'.
+    Separate the text between buttons with an '|' also.
+
+    IE: n = GUGMessageBox("Are you awake?"," YES | NO ");
+
+      Will display:
+
+                 +----------------------------------+
+                 |                                  |
+                 |         Are you awake?           |
+                 |                                  |
+                 | +-----+                 +----+   |
+                 | | YES |                 | NO |   |
+                 | +-----+                 +----+   |
+                 +----------------------------------+
+
+      Clicking in YES will return a 0, in NO a 1.
+
+    IE: n = GUGMessageBox("Hello!|Are you awake?"," YES | NOT SURE | NO ");
+
+      Will display:
+
+                 +----------------------------------+
+                 |                                  |
+                 |              Hello!              |
+                 |          Are you awake?          |
+                 |                                  |
+                 | +-----+   +----------+    +----+ |
+                 | | YES |   | Not Sure |    | NO | |
+                 | +-----+   +----------+    +----+ |
+                 +----------------------------------+
+
+      Clicking in YES will return a 0, Not Sure a 1 and No a 2.
+
+
+
+Ground Up Graphics                   Page: 6.6
+
+  Other Functions:
+    int GUGPCXMessageBox(char *mt, char *bt, GUG_PCX *pcx);
+
+    Works like GUGMessageBox() except a PCX image is displayed in the
+    left side of the message box.
+
+                 +----------------------------------+
+                 | +------------+                   |
+                 | |            |        Hello!     |
+                 | |            |    Are you awake? |
+                 | | PCX Image  |                   |
+                 | |            |   +-----+  +----+ |
+                 | |            |   | YES |  | NO | |
+                 | +------------+   +-----+  +----+ |
+                 +----------------------------------+
+
+    The PCX is assumed to use the current palette and is assumed to
+    be no larger that 100x100 pixels.
+
+
+
+
+Ground Up Graphics                   Page: 6.7
+
+
+  Colors used by the Widgets.
+
+    A series of global integers are used by the widget functions to
+    define the palette entries to use for the various items drawn.
+    These globals are referenced in GUG.H and are initialized by
+    GUGInitialize();
+
+    If you are using a palette other than the 666 palette or if you wish
+    to change the widget colors you will need to assign these gloabls to
+    the correct palette entries in your palette.
+
+    // Various colors - these default to in 666 palette index but
+    //   can be tuned for a custom palette. These are used in GUG
+    //   functions such as the Widgets.
+    extern int GUG_PURPLE;
+    extern int GUG_ORANGE;
+    extern int GUG_YELLOW;
+    extern int GUG_TAN;
+    extern int GUG_BROWN;
+    extern int GUG_BLACK;     // Black in Widgets
+    extern int GUG_GREY_1;
+    extern int GUG_GREY_2;    // Light grey in Widgets
+    extern int GUG_GREY_3;    // Dark grey in Widgets
+    extern int GUG_GREY_4;
+    extern int GUG_WHITE;     // White in Widgets
+    extern int GUG_B_RED;
+    extern int GUG_RED;
+    extern int GUG_D_RED;
+    extern int GUG_B_GREEN;
+    extern int GUG_GREEN;
+    extern int GUG_D_GREEN;
+    extern int GUG_B_BLUE;   // Text in Widget message boxes
+    extern int GUG_L_BLUE;
+    extern int GUG_BLUE;
+    extern int GUG_D_BLUE;
+
+
+
+
+Ground Up Graphics                   Page: 7.1
+
+  The Sprite Ripper:
+
+    The sprite ripper loads a PCX file and rips sprites from it. This
+      version is command line driven:
+
+      ripper file.PCX file.SPR [file.PAL]
+
+         will load file.PCX, save any ripped sprites to file.SPR and
+         will save the palette to file.PAL if a filename is provided.
+
+   Using the ripper:
+
+      After the ripper has loaded the PCX file it will be display.
+
+      First Step: Using the mouse click/hold the left button in the upper
+      left corner of the first sprite then drag out a rectangle around the
+      sprite to be clipped. The area UNDER the rectangle will be ripped as
+      part of the sprite. You can rip sprites up to 320x200 pixels.
+
+      Arrow keys
+        The arrow keys will move the rectangle around.
+
+      <CTRL>-Arrow Keys
+        Holding down <CTRL> will shrink by one pixel the wall
+        pointed to by the arrow key.
+
+      <ALT>-Arrow Keys
+        Holding down <ALT> will grow by one pixel the wall pointed
+        to by the arrow key.
+
+      <SPACE>
+        Hitting the SPACE BAR will clip the sprite, you will see the
+        sprite flash to indicate it has been clipped. The clipping
+        rectangle is left in place so you can move it to the next
+        sprite.
+
+      <ESC>
+        Pressing the ESC Key will exit the ripper, any sprites clipped
+        are saved and the optional palette file is saved.
+
+      Mouse RIGHT Button
+        Clicking the Mouse RIGHT Button will also clip the sprite, the
+        clipping rectangle is deleted after the sprite is clipped.
+
+      <KEY-PAD +>
+        Advance a rectangle you've already stretched out using the
+        mouse to the next logical position. Once you have the rectangle
+        stretched to the correct size for the sprites this can be used 
+        to easily move through the sequence of sprites in the PCX file.
+
+
+
+Ground Up Graphics                   Page: 7.2
+
+  The GUG Sprite Editor allows you to create/change sprites. To start
+  it type:  spredit file[.spr]   where file.spr is the sprite file to
+  edit or create. If file.spr doesn't exist you will be asked if you
+  are creating a new sprite file.
+
+  In the Upper Left area of the screen is the edit area. This is where
+  you draw the actual sprite. The white outline shows the largest possible
+  sprite size (32x32), the blue rectangle show the actual sprite size.
+
+  On the right edge of the white outline are 4 controls, these are used to
+  change the size of the sprite.
+
+  Along the upper right side of the screen is the main control bar,
+  starting in the upper left corner of the tool bar we find:
+
+     DRAW   -  Set individual pixels in the sprite.
+     LINE   -  Draw Lines in the sprite
+     PAINT  -  Fill an area in the sprite
+     RECT   -  Draw a rectangle in the sprite
+     FILL   -  Draw a filled rectangle in the sprite
+     PICK   -  Pick a color from the sprite
+     CUT    -  Make a copy of the current sprite in the paste buffer
+     PASTE  -  Replace the current sprite with the paste buffer 
+
+  Along the bottom row of the toolbar we have:
+
+     DOWN   -  Shift the sprite down a pixel
+     UP     -  Shift the sprite up a pixel
+     RIGHT  -  Shift the sprite right a pixel
+     LEFT   -  Shift the sprite left a pixel
+     HFLIP  -  Flip the sprite around the horizontal
+     VFLIP  -  Flip the sprite around the vertical
+     ROTATE -  Rotate the sprite 90 degrees
+     UNDO   -  Undo the last change made to the sprite
+
+     Below the tool bar we have three color palettes.
+
+     On top is the 666 palette area, click a color to select it.
+     In the middle is the gray scale palette, along the bottom
+     row is the user definable area.
+
+     Entries in the GREY and BOTTOM palette areas can be adjusted
+     using the Color Up/Down controls. If you adjust the palette a
+     file with the same name as the sprite file but with a .PAL
+     extension will be created to track the changes. This PAL file
+     will automatically be loaded next time you edit the sprite file.
+
+
+
+Ground Up Graphics                   Page: 7.3
+
+     Along the bottom of the screen up to 7 sprites are show, a white
+     rectangle is drawn about the current sprite being edited. Above the
+     sprites are 8 buttons, they are:
+
+     Double Left  -  Move to the first sprite
+     Left         -  Move left one sprite
+     Delete       -  Delete the current sprite
+     Add          -  Add a sprite in the position of the current sprite
+     Right        -  Move right one sprite
+     Double Right -  Move to the last sprite
+     Add left     -  Add a new sprite on the end
+     Play         -  Play the current sprite sequence
+                       Right Mouse = Faster
+                       Left Mouse  = Slower
+                       Both Mouse  = End
+
+     Clicking on any of the seven sprites will select that sprite as
+     the current sprite.
+
+     Other Buttons:
+
+      [EXIT]     - Exit the editor, save any changes.
+      [ABRT]     - Exit the editor, lose any changes.
+      [SAVE]     - Save the edits and continue editing.
+
+
+
+Ground Up Graphics                   Page: 7.4
+
+   The World Editor has not yet been released.
+
+
+
+Ground Up Graphics                   Page: 7.5
+
+  The Sprite Compiler:
+
+     Takes a sprite file (*.SPR) and converts it to FAST assembly code,
+     all transparent areas are removed. Handles sprites up to 320x200 pixels
+     maximum. The assemble code can be called directly from your c code.
+     This generates the fastest type of sprites in the GUG package. Version
+     0.4 and later generates output files that are usable with both "C" and
+     "C++" programs.
+
+     Usage:
+
+         spr2asm function-name SPR-file Output-name
+
+     Example:
+
+         spr2asm alien_ship new_s1.spr ships
+
+         The sprites in new_s1.spr are converted to assembly code which
+         is written in the file ships_A.ASM, note that the _A.ASM was
+         added to the assembly file. A file named ships_C.C is also
+         created, this has the c function to call the sprites. You will
+         need to include both files (ships_A.ASM and ships_C.C) in your
+         program to properly use the compiled sprites.
+
+         How do you call the compiled sprites:
+
+           In our example we passed 'alien_ship' as the function name,
+           in the file ships_C.C a function named draw_alien_ships() will
+           be found.
+
+             draw_[function-name](int who, int x, int y);
+
+           [function-name] is replaced with the 'alien_ship' we passed
+           to spr2asm when we ran it.
+
+             draw_alien_ship(int who, int x, int y);
+
+           As there are 60 total sprites in new_s1.spr we pass the index
+           of the sprite we want displayed in variable who. 0 is the
+           first sprite, 59 is the last.
+
+             draw_alien_ship(0,32,50);
+
+           will draw the first sprite at X=32, y=50.
+
+
+
+
+Ground Up Graphics                   Page: 7.6
+
+  PCX2C will take a 320x200x256 PCX file and convert it into 'c' data.
+  This makes it easy to include the PCX directly in your EXE instead
+    of having to distribute it with the EXE.
+
+  Usage:
+    pcx2c file.pcx
+
+  This will create file.c which has the 'c' data in it to represent the
+  PCX file. 
+  
+  You can use GUGRestoreDisplay(file); to copy the PCX directly to the VGA 
+  card memory.
+
+  You can use GUGCopyTOBuffer(file); to copy the PCX directly to the buffer.
+
+
+
+Ground Up Graphics                   Page: 7.7
+
+  WAV2C converts a WAV file into 'c' data.
+
+  Usage:
+    wav2c file.wav
+
+  This will create file.c which has the 'c' data to represent the WAV
+  in it.
+
+  This is useful with libraries that can play 'WAV' files to allow you
+  to keep the WAV file in you EXE instead of distributing it as a
+  separate file.
+
+  If you are using version 6.2 or later of VAT you will need to use the
+  VAT function LoadWaveFromMemory() to enable VAT to use WAV's converted
+  in this way.
+
+
+
+Ground Up Graphics                   Page: 7.8
+
+  TGA2PCX is a utility written by Eric Jorgensen of 'VAT' fame.
+
+  This utility is ONLY provided in the registered version!
+
+  The TGA2PCX utility:
+
+    TGA2PCX will take a TARGA file and convert it to a 320x200 256 color
+    PCX file using the 666 palette. You can use your favorite ray-tracer
+    to generate images then use this utility to convert them to PCX files
+    that can be ripped into sprites.
+
+USAGE:
+     tga2pcx (infile) (outfile)  [options]
+
+Options:
+
+-single               single frame operation [default]
+-multi                multi frame operation.  (infile works as a seed)
+-scheme (colorscheme) Color scheme to use:
+                        grid666 = 6x6x6 grid [default]
+                        david = david's program palette
+-res ###              resolution select 320,[640],800,1024,1280
+-outres ###           width of output PCX [default = 640]
+-tcolor (r) (g) (b)   Transparent color [default = 0,0,0]
+-tindex ###           Transparent index [default = 255]
+
+  Example:
+
+    tga2pcx alien.tga alien.pcx -res 320 -outres 320
+
+    Convert alien.tga to  alien.pcx, display it as a 320x200 image and
+    save it to a 320x200 PCX file which can then be used in ripper
+    to remove the sprite.
+
+
+
+Ground Up Graphics                   Page: 7.9
+
+  REP_CLR.EXE is a utility which reads a sprite file and will replace
+  all occurrences of a color with another color.
+
+  Example:
+
+     rep_clr file.spr 0 216
+
+     This example replaces all occurrences of color 0 in the sprite file
+     with the color 216
+
+  Why would you want to do this?????
+
+     Ground Up is using POV to generate the sprites in the examples. For
+     the space ship sprites POV generates 60 TGA files, one for each frame
+     of the animation. 
+
+          IE: ship0001.TGA
+              ship0002.TGA
+                 .
+                 .
+              ship0059.TGA
+              ship0060.TGA
+
+          Note: Each frame (TGA file) contains a single 32x32 pixel frame
+                for the sprite animation.
+
+     We then use TGA2PCX.EXE to convert these 60 TGA files into a single PCX:
+
+          IE: tga2pcx ship ship.pcx -multi -outres 320
+
+          Using 'ship' as a seed name process ship*.tga into a single PCX
+          file named ship.pcx of 320x200x256 resolution using the 666
+          palette.
+
+     Next we use RIPPER.EXE to rip the individual sprites from ship.pcx:
+
+          IE: ripper ship.pcx ship.spr
+
+     Now I use REP_CLR.EXE to clean up the sprites, TGA2PCX uses color index
+     255 for transparent pixels and color 0 for black. The current version
+     of GUG uses color 0 for transparency and color 216 for black.
+
+          IE: rep_clr ship.pcx 0 216
+              rep_clr ship.pcx 255 0
+
+      First change all BLACK pixels to use GUG's BLACK.
+      Next change all transparent pixels to use GUG's transparent pixel.
+
+
+
+
+Ground Up Graphics                   Page: 7.10
+
+   SPRITED Utility
+
+     The Sprite Point Designator has not been released.
+
+
+
+Ground Up Graphics                   Page: 7.11
+
+   BMARK Utility
+
+     The BMARK utility serves a couple of purposes, first it will allow
+     you to test GUG on your system to get an idea of it's speed in your
+     configuration.
+
+     I ask that if you run it please edit the BMARK.TXT output file and
+     fill in the info requested then send it back to me via EMAIL.
+
+     All the time's in BMARK.TXT are in milliseconds (mS) (1000's of
+     a second). This 0.56 would be .56mS or 560 microseconds (uS).
+
+     Finally BMARK.C shows how to call and use a number of the GUG
+     functions.
+
+
+
+Ground Up Graphics                   Page: 7.12
+
+   spr2666 Utility
+
+   spr2666 converts a sprite file from a palette different that the
+   666 palette into the 666 palette.
+
+     spr2666 old.spr new.spr old.pal
+
+   A palette of the default VGA colors is supplied in default.pal
+
+   When you run spr2666 the first screen you see will show you the
+   from palette and a sample of the sprites in their normal palette.
+
+   Press a key to continue to the next screen.
+
+   The next screen shows you the 666 palette and what the sprites look
+   like in the 666 palette before being converted.
+
+   Press a key to continue to he next screen.
+
+   You will then see each sprite as it's converted to the 666 palette.
+
+
+
+Ground Up Graphics                   Page: 7.13
+
+   pcx2666 Utility
+
+   pcx2666 converts a PCX file from it's palette to the 666 palette.
+
+     pcx2666 old.pcx new.pcx
+
+   The first screen you see shows the original PCX image in it's
+   default palette.
+
+   Press a key to continue to the next screen.
+
+   The next screen shows the PCX in the 666 palette before conversion
+   to the 666 palette.
+
+   Press a key to continue to the next screen.
+
+   The final screen shows the PCX after conversion to the 666 palette.
+
+
+
+Ground Up Graphics                   Page: 7.14
+
+   spr2pcx Utility
+
+     Convert a sprite file to a PCX file.
+
+       spr2pcx sprite.spr file.pcx [start_sprite]
+
+       start_sprite is optional, it is the index of the sprite to
+       start the conversion on. This will allow you to start later
+       in the SPR file if all the sprites will not fit in one PCX.
+
+
+
+Ground Up Graphics                   Page: 7.15
+
+   showpcx Utility
+
+     Display a PCX file.
+
+       showpcx file.pcx
+
+       The PCX file will be displayed using it's native palette. The
+       source for this utility is included in this package.
+
+
+
+Ground Up Graphics                   Page: 7.16
+
+   spr2c Utility
+
+     Convert a spr file to c code. This code can be linked into your
+     program so you don't have to ship separate SPR files. If you plan
+     to use the warping features this is a clean way to include the
+     sprites.
+
+       spr2c file.spr
+
+         Creates file.c and file.h
+
+
+
+Ground Up Graphics                   Page: 7.17
+
+   Ground Up Installer
+
+      The Ground Up Installer is a code shell to a program installation
+          utility. This is the installer used on the version of SPIN 
+          shipped on floppy disk.
+
+      This is meant as a starting point for your own installer.
+
+      This source is only provided with the registered version.
+
+
+
+Ground Up Graphics                   Page: 7.18
+
+   fix_size utility
+
+     fix_size take a SPR file and converts all the sprites to the
+     same size.
+
+     Usage:
+
+         fix_size file.spr new_x_size new_y_size
+
+  
+
+
+Ground Up Graphics                   Page: 7.19
+
+   GUG Fonts demo program:
+
+     The textfont directory holds a sample program that shows how to load
+     and display various fonts. It also shows how to use the internal
+     gug_font structure. Finally is also demonstrates how the font functions
+     default to the GLYPH font is no font is loaded.
+
+
+
+Ground Up Graphics                   Page: 8.1
+
+  Example programs:
+ 
+    Included in the package:
+
+        TEST.DIR     - Calls a large number of the functions,
+                       shows usage of standard and compiled sprites.
+
+        SPIN_1.DIR   - How to compile sprites and use them in you
+                       own code.
+
+        BMARK.DIR    - Benchmarks many of the GUG functions. Also show's
+                       how to call many of the functions.
+
+        WARP.DIR     - Example code for calling the warping functions.
+
+        JOY.DIR      - How to use the joysticks. Example of how to
+                       alternate reading the X/Y axis during a game.
+
+        SHOWPCX.DIR  - Source code to read and display PCX file.
+                     
+        SPIRO.DIR    - Uses the PIX functions and the Widgets functions
+                       to emulate a simple SpiroGraph.
+
+        BITM.DIR     - Example of using the Joystick functions and the 
+                       warping functions. 
+
+        TESTFONT.DIR - Examples of loading a font and displaying it.
+
+        The SPIN Playable Game Demo is available separately.
+
+    Please study the source code for a better understanding of GUG,
+    also please check out the makefile and link.cmd files for examples
+    of how to build projects.
+
+
+
+Ground Up Graphics                   Page: 8.2
+
+  GUG Beta Directory Structure:
+
+  The GUGnnnnn.ZIP file should be unzipped using PKUNZIP (V2.04) with
+  the -D option to allow it to recreate the directory structure.
+
+    pkunzip -D GUGnnnnn.ZIP
+
+
+  The GUG Directory Structure.
+
+       root\
+         GUG Tool's executables
+         GUG Doc's
+         LIB1\
+           The GUG include files
+           The GUG Library
+         TEST\
+           Example code to test basic GUG functions and the mouse
+         SPIN_1\
+           Example code for compiled sprites, see the readme.txt file
+         BMARK\
+           Example use of the timers
+         WARP\
+           Example use of the Joystick functions
+         JOY\
+           Example use of the Joystick functions
+         SHOWPCX\
+           Example to load and display a PCX file.
+         SPIRO\
+           SpiroGraph demo.
+         BITM\
+           Joystick Demo and Warping Demo
+         TESTFONT\
+           Font examples.
+
+   The example MAKEFILE's and LINK.CMD files expect to find this directory
+   structure.
+
+   They also expect to find the WCL386 and WASM environmental variables
+   set to compile the code correctly. See section 1.2 for examples of
+   setting these variables.
+
+
+
+Ground Up Graphics                   Page: A
+
+  Typical GUG Program Flow:
+  This is NOT functional code!!!
+
+#include "stdio.h"
+#include "gug.h"
+#include "colors.h"
+
+void main() {
+  char *sprite = { data for sprite };   // sprite's information
+
+  if (GUGInitialize(void) == 0) {       // did we fail to initialize
+    printf("Not able to initialize graphics system\n");
+    return;
+  }
+
+  do {
+    // these command work against the working 'video working page'
+    //  and will NOT be seen on the screen until copied!
+    GUGClearDisplay(void);                  // clear the display
+    GUGLine(10,10,310,190,15);              // draw a line
+    GUGPutFGSprite(20,40,sprite);           // display a sprite
+    GUGPutText(150,100,RED,"Text in RED");  // display some text
+    GUGPrintGreen5x10(150,110,"Compiled Green Text"); // compiled text
+
+    GUGVSync();                             // wait for a vertical sync
+    GUGCopyToDisplay();                     // copy the image to 
+                                            //   the VGA's memory
+  }
+  while (not end of game);
+  
+  GUGEnd(void);                         // exit the graphics system
+}
+
+
+
+Ground Up Graphics                   Page: B1
+
+  Sprite Format:
+
+   Standard Sprites:
+
+    Sprites are stored in a simple character based format.
+
+    The first two bytes of the character buffer contain a int value (16 bit)
+    that is the width of the sprite image, the next two characters contain
+    the height of the sprite, the remaining bytes (width * height) contain
+    the actual sprite.
+
+    char a_sprite =
+    {  0x02,           // lower byte of width
+       0x00,           // upper byte of width
+       0x03,           // lower byte of height
+       0x00,           // upper byte of height
+       0xFE,0xDF,      // first row of sprite
+       0x23,0x32,      // second row of sprite
+       0x10,0xAB       // third row of sprite
+    }
+
+
+Sprite Structure Format:
+
+   Sprites are limited to 320x200 pixels maximum:
+
+     struct define_a_sprite {
+       unsigned char   x_pixels;   /* width of the sprite  - Low Byte    */
+       unsigned char   x_pixels;   /* width continued      - High Byte   */
+       unsigned char   y_pixels;   /* height of the sprite - Low Byte    */
+       unsigned char   y_pixels;   /* height continued     - High Byte   */
+       unsigned char   data[];     /* data for sprite                    */
+     };
+
+
+
+Ground Up Graphics                   Page: B3
+
+  Sprite Storage File Format:
+
+    Sprites stored on the disk (*.spr files) are stored in a binary format,
+    the actual format of the sprite is the same as the in-memory image
+    described above. The first byte of the file defines the number of
+    sprites in the file -1.
+
+    Older GUG sprite files do NOT have a 35 byte header, newer GUG sprite
+    file will have this header. GUGLoadSprite() handles both versions
+    automatically.
+
+    New GUG Sprite Header:
+       12345678901234567890123456789012345
+       GROUND UP sprite file n.nn      xyz
+         n.nn = version number (I.E. 1.00)
+         x    = Carriage Return <CR>
+         y    = Form Feed       <FF>
+         z    = End Of File     <EOF>
+
+    If you type a GUG sprite file you will see this header only and none of
+    the info in the file. You will need to use low level I/O to process
+    these files to enable you to read past the <EOF> in the header.
+
+    The actual data starts at:
+       Byte  0 in the old format.
+       Byte 36 in the new format.
+
+    First Byte:  (Byte count 0 or 36 depending on header)
+
+      The number of sprites in the file - 1 assuming a 0 (zero) based
+      count, IE:
+
+           3 = four total sprites numbered 0 .. 2
+           9 = nine total sprites numbered 0 .. 8
+
+    Second Byte:
+
+      Unused.
+
+    Third to nth byte:
+
+      First sprite image, see the sprite formats described in the appendices.
+
+
+
+Ground Up Graphics                   Page: C
+
+
+  Functions/Source Files
+
+
+               User Function Name         Source File
+               --------------------------------------
+               GUGCalcSize_...............calcsize.c
+               GUGClearDisplay_...........clear.c
+               GUGClipSprite_.............clipspr.c
+               GUGCopyToDisplay_..........copypage.c
+               GUGCopyToBuffer_...........copybuff.c
+               GUGCyclePalette_...........cyclepal.c
+               GUGEnd_....................end.c
+               GUGFadeToColor_............fade2col.c            
+               GUGFadeToPalatte_..........fade2pal.c
+               GUGFillRectangle_..........fillrect.c            
+               GUGGetPalette_.............getpal.c
+               GUGGetPixel_...............getpixel.c            
+               GUGHLine_..................hline.c
+               GUGInitialize_.............init.c            
+               GUGLine_...................line.c
+               GUGLoadPalette_............loadpal.c
+               GUGLoadPcx_................loadpcx.c            
+               GUGLoadSprite_.............loadspr.c
+               GUGmake666Palette_.........make666.c            
+               GUGPutBGSprite_............putbgspr.c
+               GUGPutFGSprite_............putfgspr.c            
+               GUGPutMNSprite_............putmnspr.c
+               GUGPutText_................puttext.c            
+               GUGRectangle_..............rect.c
+               GUGSavePalette_............savepal.c            
+               GUGSaveSprite_.............savespr.c
+               GUGSetDisplay_.............clrcolor.c            
+               GUGSetPalette_.............setpal.c            
+               GUGSetPixel_...............setpixel.c
+               GUGSpriteHeight_...........sprheigh.c            
+               GUGSpriteWidth_............sprwidth.c
+               GUGTestPixel_..............testpixl.c            
+               GUGTextWidth_..............txtwidth.c
+               GUGVLine_..................vline.c            
+               GUGRestorePage_............rstrpage.c
+               GUGVSync_..................vsync.c
+               GUGSpriteSize_.............sprsize.c
+               GUGSaveDisplay_............savepage.c
+               GUGRegControlText..........widgets.c    (GUG_reg_control_)
+               GUGRegControlSprite........widgets.c    (GUG_reg_control_)
+               GUGRegRadioText............widgets.c    (GUG_reg_control_)
+               GUGRegRadioSprite..........widgets.c    (GUG_reg_control_)
+               GUGRegDraw.................widgets.c    (GUG_reg_control_)
+               GUGRegHidden...............widgets.c    (GUG_reg_control_)
+               GUGRegHotKey...............widgets.c    (GUG_reg_control_)
+
+
+Ground Up Graphics                   Page: C2
+
+
+  Functions/Source Files continued
+
+
+               User Function Name         Source File
+               --------------------------------------
+               GUGProcessControls_........widgets.c
+               GUGGetRadioStatus_.........widgets.c
+               GUGMessageBox_.............widgets.c
+               GUGSpriteShiftRight_.......shift_r.c
+               GUGSpriteShiftLeft_........shift_l.c
+               GUGSpriteShiftUp_..........shift_u.c
+               GUGSpriteShiftDown_........shift_d.c
+               GUGSpriteRotate90_.........rotate90.c
+               GUGSpriteVFlip_............vflip.c
+               GUGSpriteHFlip_............hflip.c
+               GUGFastCopy_...............fastcpy1.asm
+               GUGFastClear_..............fastclr1.asm
+               GUGFPAssignInt_............fixed.c
+               GUGFPAssignFloat_..........fixed.c
+               GUGFPMul_..................fixed.c
+               GUGFPAdd_..................fixed.c
+               GUGFPDiv_..................fixed.c
+               GUGFPGetInt_...............fixed.c
+               GUGFPGetFloat_.............fixed.c
+               GUGDetectX1()_.............joy_a.asm
+               GUGDetectX2()_.............joy_a.asm
+               GUGReadX1Axis_.............joy_a.asm
+               GUGReadY1Axis_.............joy_a.asm
+               GUGReadX2Axis_.............joy_a.asm
+               GUGReadY2Axis_.............joy_a.asm
+               GUGScaleX1Axis_............joy_c.c
+               GUGScaleY1Axis_............joy_c.c
+               GUGScaleX2Axis.............joy_c.c
+               GUGScaleY2Axis_............joy_c.c
+               GUGReadButtons_............joy_a.asm
+               GUGJoystickCalibrate_......joy_c.c
+               GUGGetSpritePixel_.........setsppxl.c
+               GUGSetSpritePixel_.........getsppxl.c
+               GUGResizeRectangle_........rszrect.c
+               GUGResizeSpriteToRectangle_rszsprec.c
+               GUGResizeSpriteToSprite_...rszsp_sp.c
+               GUGSavePCX_................savepcx.c
+               GUGRemapPalette_...........map_pal.c
+               GUGCircle_.................circle.c
+               GUGFillCircle_.............fillcrcl.c
+               GUGFlipXFGSprite_..........fxfgspr.c
+               GUGFlipXBGSprite_..........fxbgspr.c
+               GUGFlipXMNSprite_..........fxmnspr.c
+               GUGFlipYFGSprite_..........fyfgspr.c
+               GUGFlipYBGSprite_..........fybgspr.c
+               GUGFlipYMNSprite_..........fymnspr.c
+               GUGFillPoly_...............fillpoly.c
+               GUGPoly_...................poly.c
+               GUGCopyRectToRect_.........rct2rct.c
+
+
+Ground Up Graphics                   Page: C3
+
+
+  Functions/Source Files continued
+
+
+               User Function Name         Source File
+               --------------------------------------
+               GUGFloodFill_..............ffill.c
+               GUGFadeToDisplay_..........fadecopy.c
+               GUGReadPCX_................loadpcx1.c
+               GUGWritePCX_...............savepcx1.c
+               GUGFreePCX_................freepcx1.c
+               GUGShowPCX_................showpcx1.c
+               GUGWaitForKey_.............waitkey.c
+               GUGLoadFont_...............fonttext.c
+               GUGPrintFont_..............fonttext.c
+               GUGCenterFont_.............fonttext.c
+               GUGSetFont.................gug.h - macro to GUG_set_font()
+               GUGSetPaletteEntry_........palentry.c
+               GUGPutFGPCX_...............gugfgpcx.c
+               GUGPutBGPCX_...............gugbgpcx.c
+               GUGPutMNPCX_...............gugmnpcx.c
+               GUGDebugVSync_.............dvsync.c
+               GUGDebugString_............debug.c
+               GUGDebugStringAtLine.......debug.c
+               GUGDebugStringAtXY.........debug.c
+               GUGDebugClear..............debug.c
+               GUGClipFGSprite_...........clpfgspr.c
+               GUGClipBGSprite_...........clpbgspr.c
+               GUGClipMNSprite_...........clpmnspr.c
+
+
+Ground Up Graphics                   Page: C4
+
+
+       Internal Functions / Reserved Names
+
+
+               Internal Function Name     Source File
+               --------------------------------------
+               GUG_display_character_.....puttext.c
+               GUG_fix_point_.............fixpoint.c            
+               GUG_get_pal_raw_...........getpal.c
+               GUG_h_line_................line.c            
+               GUG_put_pal_raw_...........setpal.c
+               GUG_v_line_................line.c            
+               GUG_reg_control_...........widgets.c
+               GUG_draw_control_up_.......widgets.c
+               GUG_draw_control_dn_.......widgets.c
+               GUG_draw_sprite_up_........widgets.c
+               GUG_draw_sprite_dn_........widgets.c
+               GUG_handle_radio_text_.....widgets.c
+               GUG_draw_radio_text_.......widgets.c
+               GUG_handle_radio_sprite_...widgets.c
+               GUG_draw_radio_sprite_.....widgets.c
+               GUG_set_font_..............fonttext.c
+
+
+                    (Reserved variable names)
+               Variable Name              Type
+               --------------------------------------
+               GUG_Font_Height............int            
+               GUG_Font_Width.............int
+               VGA_MEMORY.................char *         
+               VGA_POINTER................char *
+               VGA_START..................char *            
+               GUG_Old_Palette............char *
+               GUG_666_Palette............char *
+               GUG_key_table..............char *
+               inregs,outregs.............REGS
+               segreg.....................SREG
+               GUG_cntrl..................struct
+               GUG_Controls_Used..........int
+               GUG_KBD_Installed..........int
+               GUGJ1XMax..................int
+               GUGJ1XMin..................int
+               GUGJ1YMax..................int
+               GUGJ1YMin..................int
+               GUGJ2XMax..................int
+               GUGJ2XMin..................int
+               GUGJ2YMax..................int
+               GUGJ2YMin..................int
+               GUGX1Active................int
+               GUGX2Active................int
+               pix_x......................int
+               pix_y......................int
+               pix_c......................int
+               gug_font...................struct GUG_FONT
+
+
+Ground Up Graphics                   Page: C5
+
+
+       Defined Values
+
+               defined name      value     where
+               --------------------------------------
+               OFFSET               +1     widgets.h
+               GUG_CONTROL_BUTTON    1     widgets.h
+               GUG_SPRITE_BUTTON     2     widgets.h
+               GUG_RADIO_TEXT        3     widgets.h
+               GUG_RADIO_SPRITE      4     widgets.h
+               GUG_DRAW_CONTROL      5     widgets.h
+               GUG_HIDDEN_CONTROL    6     widgets.h
+               GUG_FAIL             -1     widgets.h
+               GUG_SUCCESS           1     widgets.h
+               GUG_UNSELECTED        0     widgets.h
+               GUG_SELECTED          1     widgets.h
+               MOUSE_LOADED         -1     gug.h
+               MOUSE_FAILED          0     gug.h
+               MOUSE_NO_BUTTON       0     gug.h
+               MOUSE_BUTTON_LEFT     1     gug.h
+               MOUSE_BUTTON_RIGHT    2     gug.h
+               SHIFT                 8     fixed.h
+               MULTI               256     fixed.h
+               J1_B1              0x01     gug.h - Joystick 1 Button 1 mask
+               J1_B2              0x02     gug.h - Joystick 1 Button 2 mask
+               J2_B1              0x04     gug.h - Joystick 2 Button 1 mask
+               J2_B2              0x08     gug.h - Joystick 2 Button 2 mask
+               GUG_NO_FADE           0     gug.h
+               GUG_RECT_FADE         1     gug.h
+               GUG_PIXEL_FADE        2     gug.h
+               GUG_SWIRL_FADE        3     gug.h
+               GUG_SLIDEX_FADE       4     gug.h
+               GUG_SLIDEY_FADE       5     gug.h
+               GUG_PALETTE_FADE      6     gug.h
+               MAX_FADE              6     gug.h
+               GUG_RANDOM_FADE      -1     gug.h
+               GUG_FONT_FAIL         0     gug.h
+               GUG_FONT_OK           1     gug.h
+
+
+     keydefs.h contains a list of the indexes defined for the keyboard.
+     colors.h contains a list of the indexes defined for the 666 palette.
+     pi.h contains a list of math constants
+
+
+
+Ground Up Graphics                   Page: C6
+
+
+       Structure Names:
+
+               defined name    where   for
+               ---------------------------------------------
+               GUG_PCX         gug.h   Contain info on a PCX
+               GUGVertex       gug.h   Contain a Vertex
+               GUG_FONT        gug.h   Contain a GUG Font

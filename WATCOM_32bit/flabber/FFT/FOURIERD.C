@@ -1,0 +1,204 @@
+/*============================================================================
+
+       fourierd.c  -  Don Cross <dcross@intersrv.com>
+
+       http://www.intersrv.com/~dcross/fft.html
+
+       Contains definitions for doing Fourier transforms
+       and inverse Fourier transforms.
+
+       This module performs operations on arrays of 'double'.
+
+============================================================================*/
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+
+#include "fourier.h"
+#include "ddcmath.h"
+
+#define CHECKPOINTER(p)  CheckPointer(p,#p)
+
+static void CheckPointer ( void *p, char *name )
+{
+   if ( p == NULL )
+   {
+      fprintf ( stderr, "Error in fft_double():  %s == NULL\n", name );
+      exit(1);
+   }
+}
+
+
+void fft_double ( unsigned NumSamples,
+									signed int *RealIn,
+                  double *ImagIn,
+                  double *RealOut,
+                  double *ImagOut )
+{
+   unsigned NumBits;    /* Number of bits needed to store indices */
+   unsigned i, j, k, n;
+   unsigned BlockSize, BlockEnd;
+
+   double angle_numerator = 2.0 * DDC_PI;
+   double delta_angle;
+   double alpha, beta;  /* used in recurrence relation */
+   double delta_ar;
+   double tr, ti;     /* temp real, temp imaginary */
+   double ar, ai;     /* angle vector real, angle vector imaginary */
+
+   if ( !IsPowerOfTwo(NumSamples) )
+   {
+      fprintf ( stderr,
+                "Error in fft():  NumSamples=%u is not power of two\n",
+                NumSamples );
+      exit(1);
+   }
+
+
+   CHECKPOINTER ( RealIn );
+   CHECKPOINTER ( RealOut );
+   CHECKPOINTER ( ImagOut );
+
+   NumBits = NumberOfBitsNeeded ( NumSamples );
+
+   /*
+   **   Do simultaneous data copy and bit-reversal ordering into outputs...
+   */
+
+   for ( i=0; i < NumSamples; i++ )
+   {
+      j = ReverseBits ( i, NumBits );
+
+      RealOut[j] = RealIn[i];
+			ImagOut[j] = 0.0;
+   }
+
+   /*
+   **   Do the FFT itself...
+   */
+
+   BlockEnd = 1;
+	 for ( BlockSize = 2; BlockSize <= NumSamples; BlockSize <<= 1 )
+   {
+      delta_angle = angle_numerator / (double)BlockSize;
+      alpha = sin ( 0.5 * delta_angle );
+      alpha = 2.0 * alpha * alpha;
+      beta = sin ( delta_angle );
+
+      for ( i=0; i < NumSamples; i += BlockSize )
+      {
+         ar = 1.0;   /* cos(0) */
+         ai = 0.0;   /* sin(0) */
+
+         for ( j=i, n=0; n < BlockEnd; j++, n++ )
+         {
+            k = j + BlockEnd;
+            tr = ar*RealOut[k] - ai*ImagOut[k];
+            ti = ar*ImagOut[k] + ai*RealOut[k];
+
+            RealOut[k] = RealOut[j] - tr;
+            ImagOut[k] = ImagOut[j] - ti;
+
+            RealOut[j] += tr;
+            ImagOut[j] += ti;
+
+            delta_ar = alpha*ar + beta*ai;
+            ai -= (alpha*ai - beta*ar);
+            ar -= delta_ar;
+         }
+      }
+
+      BlockEnd = BlockSize;
+   }
+
+}
+
+
+void fft_float ( unsigned NumSamples,
+									signed int *RealIn,
+									float *ImagIn,
+									float *RealOut,
+									float *ImagOut )
+{
+   unsigned NumBits;    /* Number of bits needed to store indices */
+   unsigned i, j, k, n;
+   unsigned BlockSize, BlockEnd;
+
+	 float angle_numerator = 2.0 * DDC_PI;
+	 float delta_angle;
+	 float alpha, beta;  /* used in recurrence relation */
+	 float delta_ar;
+	 float tr, ti;     /* temp real, temp imaginary */
+	 float ar, ai;     /* angle vector real, angle vector imaginary */
+
+   if ( !IsPowerOfTwo(NumSamples) )
+   {
+      fprintf ( stderr,
+                "Error in fft():  NumSamples=%u is not power of two\n",
+                NumSamples );
+      exit(1);
+   }
+
+
+   CHECKPOINTER ( RealIn );
+   CHECKPOINTER ( RealOut );
+   CHECKPOINTER ( ImagOut );
+
+   NumBits = NumberOfBitsNeeded ( NumSamples );
+
+   /*
+   **   Do simultaneous data copy and bit-reversal ordering into outputs...
+   */
+
+   for ( i=0; i < NumSamples; i++ )
+   {
+      j = ReverseBits ( i, NumBits );
+
+      RealOut[j] = RealIn[i];
+			ImagOut[j] = 0.0;
+   }
+
+   /*
+   **   Do the FFT itself...
+   */
+
+   BlockEnd = 1;
+	 for ( BlockSize = 2; BlockSize <= NumSamples; BlockSize <<= 1 )
+   {
+			delta_angle = angle_numerator / (float)BlockSize;
+      alpha = sin ( 0.5 * delta_angle );
+      alpha = 2.0 * alpha * alpha;
+      beta = sin ( delta_angle );
+
+      for ( i=0; i < NumSamples; i += BlockSize )
+      {
+         ar = 1.0;   /* cos(0) */
+         ai = 0.0;   /* sin(0) */
+
+         for ( j=i, n=0; n < BlockEnd; j++, n++ )
+         {
+            k = j + BlockEnd;
+            tr = ar*RealOut[k] - ai*ImagOut[k];
+            ti = ar*ImagOut[k] + ai*RealOut[k];
+
+            RealOut[k] = RealOut[j] - tr;
+            ImagOut[k] = ImagOut[j] - ti;
+
+            RealOut[j] += tr;
+            ImagOut[j] += ti;
+
+            delta_ar = alpha*ar + beta*ai;
+            ai -= (alpha*ai - beta*ar);
+            ar -= delta_ar;
+         }
+      }
+
+      BlockEnd = BlockSize;
+   }
+
+}
+
+
+
+/*--- end of file fourierd.c ---*/

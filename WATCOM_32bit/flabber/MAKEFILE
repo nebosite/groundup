@@ -1,0 +1,78 @@
+#
+# Flabbergasted makefile
+#
+
+CC=wcl386
+CL=wcl386
+
+# -c -l=dos4g
+# above is original gug options
+# CCO=/cc++ /zq /w5 /e5 -c -l=dos4g /dDEMOVERSION
+# Demo version options:CCO=/cc++ /zq /otrl -c -l=dos4g /dDEMOVERSION /k64000 /s
+# Registered options:
+CCO=/cc++ /zq /otrl -c -l=dos4g /k64000 /s
+# optional options:   -debug -sg
+CCL=/"lib vat.lib"
+
+SOUNDS =
+#        snd00.obj snd02.obj snd03.obj snd04.obj snd05.obj snd06.obj snd07.obj &
+#        snd08.obj snd09.obj snd10.obj snd11.obj snd12.obj snd13.obj snd14.obj &
+#        snd15.obj snd16.obj snd17.obj snd18.obj snd19.obj snd20.obj snd21.obj &
+#        snd22.obj snd23.obj snd24.obj snd25.obj snd26.obj snd27.obj snd28.obj &
+#        snd29.obj snd30.obj snd31.obj snd32.obj snd33.obj snd34.obj snd35.obj &
+#        snd36.obj snd37.obj snd38.obj snd39.obj snd40.obj snd41.obj snd42.obj &
+#        snd43.obj snd44.obj snd45.obj snd46.obj snd47.obj snd48.obj snd49.obj &
+#        snd50.obj snd51.obj snd52.obj snd53.obj snd54.obj snd55.obj snd56.obj &
+#        snd57.obj snd58.obj snd59.obj snd60.obj snd61.obj snd62.obj snd63.obj &
+#        snd64.obj snd65.obj snd66.obj snd67.obj snd68.obj snd69.obj snd70.obj
+
+SPRITES = MC_SQARE.obj mc_circl.obj mc_slash.obj mc_slant.obj &
+          mc_spray.obj mc_x.obj mc_plus.obj mc_fill.obj flabbig.obj &
+          flabsm.obj urd.obj easthead.obj
+TEXT = title.obj
+FONTS = small.obj 8x11snsf.obj computer.obj digital.obj dragon.obj &
+				outline.obj roman2.obj simpagar.obj
+OBJ= main.obj sounds.obj util.obj flabber.obj dopal.obj pics.obj &
+     dokey.obj animfunc.obj domouse.obj routine.obj miscfunc.obj &
+     fft.obj $(SOUNDS) $(SPRITES) $(FONTS) $(TEXT)
+LNK=flabber.lnk
+lnk_dependencies = makefile
+
+
+flabber.exe : $(OBJ) $(LNK)
+		wlink @$(LNK)
+#    @%make bindit
+
+$(LNK) : $(lnk_dependencies)
+		%create $(LNK)
+		@%append $(LNK) debug    all
+		@%append $(LNK) system   dos4g
+		@%append $(LNK) option   caseexact
+								@%append $(LNK) option   stack=512000
+		@%append $(LNK) name     flabber
+		@%append $(LNK) lib      \watcom\lib386\dos\gug,\watcom\vat\vat
+#    @%make linkit
+		@for %i in ($(OBJ)) do @%append $(LNK) file %i
+
+.EXTENSIONS:
+.EXTENSIONS: .exe
+.EXTENSIONS: .obj
+.EXTENSIONS: .c .h
+
+.c:.;.\waves;.\pics;.\fonts;
+.h:.;.\waves;.\pics;.\fonts;
+
+.c.obj :
+ $(CC) $(CCO) $(CCL) $[*
+
+clean: .symbolic
+		@erase *.obj
+		@erase *.err
+		@erase *.exe
+		@erase *.lnk
+		@erase *.res
+		@erase *.rex
+		@erase *.lib
+
+
+

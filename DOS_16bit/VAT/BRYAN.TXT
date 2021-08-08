@@ -1,0 +1,617 @@
+[ ] Moved midi_mpuport() into vat.c
+[ ] Moved MPUExit() into vat.c
+[ ] Moved mpu_available() to vat.c
+[ ] Added getch() in error section in main() of VATdemo after "press a key"
+    and before SBsetUp()
+[ ] Added To midi.c:
+            (in the midi.c header)
+    SHORT          midi_fmpatchmapoverride = FALSE;
+            (in midi_player() at the program change code)
+    if(!midi_fmpatchmapoverride) midi_fmpatchmap[i] = b1;
+            (in MidiCommand())
+    SHORT i;
+            (in MidiCommand in v_stop before FMreset
+    for(i = 0; i < 9; i++) FMSetVolume(1,0);
+
+[ ] removed from VATdemo:
+
+  gotoxy(30,14);
+  vcprintf("R   - Rotate FM patchmap (%s)",instname[myfmpatchmap[1]]);
+
+    else if(toupper(r) == 'R') {              // Rorate FM patchmap
+      myfmpatchmap[1]++;
+      if(myfmpatchmap[1] > 15) myfmpatchmap[1] = 0;
+      myfmpatchmap[2] = myfmpatchmap[1];
+      gotoxy(55,14);
+      vcprintf("(%s)     ",instname[myfmpatchmap[1]]);
+    }
+
+[ ] Added to SBCleanup:
+
+  SHORT i;
+
+  for(i = 0; i < 9; i++) FMSetVolume(1,0);
+  FMReset();
+
+[ ] Turned off Word alignment in compiler options
+[ ] Added  to:  s3m.c,
+
+    #include <dos.h>
+
+[ ] Changed pos to a dword in vat.h:
+
+  DWORD    dummy;
+  DWORD   position;                   // data position used internally by sbint
+  DWORD   dummy2;
+  DWORD   *pos;                       // pointer to current byte position
+
+[ ] optimized waveplayer()
+
+void wavplayer(void)
+{
+  WORD j;
+  SOUNDEFFECT VFAR *s,*hold;
+  SAMPLE *data;
+  DWORD dummy=0,position,dummy2=0,*pos,length,pinc;
+  BYTE volume;
+
+  pos = (DWORD *)(((BYTE *)&position)+1);
+
+  DOSYNC1;
+                                   // ***********************************
+                                   // *                                 *
+                                   // *       Mix in plain sounds       *
+                                   // *                                 *
+                                   // ***********************************
+  s = soundlist;
+  while(s){
+    DOSYNC1;
+    hold = s->next;
+    if(s->active && s->type == v_plain) {
+      data = s->data;              // set up data pointer
+      if(*s->pos >= dma_bufferlen) {// enough left to fill the buffer?
+        for(j = 0; j < dma_bufferlen; j++) {
+          *(mix_buffer+j) += *(data++);
+        }
+        s->data = data;
+        *s->pos -= (dma_bufferlen);
+      }
+      else {                         // else play what is left
+        position = *s->pos;
+        for(j = 0; j <= position; j++) {
+          *(mix_buffer+j) += *(data++);
+        }
+        s->data = data;
+
+        if(s->w->next) {             // More to play?
+          s->w = s->w->next;        // set up next link
+          s->data = s->w->data;
+          s->length = s->w->chunk_size-1;
+          *s->pos = (WORD)s->length;
+                                    // Mix the rest of the dma_buffer
+          if(*s->pos > (dma_bufferlen-j)) {
+            *s->pos -= (dma_bufferlen-j);
+            data = s->data;
+            while(j < dma_bufferlen) {
+              *(mix_buffer+j) += *(data++);
+              j++;
+            }
+            s->data = data;
+          }
+          else {
+            data = s->data;
+            while(*s->pos) {        // ... or mix rest of sample
+              *(mix_buffer+j) += *(data++);
+              j++;
+              *s->pos--;
+            }
+            s->data = data;
+          }
+        }
+        else if(!s->repeat) {       // Do we not repeat this sample?
+
+          if(s->chain) {            // Is there an effect to play after this?
+            (s->chain)->next = soundlist;
+            soundlist = s->chain;
+            s->chain = NULL;        // Break link to hide from freesound()
+            sounds_in_queue++;
+          }
+
+          freesound(s->id);          // Terminate it if not.
+          break;
+        }
+        else {                      // Decrememnt the repeat counter
+          if(s->repeat > 0) s->repeat--; // -1 = infinity
+          s->w = s->w->head;
+          s->data = s->w->data;
+          s->length = s->w->chunk_size-1;
+          *s->pos = s->length;
+        }
+      }
+    }
+    s = hold;
+  }
+  DOSYNC1;
+
+                                   // ***********************************
+                                   // *                                 *
+                                   // *      Mix in fancy sounds        *
+                                   // *                                 *
+                                   // ***********************************
+  s = soundlist;
+  while(s){
+    DOSYNC1;
+    hold = s->next;
+    if(s->active && s->type == v_fancy) {
+      data = s->data;               // Set up speed varaibles
+      position = s->position;
+      length = s->length * 256;
+      pinc = s->pinc;
+      volume = s->volume;
+
+      for(j = 0; j < dma_bufferlen; j++) {
+        DOSYNC2;
+                                    // Add this byte to the mixing buffer
+        *(mix_buffer+j) += (*(data + (ARRAYTYPE)*pos)* volume)>>5;
+                                    // Here is where the frequency magic
+                                    // happens.  I use fixed point arithmatic
+                                    // to increment the sample position pointer
+                                    // at different rates.
+        position += pinc;
+                                    // Are we at the end of the sample?
+        if(position >= length) {
+          if(s->w->next) {          // More to play?
+            s->w = s->w->next;      // set up next link
+            data = s->data = s->w->data;
+            *pos = *s->pos = 0;
+            length = s->length = s->w->chunk_size-1;
+            length *= 256;
+                                    // Mix the rest of the dma_buffer
+            while(j < dma_bufferlen && position < length) {
+              *(mix_buffer+j) += (*(data + *pos)*volume)>>5;
+              position += pinc;
+              j++;
+            }
+
+            if(position >= length)  break;
+          }
+          else if(!s->repeat) {     // Do we not repeat this sample?
+
+            if(s->chain) {          // Is there an effect to play after this?
+              (s->chain)->next = soundlist;
+              soundlist = s->chain;
+              s->chain = NULL;      // Break link to hide from freesound()
+              sounds_in_queue++;
+            }
+
+            freesound(s->id);        // Terminate it if not.
+            break;
+          }
+          else {                    // Decrememnt the repeat counter
+            if(s->repeat > 0) s->repeat--; // -1 = infinity
+            position = s->position = 0;
+            s->w = s->w->head;
+            data = s->data = s->w->data;
+            length = s->length = s->w->chunk_size-1;
+            length *= 256;
+          }
+        }
+        s->position = position;
+      }
+    }
+    s = hold;
+  }
+}
+
+[ ] Optimized modplayer()
+void modplayer(void)
+{
+  static SHORT i,j,vol;
+  SHORT lastbyte;
+  DWORD dumm1=0,position=0,dummy2=0,*pos,end,pinc;
+  SAMPLE *data;
+
+  pos = (DWORD *)(((BYTE *)&position)+1);
+
+
+  if(mod_reset) {                // Reset the MOD?
+    for(i = 0; i < 4; i++ ) {    // Reset all four channels
+      chan[i].bufferdummy1 = 0;
+      chan[i].bufferdummy2 = 0;
+      chan[i].sdata = NULL;
+      chan[i].offset = 0;
+      chan[i].rlength = 0;
+      chan[i].end = 0;
+      chan[i].volume = 0;
+      chan[i].sample_number = 0;
+      chan[i].position= 0;
+      chan[i].pos = (DWORD *)(((BYTE *)&chan[i].position)+1);
+      chan[i].counter = 0;
+      chan[i].pinc = 0;
+      chan[i].effect = 0;
+      chan[i].x = 0;
+      chan[i].y = 0;
+    }
+                                     // Reset global mod variables
+    mod_pattern=mod_data->pattern_data[mod_data->ptable[0]];
+    mod_pstop = mod_pattern+1024;
+    mod_tablepos=0;
+    mod_bytespertick = (WORD)(((LONG)sample_rate *220)/11000L);
+    mod_ticksperdivision = 6;
+    mod_currentbyte = 0;
+    mod_currenttick = 0;
+    mod_divoffset =0;
+    mod_reset = FALSE;           // Reset the reset switch
+  }
+
+                                     // **************************************
+                                     // This little section mixes all the mod
+                                     // channels if the number of bytes left
+                                     // to go until the next tick is bigger
+                                     // than the dma_buffer length.
+                                     // **************************************
+  if(mod_currentbyte > dma_bufferlen) {
+    for(i = 0; i < 4; i++) {     // Loop through the four channels
+
+                                     // If the volume is zero or if the sample
+                                     // has ended, then there is no need to mix
+                                     // anything.
+
+      if(chan[i].volume && *chan[i].pos <= chan[i].end) {
+        vol = (chan[i].volume * mod_volume)/100;
+        data = chan[i].sdata;
+        position = chan[i].position;
+        end = chan[i].end*256;
+        pinc = chan[i].pinc;
+                                    // Loop along the length of the mixing buffer
+        for(j = 0; j < dma_bufferlen; j++) {
+          DOSYNC2;
+                                 // Add this byte to the mixing buffer
+          *(mix_buffer+j) += (*(data + (ARRAYTYPE)*pos)*vol)>>6;
+                                     // Here is where the frequency magic
+                                     // happens.  I use fixed point arithmatic
+                                     // to increment the sample position pointer
+                                     // at different rates.
+          position += pinc;
+                                    // Are we at the end of the sample?
+          if(position >= end) {
+                                     // Repeating?  Move the position back.
+            if(chan[i].rlength > 1) {
+              *pos -= chan[i].rlength;
+              *chan[i].pos = *pos;
+
+              chan[i].counter = 0;
+              end = chan[i].end = chan[i].offset+chan[i].rlength;
+              end *=256;
+            }
+
+            else break;          // else Jump out of mixing loop
+          }
+        }
+        chan[i].position = position;
+      }
+    }
+                                     // Keep track of where we are.
+    mod_currentbyte -= dma_bufferlen;
+  }
+                                     // **************************************
+                                     // This little section mixes all the mod
+                                     // channels if the number of bytes left
+                                     // to go until the next tick is *smaller*
+                                     // than the dma_buffer length.
+                                     //
+                                     // It first mixes what is left, then it
+                                     // decrements the tick and calls out
+                                     // to the module handling routines.
+                                     // Once that is done, it mixes the
+                                     // rest of the DMA buffer.
+                                     //
+                                     // The two mixing routines are extacly the
+                                     // same as the one above except the first
+                                     // one loops over the first part of the
+                                     // mixing buffer, and the second mixes
+                                     // over the rest.
+                                     // **************************************
+
+  else {
+                                     // Mix the first part of the buffer
+    for(i = 0; i < 4; i++) {
+      if(chan[i].volume && *chan[i].pos <= chan[i].end) {
+        vol = (chan[i].volume * mod_volume)/100;
+        data = chan[i].sdata;
+        position = chan[i].position;
+        end = chan[i].end*256;
+        pinc = chan[i].pinc;
+
+        for(j = 0; j < mod_currentbyte; j++) {
+          DOSYNC2;
+          *(mix_buffer+j) += (*(data + (ARRAYTYPE)*pos)*vol)>>6;
+          position += pinc;
+                                 // Are we at the end of the sample?
+          if(position >= end) {
+                                 // Repeating?  Move the position back.
+            if(chan[i].rlength > 1) {
+              *pos -= chan[i].rlength;
+              *chan[i].pos = *pos;
+              chan[i].counter = 0;
+              end = chan[i].end = chan[i].offset+chan[i].rlength;
+              end *= 256;
+            }
+            else break;          // else Jump out of mixing loop
+          }
+        }
+        chan[i].position = position;
+      }
+    }
+
+    lastbyte = mod_currentbyte;  // Keep track of where we are inthe buffer
+
+                                     // Ready for next division?
+    if(mod_currenttick >= mod_ticksperdivision * (mod_patterndelay+1) ) {
+      mod_patterndelay = 0;      // Reset pattern delay
+      dodiv();                   // Handle the division commands.
+                                 // Are we at the end of the pattern?
+      if(mod_pattern == mod_pstop) {
+        mod_tablepos++;          // Next table!
+
+                                     // Done with tables?  Done with MOD.
+        if(mod_tablepos == mod_data->num_positions) {
+          mod_on = FALSE;
+          mod_reset = TRUE;
+
+          if(mod_data->repeatmusic) { // repeat?
+            if(mod_data->repeatmusic > 0) mod_data->repeatmusic--;
+            mod_on = TRUE;
+          }
+                                     // Check for a chain function
+          if(mod_data->chainfunc) mod_data->chainfunc(mod_data);
+
+                                     // Check for a chain
+          if(mod_data->chain) {
+            mod_data = mod_data->chain;
+            mod_on = TRUE;
+          }
+        }
+        else {                   // Otherwise, set pointer to next table
+          mod_pattern = mod_data->pattern_data[mod_data->ptable[mod_tablepos]];
+          mod_pstop = mod_pattern+1024;
+        }
+      }
+      mod_currenttick = 0;       // Reset the tick counter
+    }
+                                     // Reset the byte counter
+    mod_currentbyte = mod_bytespertick;
+
+    mod_currenttick++;           // Do our tick stuff.
+    dotick();
+
+                                     // Mix the rest of the buffer
+    for(i = 0; i < 4; i++) {
+      if(chan[i].volume && *chan[i].pos <= chan[i].end) {
+        vol = (chan[i].volume * mod_volume)/100;
+        data = chan[i].sdata;
+        position = chan[i].position;
+        end = chan[i].end*256;
+        pinc = chan[i].pinc;
+
+        for(j = lastbyte; j < dma_bufferlen; j++) {
+          DOSYNC2;
+          *(mix_buffer+j) += (*(data + (ARRAYTYPE)*pos)*vol)>>6;
+          position += pinc;
+                                     // Are we at the end of the sample?
+          if(position >= end) {
+                                  // Repeating?  Move the position back.
+            if(chan[i].rlength > 1) {
+              *pos -= chan[i].rlength;
+              *chan[i].pos = *pos;
+              chan[i].counter = 0;
+              end = chan[i].end = chan[i].offset+chan[i].rlength;
+              end *= 256;
+            }
+            else break;
+          }
+        }
+        chan[i].position = position;
+      }
+    }
+                                     // Update our position
+    mod_currentbyte -= (dma_bufferlen-lastbyte);
+  }
+
+  DOSYNC1;
+}
+
+
+[ ] optimized s3mplayer()
+
+void s3mplayer(void)
+{
+  static SHORT i,j,vol;
+  LONG lastbyte;
+  DWORD dummy1=0,position=0,dummy=0,*pos,end,pinc;
+  SAMPLE *data;
+
+  DOSYNC1;
+
+  pos = (DWORD *)(((BYTE *)&position)+1);
+
+
+  if(s3m_reset) {
+    channels=s3m_data->channelnum;       // Reset the S3M?
+    for(i = 0; i < channels; i++ ) {     // Reset all channels
+      DOSYNC1;
+      chan[i].bufferdummy1 = 0;
+      chan[i].bufferdummy2 = 0;
+      chan[i].sdata = NULL;
+      chan[i].offset = 0;
+      chan[i].rlength = 0;
+      chan[i].end = 0;
+      chan[i].volume = 0;
+      chan[i].sample_number = 0;
+      chan[i].position= 0;
+      chan[i].pos = (DWORD *)(((BYTE *)&chan[i].position)+1);
+      chan[i].counter = 0;
+      chan[i].pinc = 0;
+      chan[i].effect = 0;
+      chan[i].x = 0;
+      chan[i].y = 0;
+      chan[i].s3m_fine=FALSE;
+      chan[i].fineperiod=0;
+    }
+                                         // reset the global s3m variables
+    s3m_divbytes=s3m_data->channelnum * 5;
+    s3m_pattern=s3m_data->pattern_data[s3m_data->order[0]];
+    s3m_pstop=s3m_pattern+s3m_divbytes*64;
+
+    s3m_bytespertick=((s3m_data->inittempo-250L)*220L)/-125L;
+    s3m_bytespertick=(WORD)(((LONG)sample_rate*s3m_bytespertick)/11000L);
+
+    DOSYNC1;
+
+    s3m_ticksperdivision=s3m_data->initspeed;
+    s3m_currentbyte=0;
+    s3m_currenttick=0;
+    s3m_reset=FALSE;
+    s3m_order=0;
+    s3m_division=0;
+  }
+                                         //Mix the buffer if the number of
+                                         //left is bigger than bufferlen
+  if(s3m_currentbyte > dma_bufferlen) {
+    for(i=0;i<channels;i++){             //loop through ALL channels...
+      DOSYNC1;
+      if(chan[i].volume && *chan[i].pos < chan[i].end) {
+        vol = (chan[i].volume * s3m_volume)/100;
+        data = chan[i].sdata;
+        position = chan[i].position;
+        end = chan[i].end*256;
+        pinc = chan[i].pinc;
+
+        for(j=0;j<dma_bufferlen;j++){
+          DOSYNC2;
+          *(mix_buffer+j) += (*(data + (ARRAYTYPE)*pos)*vol)>>6;
+          position+= pinc;
+          if(position>=end) {
+            if(chan[i].sflag&0x1) {      //If this inst loops loop it...
+
+              *pos -= (chan[i].rlength-chan[i].offset);
+              *chan[i].pos = *pos;
+              chan[i].counter=0;
+              end = chan[i].end=chan[i].rlength;
+              end <<= 8;
+            }
+            else break;
+          }
+        }
+        chan[i].position = position;
+      }
+    }
+    s3m_currentbyte -= dma_bufferlen;
+  }
+                                         //if we have less than bufferlen to
+                                         //mix then we mix the rest and call
+                                         //our tick routine, if it as a division
+                                         //we also call our division routine
+  else {
+    for(i=0;i<channels;i++){             //mix ALL channels
+      DOSYNC1;
+      if(chan[i].volume && *chan[i].pos < chan[i].end) {
+        vol = (chan[i].volume * s3m_volume)/100;
+        data = chan[i].sdata;
+        position = chan[i].position;
+        end = chan[i].end*256;
+        pinc = chan[i].pinc;
+
+        for(j=0;j<s3m_currentbyte;j++){
+          DOSYNC2;
+          *(mix_buffer+j) += (*(data + (ARRAYTYPE)*pos)*vol)>>6;
+          position+=pinc;
+          if(position>=end) {
+            if(chan[i].sflag&0x1) {
+
+              *pos -= (chan[i].rlength-chan[i].offset);
+              *chan[i].pos  = *pos;
+              chan[i].counter=0;
+              end = chan[i].end=chan[i].rlength;
+              end <<= 8;
+            }
+            else break;
+          }
+        }
+        chan[i].position = position;
+      }
+    }
+
+    lastbyte=s3m_currentbyte;            //if we are at a division call it
+    if(s3m_currenttick >= s3m_ticksperdivision*(s3m_patterndelay+1)) {
+      s3m_patterndelay=0;
+      sdodiv();
+      s3m_division++;
+      if(s3m_pattern == s3m_pstop) {
+        s3m_order++;
+        s3m_division=0;
+                                      // End of the s3m?
+        if(s3m_order == s3m_data->orders) {
+          s3m_on=FALSE;
+          s3m_reset=TRUE;
+          if(s3m_data->repeatmusic) { // repeat?
+            if(s3m_data->repeatmusic > 0) s3m_data->repeatmusic--;
+            s3m_on = TRUE;
+          }
+                                     // Check for a chain function
+          if(s3m_data->chainfunc) s3m_data->chainfunc(s3m_data);
+
+                                     // Check for a chain
+          if(s3m_data->chain) {
+            s3m_data = s3m_data->chain;
+            s3m_on = TRUE;
+          }
+
+        }
+        else {
+          s3m_pattern=s3m_data->pattern_data[s3m_data->order[s3m_order]];
+          s3m_pstop=s3m_pattern+s3m_divbytes*64;
+        }
+      }
+      s3m_currenttick=0;
+    }
+    s3m_currentbyte=s3m_bytespertick;    //reset current byte
+    s3m_currenttick++;
+    sdotick();                           //do the tick stuff
+    for(i=0;i<channels;i++){             //mix the rest of ALL channels up to
+                                         //bufferlen
+      DOSYNC1;
+      if(chan[i].volume && *chan[i].pos < chan[i].end) {
+        vol = (chan[i].volume * s3m_volume)/100;
+        data = chan[i].sdata;
+        position = chan[i].position;
+        end = chan[i].end*256;
+        pinc = chan[i].pinc;
+
+        for(j=lastbyte;j<dma_bufferlen;j++){
+          DOSYNC2;
+          *(mix_buffer+j) += (*(data + (ARRAYTYPE)*pos)*vol)>>6;
+          position+=pinc;
+          if(position>=end) {
+            if(chan[i].sflag&0x1) {
+
+              *pos -= (chan[i].rlength-chan[i].offset);
+              *chan[i].pos = *pos;
+              chan[i].counter=0;
+              end = chan[i].end = chan[i].rlength;
+              end <<= 8;
+            }
+            else break;
+          }
+        }
+        chan[i].position = position;
+      }
+    }
+    s3m_currentbyte-=(dma_bufferlen-lastbyte);
+  }
+  DOSYNC1;
+}
+
+
+
+--------------------------- CODE Fragments --------------------------

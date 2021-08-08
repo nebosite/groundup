@@ -1,0 +1,13 @@
+@echo off
+del main.obj
+del sounds.obj
+del util.obj
+del flabber.obj
+del dopal.obj
+del pics.obj
+del dokey.obj
+del animfunc.obj
+del domouse.obj
+del miscfunc.obj
+del fft.obj
+call wmake

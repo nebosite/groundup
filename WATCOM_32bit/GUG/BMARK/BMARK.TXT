@@ -1,0 +1,40 @@
+                       GUG Benchmark Utility 0.1 Results
+                               GUG Version 0.70a
+
+After filling in this form please email it to nbreeden@groundup.com
+
+CPU Type:________________________  (IE: 486DX2-66)
+VGA Type:________________________  (IE: Trident 8900)
+VGA BUSS:________________________  (IE: ISA 16-bit)
+
+                  1     100   Min   Max
+function          Run   Avg   Seen  Seen  Notes
+----------------- ----- ----- ----- ----- --------------------------
+GUGFastClear       0.74  0.71  0.69  0.98 BPS:89772017
+GUGFastCopy        2.05  2.13  1.66  3.11 BPS:30104288
+GUGSetDisplay      0.80  0.82  0.80  1.74
+GUGSaveDisplay    15.24 15.25 14.79 28.73
+GUGRestoreDisplay  2.16  2.11  1.66  2.53
+GUGCopyToBuffer    1.16  1.00  0.99  1.45
+GUGVLIne           0.03  0.02  0.02  0.03
+GUGHLIne           0.03  0.02  0.02  0.03
+GUGLIne            0.04  0.03  0.03  0.03
+GUGBLIne           0.06  0.05  0.05  0.06
+GUGRectangle       0.09  0.01  0.01  0.01
+GUGFillRectangle   3.53  3.77  3.69  5.49
+draw_bench         0.05  0.03  0.03  0.04
+GUGPutFGSprite     0.07  0.05  0.05  0.06
+GUGPutBGSprite     0.07  0.05  0.05  0.06
+GUGPutMNSprite     0.07  0.06  0.05  0.31
+GUGSpriteHeight    0.01  0.00  0.00  0.01
+GUGSpriteWidth     0.01  0.00  0.00  0.01
+GUGSetPixel 1K     0.31  0.25  0.24  1.25
+GUGFastSetPixel    0.20  0.20  0.20  0.23
+GUGGetPixel        0.01  0.00  0.00  0.01
+GUGTestPixel       0.01  0.00  0.00  0.01
+GUGPutText     14  0.05  0.05  0.05  0.05
+GUGPrintRed6x8 14  0.04  0.03  0.03  0.03
+GUGFPMul           0.24  0.24  0.23  1.23 Result:74.871094
+FPU Multiply       0.00  0.15  0.14  0.44 Result:74.942398
+GUGFPDiv           0.62  0.64  0.62  1.67 Result:1.542969
+FPU Divide         0.00  0.46  0.44  1.40 Result:1.544554

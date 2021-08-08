@@ -1,0 +1,123 @@
+CC=wcl386
+CCO=/zq /l=causeway
+#OPT=/oneatx
+OPT=/otrl /s /k64000
+DBG=
+INC=vat.h
+OBJ=handler.obj wav.obj mod.obj s3m.obj midi.obj fm.obj mpu.obj &
+    mixer.obj timer.obj voice.obj
+#doink.obj wooeep.obj rumble.obj
+DBJ=vatlogo.obj varmint1.obj varmint2.obj
+
+#
+# Make vat.lib and vatdemo.exe without any restrictions.
+#
+def:    $(OBJ) vat.c 
+        @echo Removing installed header and library..
+        @del %WATCOM%\h\vat.h
+        @del %WATCOM%\lib386\dos\vat.lib
+        @echo Building unrestricted vat.lib..
+        $(CC) $(CCO) /c $(OPT) vat.c
+        @wlib /n /q /s /t vat.lib +vat.obj
+        @for %f in ($(OBJ)) do @wlib /q /s /t vat.lib +%f
+#        @echo Building unrestricted s3mdebug.exe..
+#        $(CC) $(CCO) $(OPT) s3mdebug.c /"lib vat.lib"
+
+#        @echo Building inittest.exe..
+#        $(CC) $(CCO) $(OPT) inittest.c /"lib vat.lib"
+
+        @echo Building s3mdebug.exe..
+        $(CC) $(CCO) $(OPT) s3mdebug.c /"lib vat.lib"
+
+#        @echo Building wav2c.exe..
+#        $(CC) $(CCO) $(OPT) wav2c.c /"lib vat.lib"
+
+#        @echo Building wavetest.exe..
+#        $(CC) $(CCO) $(OPT) wavetest.c /"lib vat.lib"
+
+#        @echo =============================
+#        @echo =                           =
+#        @echo = Building vatdemo.exe...   =
+#        @echo =                           =
+#        @echo =============================
+#        $(CC) $(CCO) $(OPT) vatdemo.c /"lib vat.lib"
+
+#        @echo =============================
+#        @echo =                           =
+#        @echo = Building ptest.exe...     =
+#        @echo =                           =
+#        @echo =============================
+#        $(CC) $(CCO) $(OPT) ptest.c /"lib vat.lib"
+
+#        @echo =============================
+#        @echo =                           =
+#        @echo = Building zotmake.exe...   =
+#        @echo =                           =
+#        @echo =============================
+#        $(CC) $(CCO) $(OPT) zotmake.c /"lib vat.lib"
+
+#        @echo =============================
+#        @echo =                           =
+#        @echo = Building patcomp.exe...   =
+#        @echo =                           =
+#       @echo =============================
+#        $(CC) $(CCO) $(OPT) patcomp.c /"lib vat.lib"
+
+#        @echo =============================
+#        @echo =                           =
+#        @echo = Building wavcomp.exe...   =
+#        @echo =                           =
+#        @echo =============================
+#        $(CC) $(CCO) $(OPT) wavcomp.c /"lib vat.lib"
+
+        @echo Installing header and library..
+        @copy vat.h %WATCOM%\h
+        @copy vat.lib %WATCOM%\lib386\dos
+        @copy vat.h %WATCOM%\vat
+        @copy vat.lib %WATCOM%\vat
+          # boneheaded Makefile 'error' avoidance
+        @wtouch /d 01-01-96 def
+
+
+#
+# All the standard objects (OBJ).
+#
+handler.obj:    handler.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) handler.c
+
+wav.obj:        wav.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT)  wav.c
+
+mod.obj:        mod.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) mod.c
+
+s3m.obj:        s3m.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) s3m.c
+
+midi.obj:       midi.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) midi.c
+
+fm.obj:         fm.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) fm.c
+
+mpu.obj:        mpu.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) mpu.c
+
+mixer.obj:      mixer.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) mixer.c
+
+timer.obj:      timer.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) timer.c
+
+voice.obj:      voice.c $(INC)
+                $(CC) $(CCO) /c $(DBG) $(OPT) voice.c
+
+#doink.obj:      doink.c $(INC)
+#                $(CC) $(CCO) /c $(DBG)         doink.c
+
+#wooeep.obj:     wooeep.c $(INC)
+#                $(CC) $(CCO) /c $(DBG)         wooeep.c
+
+#rumble.obj:     rumble.c $(INC)
+#                $(CC) $(CCO) /c $(DBG)         rumble.c
+

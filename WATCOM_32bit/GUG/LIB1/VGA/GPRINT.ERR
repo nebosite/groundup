@@ -1,0 +1,22 @@
+GPRINT.C(4): Error! E1055: Unable to open 'svgacc.h'
+GPRINT.C(8): Error! E1009: Expecting ',' but found 'pmode'
+GPRINT.C(8): Error! E1116: An id list not allowed except for function definition
+GPRINT.C(9): Error! E1009: Expecting ',' but found 'pmode'
+GPRINT.C(9): Error! E1116: An id list not allowed except for function definition
+GPRINT.C(10): Error! E1009: Expecting ',' but found 'pmode'
+GPRINT.C(10): Error! E1116: An id list not allowed except for function definition
+GPRINT.C(11): Error! E1009: Expecting ',' but found 'pmode'
+GPRINT.C(11): Error! E1116: An id list not allowed except for function definition
+GPRINT.C(12): Error! E1009: Expecting ',' but found 'pmode'
+GPRINT.C(12): Error! E1116: An id list not allowed except for function definition
+GPRINT.C(15): Error! E1009: Expecting ',' but found 'pmode'
+GPRINT.C(15): Error! E1116: An id list not allowed except for function definition
+GPRINT.C(29): Error! E1011: Symbol 'RGB' has not been declared
+GPRINT.C(29): Error! E1009: Expecting ';' but found 'palette'
+GPRINT.C(29): Error! E1063: Missing operand
+GPRINT.C(29): Error! E1045: Subscript on non-array
+GPRINT.C(29): Warning! W111: Meaningless use of an expression
+GPRINT.C(39): Error! E1011: Symbol 'SET' has not been declared
+GPRINT.C(86): Error! E1009: Expecting ',' but found 'pmode'
+GPRINT.C(93): Error! E1117: Must use 'va_start' macro inside function with variable parameters
+GPRINT.C(93): Error! E1147: Too many errors: compilation aborted

@@ -1,0 +1,252 @@
+			Flabbergasted Beta Test Form  
+			     Version 1.0 beta1
+
+---------|---------|---------|---------|---------|---------|---------|---------|
+
+Beta testers:  use this form to guide you as you test Flabbergasted.   
+Please test all pieces, then report back to us with any anamalies, comments
+or suggestions.
+
+
+|---------------------------------|
+| 				  |
+| PART I:  Keyboard Functionality |
+|				  |
+|---------------------------------|
+
+Most of flabbergasted's features are accessed through the keyboard.  
+
+
+==> MUSIC KEYS
+
+[ ] Keyboard Music
+	- 1234567890-= These keys play notes in a major scale
+	- Left shift causes keys to play an octive lower
+	- left ctrl cause keys to play one note lower
+	- right shift = octive higher
+	- right ctrl = one note higher
+	- ~ key transfers last sound into the music keyboard
+[ ] MOD and S3M music
+	- Insert key picks the next song in the list and plays it
+	- Delete key picks the previous song in the list and plays it
+	  (Note: the music list in found in the file music.cfg)
+	- Home key toggles music on/off
+	- Keypad + and - alter the tempo of the music playing
+
+==> DRAWING KEYS
+
+[ ] Static drawing.  Each of these keys will change the screen in
+    some matter immediately.  Almost all have some random  
+    component to them.
+
+    KEY		ACTION				SOUND
+   ----------  ------------------------------  ---------------------
+     w     	Checkered ball        		Low Bubble
+     e  	Cone                     	Hit pan
+     r  	Starburst                   	Low Spin
+     t  	Weird Fractal Tree        	Sneeze
+     y  	Argle  Pattern         		Low squirt
+     u  	Checkerboard Pattern (in       	Comic Rattlesnale
+		black areas only)
+     i  	Spiral Bar                     	wooeep
+     ]    	Horizontal line        		High Chime
+     Enter 	Vertical line        		Low Chime
+     a  	Random regular circle        	"Bonk"
+     d  	Nested circles         		divboard
+     f  	XOR whole screen   		Screech
+     g  	Cylinder shape      		sonar vibration
+     h  	Random XOR'ed rectangle      	Metal drum
+     j  	Flabbergasted!          	"Flabbergasted"
+     k  	Palette box               	Kachunksqueak
+     z  	Circle        			Tin bell
+     x  	Square                 		"Dwee"
+     c  	Nested boxes       		Low Box & Spring
+     b  	Random XOR'd circle   		Swing (miss)
+     Spacebar   Random Dot    			Plip
+     F1  	Clear to black              	Alarm Clock
+     F2  	Clear to random color          	Low Bell
+     F4  	Convert screen to B&W      	Cough
+     F6  	Draw a plasma pattern         	Big Cymbal (after!)
+     Num Lock  	Toggle White/black palette  	Clear Bell
+     Arrow Rt  	Move all colors up 1      	Single Laugh (high)
+     Arrow Dn 	Move all Colors down 1         	Single laugh (low)
+     Page Up  	Draw Line  	  		Small Boing
+     Page Down 	Starburst 			Hard Strike
+     Keypad enter   Initiate Text Typing        Click
+
+[ ] Dynamic Drawing.  These Initiate an animation that draws on the screen 
+    like a brush.
+
+    KEY		ACTION				SOUND
+   ----------  ------------------------------  ---------------------
+     KeyPad Insert  Moire pattern          	Descending Drum
+     F8 	Snow!                      	High spin
+     Keypad *  	Fireworks                 	Phoomp, Pow!!
+     KeyPad 4 	FFT brush (sound-based) 	Dweewee
+     KeyPad 5 	Waveform Brush (sound-based)  	Engine Revv
+     Arrow Up 	Draw a Spiral             	Big Boing
+     Arrow lt	Bouncing Ball         		Dull Thud
+
+[ ] Mouse Drawing.  These keys affect the use of the mouse.
+
+    KEY		ACTION				SOUND
+   ----------  ------------------------------  ---------------------
+     TAB  	lock 'n drag.  Hold this key  	Two click
+		down to drag and lock a mouse
+		action.  The next key you 
+		press will use the locked
+		coordinates.
+     p  	Draw pallette.  This pallette 	Twang
+		will dissappear at the next
+		mouseclick or keystroke.
+     m          Reverse mouse coordinates       Little man laugh
+     ;  	Turn on/off mouse tiling       	March
+     '  	Spray brush shape              	Hydraulic shzzt 
+     \  	Slant brush shape             	Hydraulic shzzt 
+     /  	slash brush shape              	Hydraulic shzzt
+     [  	Square brush shape            	Hydraulic shzzt
+     o  	Circle brush shape           	Hydraulic shzzt
+     ,  	Smaller brush                 	sniff
+     .  	Larger brush             	sniff
+     v   	Flood Fill                     	Hit Twang
+
+[ ] Full screen animations.  These keys set up animations that do something
+	that affects the whole screen.  No two animations can be active at
+	the same time.  Pressing an animation key repeatedly will toggle
+	the animation off an on.
+
+    KEY		ACTION				SOUND
+   ----------  ------------------------------  ---------------------
+     F3  	Slump   			rumble
+     F5  	Game of life			Marching
+     F7  	Slide screen a randomly  	Small Whoop
+     F9 	Slide Alternate Lines  		Squeek
+     F10 	Diffusion  			Hi Locomotive
+     KeyPad 1  	Crazy color chaser   		Drumming
+     KeyPad 2  	Hyper-Vortex 			Low Wah Wah
+     KeyPad 3  	Down the drain			Gargle
+     F11 	Blur     			Short Cow
+     F12 	FFT animation (This is best 	Whistle and bonks
+		when music is playing.
+
+
+==> MISCELLANEOUS KEYS
+
+[ ] Function keys.  These keys perform some non-characterizable function.
+
+    KEY		ACTION				SOUND
+   ----------  ------------------------------  ---------------------
+     Caps lck 	Locks current color for next 	Guncock (clicking)
+		drawing key.
+     Esc    	Diagnostics/messages		Wow
+     Bkspace  	Stop everything          	Thud/spring
+     Scrll lck	Memory Check.  (Diagnotic   	Long Cymbal
+		Thingy to help me find stray
+		pointers)
+     KeyPad 6 	Reverse Sounds      		"Flabbergasted" 
+						(or "detsagrebbalF")
+     Keypad /  	Toggle Volume on/off   		>> Random sound when on <<
+
+
+[ ] Sound-only keys.  These keys only play a sound.
+
+    KEY		ACTION				SOUND
+   ----------  ------------------------------  ---------------------
+     q  	                     		Metal Click
+     l                                          Low train chug
+     s                                          BWoooooeeee  
+     n 	                      			Sine Wave. 
+						(Default sound for music keys)
+     KeyPad 7   				Drum tune 1
+     KeyPad 8    				Drum Tune 2
+     KeyPad 9    				Drum Tune 3
+     KeyPad Del    				Delicate Crash
+     Print Screen     				Big Pipe
+     End                			Tinkerbell
+
+[ ] Do-nothing keys.  These keys don't do anything on their own.
+
+    KEY		ACTION				SOUND
+   ----------  ------------------------------  ---------------------
+     Left Ctrl  - Nothing -               	- Silent -
+     Rt Ctrl 	- Nothing -         		- Silent -
+     Lt Shift 	- Nothing -                  	- Silent -
+     Rt Shift 	- Nothing -   			- Silent -
+     Lt Alt  	- Nothing -        		- Silent -
+     Rt alt  	- Nothing -          		- Silent -
+
+[ ] Key sequences/combinations.  Flabbergasted has some functionality that 
+	can only be accessed through pressing a few keys together or 
+	several in sequence.
+
+	"qQ"			Quit flabbergasted
+        [Ctrl-S]                Save the screen.  User can save screen 
+				in 1 of 12 slots.
+        [Ctrl-L]                Load a screen from one of the 12 slots. 
+	[Ctrl-Alt-PgUp]		Toggle Stress mode 1 (random keystrokes)
+	[Ctrl-Alt-PgDn]		Toggle Stress mode 2 (each random keystroke 
+				pressed multiple times)
+	"Varmint"		???
+
+
+|---------------------------------|
+| 				  |
+| PART II:  Mouse Functionality   |
+|				  |
+|---------------------------------|
+					
+Mouse functionality is pretty simple:
+
+[ ] Left mouse button- draw on the screen using current brush and color
+[ ] Right mouse button- picks up a color from the screen
+[ ] Animated colors.  Drawing with one of the animated colors should leave
+    behind an animated color trail.
+[ ] Does the mouse track well?  Or does it seem sluggish?
+
+|---------------------------------|
+| 				  |
+| PART IV:  User Friendly	  |
+|				  |
+|---------------------------------|
+
+Flabbergasted is intended to have an exploration element, so some user
+friendliness has been withheld to encourage experimentation.  
+
+[ ] Was it easy to install?
+[ ] Any problems getting it to run?
+[ ] Are there any features or behaviors in flabbergasted that come off
+ 	more as annoying than tantalizing?
+
+
+|---------------------------------|
+| 				  |
+| PART IV:  OS Friendly	  	  |
+|				  |
+|---------------------------------|
+																						s70 Yell (stress mode)
+Once all the functionality has been verified, we'd like to know that 
+Flabbergasted doesn't do mean things to Windows 95.  Probably the best 
+way to do that is put Flabbergasted in one of the stress modes 
+(Ctrl-alt-pgup or ctrl-alt-pgdn) and let it run overnight.  
+
+[ ] What OS are you running?
+[ ] Run a stress mode for a length of time.  
+	How long? 
+	Any problems?
+
+|---------------------------------|
+| 				  |
+| PART IV:  Hardware Friendly	  |
+|				  |
+|---------------------------------|
+
+[ ] Works on a computer with a sound card?
+[ ] Works on a computer without a sound card?
+[ ] Works with the mouse?
+[ ] What's your hardware setup?
+	CPU:
+	RAM:
+	Sound Card (Make and Model):
+	Graphics card (Make and Model):	
+
+

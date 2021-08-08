@@ -1,0 +1,389 @@
+
+ Start  Stop   Length Name               Class
+
+ 00000H 01DCCH 01DCDH _TEXT              CODE
+ 01DCDH 020CCH 00300H STRGEN_TEXT        CODE
+ 020D0H 020D0H 00000H _FARDATA           FAR_DATA
+ 020D0H 020D0H 00000H _FARBSS            FAR_BSS
+ 020D0H 020D0H 00000H _OVERLAY_          OVRINFO
+ 020D0H 020D0H 00000H _1STUB_            STUBSEG
+ 020D0H 026FDH 0062EH _DATA              DATA
+ 026FEH 026FFH 00002H _CVTSEG            DATA
+ 02700H 02705H 00006H _SCNSEG            DATA
+ 02706H 02706H 00000H _CONST             CONST
+ 02706H 02711H 0000CH _INIT_             INITDATA
+ 02712H 02712H 00000H _INITEND_          INITDATA
+ 02712H 02712H 00000H _EXIT_             EXITDATA
+ 02712H 02712H 00000H _EXITEND_          EXITDATA
+ 02712H 02899H 00188H _BSS               BSS
+ 0289AH 0289AH 00000H _BSSEND            BSSEND
+ 028A0H 0291FH 00080H _STACK             STACK
+
+
+Detailed map of segments
+
+ 0000:0000 0295 C=CODE   S=_TEXT          G=(none)  M=c0.ASM     ACBP=28
+ 0000:0295 002D C=CODE   S=_TEXT          G=(none)  M=ATEXIT     ACBP=28
+ 0000:02C2 0000 C=CODE   S=_TEXT          G=(none)  M=CTYPE      ACBP=28
+ 0000:02C2 0093 C=CODE   S=_TEXT          G=(none)  M=EXIT       ACBP=28
+ 0000:0355 0000 C=CODE   S=_TEXT          G=(none)  M=FILES      ACBP=28
+ 0000:0355 0000 C=CODE   S=_TEXT          G=(none)  M=FILES2     ACBP=28
+ 0000:0355 001C C=CODE   S=_TEXT          G=(none)  M=F_SCOPY    ACBP=28
+ 0000:0371 0021 C=CODE   S=_TEXT          G=(none)  M=H_LLSH     ACBP=28
+ 0000:0392 0060 C=CODE   S=_TEXT          G=(none)  M=H_PADD     ACBP=28
+ 0000:03F2 004B C=CODE   S=_TEXT          G=(none)  M=IOERROR    ACBP=28
+ 0000:043D 0011 C=CODE   S=_TEXT          G=(none)  M=ISATTY     ACBP=28
+ 0000:044E 00A2 C=CODE   S=_TEXT          G=(none)  M=LONGTOA    ACBP=28
+ 0000:04F0 0029 C=CODE   S=_TEXT          G=(none)  M=LSEEK      ACBP=28
+ 0000:0519 0021 C=CODE   S=_TEXT          G=(none)  M=N_PCMP     ACBP=28
+ 0000:053A 00BA C=CODE   S=_TEXT          G=(none)  M=SETUPIO    ACBP=28
+ 0000:05F4 0000 C=CODE   S=_TEXT          G=(none)  M=STKLEN     ACBP=28
+ 0000:05F4 04DB C=CODE   S=_TEXT          G=(none)  M=VPRINTER   ACBP=28
+ 0000:0ACF 001F C=CODE   S=_TEXT          G=(none)  M=CVTFAK     ACBP=28
+ 0000:0AEE 0432 C=CODE   S=_TEXT          G=(none)  M=FARHEAP    ACBP=28
+ 0000:0F20 0140 C=CODE   S=_TEXT          G=(none)  M=FBRK       ACBP=28
+ 0000:1060 0004 C=CODE   S=_TEXT          G=(none)  M=REALCVT    ACBP=28
+ 0000:1064 012B C=CODE   S=_TEXT          G=(none)  M=SETARGV    ACBP=28
+ 0000:118F 001C C=CODE   S=_TEXT          G=(none)  M=SETBLOCK   ACBP=28
+ 0000:11AB 0086 C=CODE   S=_TEXT          G=(none)  M=ATOL       ACBP=28
+ 0000:1231 00CD C=CODE   S=_TEXT          G=(none)  M=FFLUSH     ACBP=28
+ 0000:12FE 0042 C=CODE   S=_TEXT          G=(none)  M=FLUSHALL   ACBP=28
+ 0000:1340 01E2 C=CODE   S=_TEXT          G=(none)  M=FSEEK      ACBP=28
+ 0000:1522 0024 C=CODE   S=_TEXT          G=(none)  M=MEMCPY     ACBP=28
+ 0000:1546 001B C=CODE   S=_TEXT          G=(none)  M=PRINTF     ACBP=28
+ 0000:1561 03C8 C=CODE   S=_TEXT          G=(none)  M=PUTC       ACBP=28
+ 0000:1929 011D C=CODE   S=_TEXT          G=(none)  M=SETVBUF    ACBP=28
+ 0000:1A46 0083 C=CODE   S=_TEXT          G=(none)  M=SPRINTF    ACBP=28
+ 0000:1AC9 0030 C=CODE   S=_TEXT          G=(none)  M=STRCMP     ACBP=28
+ 0000:1AF9 0029 C=CODE   S=_TEXT          G=(none)  M=STRCPY     ACBP=28
+ 0000:1B22 001F C=CODE   S=_TEXT          G=(none)  M=STRLEN     ACBP=28
+ 0000:1B41 00C7 C=CODE   S=_TEXT          G=(none)  M=STRTOK     ACBP=28
+ 0000:1C08 0151 C=CODE   S=_TEXT          G=(none)  M=WRITE      ACBP=28
+ 0000:1D59 003C C=CODE   S=_TEXT          G=(none)  M=WRITEA     ACBP=28
+ 0000:1D95 0038 C=CODE   S=_TEXT          G=(none)  M=XFFLUSH    ACBP=28
+ 01DC:000D 0300 C=CODE   S=STRGEN_TEXT    G=(none)  M=STRGEN.C   ACBP=28
+ 020D:0000 0000 C=FAR_DATA S=_FARDATA       G=(none)  M=c0.ASM     ACBP=68
+ 020D:0000 0000 C=FAR_BSS S=_FARBSS        G=(none)  M=c0.ASM     ACBP=68
+ 020D:0000 0000 C=OVRINFO S=_OVERLAY_      G=(none)  M=c0.ASM     ACBP=68
+ 020D:0000 0000 C=STUBSEG S=_1STUB_        G=(none)  M=c0.ASM     ACBP=68
+ 020D:0000 0093 C=DATA   S=_DATA          G=DGROUP  M=c0.ASM     ACBP=68
+ 020D:0094 01BF C=DATA   S=_DATA          G=DGROUP  M=STRGEN.C   ACBP=48
+ 020D:0254 0002 C=DATA   S=_DATA          G=DGROUP  M=ATEXIT     ACBP=48
+ 020D:0256 0101 C=DATA   S=_DATA          G=DGROUP  M=CTYPE      ACBP=48
+ 020D:0358 000C C=DATA   S=_DATA          G=DGROUP  M=EXIT       ACBP=48
+ 020D:0364 0190 C=DATA   S=_DATA          G=DGROUP  M=FILES      ACBP=48
+ 020D:04F4 002A C=DATA   S=_DATA          G=DGROUP  M=FILES2     ACBP=48
+ 020D:051E 0000 C=DATA   S=_DATA          G=DGROUP  M=F_SCOPY    ACBP=48
+ 020D:051E 0000 C=DATA   S=_DATA          G=DGROUP  M=H_LLSH     ACBP=48
+ 020D:051E 0000 C=DATA   S=_DATA          G=DGROUP  M=H_PADD     ACBP=48
+ 020D:051E 005B C=DATA   S=_DATA          G=DGROUP  M=IOERROR    ACBP=48
+ 020D:057A 0000 C=DATA   S=_DATA          G=DGROUP  M=ISATTY     ACBP=48
+ 020D:057A 0000 C=DATA   S=_DATA          G=DGROUP  M=LONGTOA    ACBP=48
+ 020D:057A 0000 C=DATA   S=_DATA          G=DGROUP  M=LSEEK      ACBP=48
+ 020D:057A 0000 C=DATA   S=_DATA          G=DGROUP  M=N_PCMP     ACBP=48
+ 020D:057A 0000 C=DATA   S=_DATA          G=DGROUP  M=SETUPIO    ACBP=48
+ 020D:057A 0002 C=DATA   S=_DATA          G=DGROUP  M=STKLEN     ACBP=48
+ 020D:057C 0067 C=DATA   S=_DATA          G=DGROUP  M=VPRINTER   ACBP=48
+ 020D:05E4 0031 C=DATA   S=_DATA          G=DGROUP  M=CVTFAK     ACBP=48
+ 020D:0616 0000 C=DATA   S=_DATA          G=DGROUP  M=FARHEAP    ACBP=48
+ 020D:0616 0002 C=DATA   S=_DATA          G=DGROUP  M=FBRK       ACBP=48
+ 020D:0618 0000 C=DATA   S=_DATA          G=DGROUP  M=REALCVT    ACBP=48
+ 020D:0618 0010 C=DATA   S=_DATA          G=DGROUP  M=SETARGV    ACBP=48
+ 020D:0628 0000 C=DATA   S=_DATA          G=DGROUP  M=SETBLOCK   ACBP=48
+ 020D:0628 0000 C=DATA   S=_DATA          G=DGROUP  M=ATOL       ACBP=48
+ 020D:0628 0000 C=DATA   S=_DATA          G=DGROUP  M=FFLUSH     ACBP=48
+ 020D:0628 0000 C=DATA   S=_DATA          G=DGROUP  M=FLUSHALL   ACBP=48
+ 020D:0628 0000 C=DATA   S=_DATA          G=DGROUP  M=FSEEK      ACBP=48
+ 020D:0628 0000 C=DATA   S=_DATA          G=DGROUP  M=MEMCPY     ACBP=48
+ 020D:0628 0000 C=DATA   S=_DATA          G=DGROUP  M=PRINTF     ACBP=48
+ 020D:0628 0001 C=DATA   S=_DATA          G=DGROUP  M=PUTC       ACBP=48
+ 020D:062A 0004 C=DATA   S=_DATA          G=DGROUP  M=SETVBUF    ACBP=48
+ 020D:062E 0000 C=DATA   S=_DATA          G=DGROUP  M=SPRINTF    ACBP=48
+ 020D:062E 0000 C=DATA   S=_DATA          G=DGROUP  M=STRCMP     ACBP=48
+ 020D:062E 0000 C=DATA   S=_DATA          G=DGROUP  M=STRCPY     ACBP=48
+ 020D:062E 0000 C=DATA   S=_DATA          G=DGROUP  M=STRLEN     ACBP=48
+ 020D:062E 0000 C=DATA   S=_DATA          G=DGROUP  M=STRTOK     ACBP=48
+ 020D:062E 0000 C=DATA   S=_DATA          G=DGROUP  M=WRITE      ACBP=48
+ 020D:062E 0000 C=DATA   S=_DATA          G=DGROUP  M=WRITEA     ACBP=48
+ 020D:062E 0000 C=DATA   S=_DATA          G=DGROUP  M=XFFLUSH    ACBP=48
+ 020D:062E 0000 C=DATA   S=_CVTSEG        G=DGROUP  M=c0.ASM     ACBP=48
+ 020D:062E 0002 C=DATA   S=_CVTSEG        G=DGROUP  M=CVTFAK     ACBP=48
+ 020D:0630 0000 C=DATA   S=_CVTSEG        G=DGROUP  M=REALCVT    ACBP=48
+ 020D:0630 0000 C=DATA   S=_SCNSEG        G=DGROUP  M=c0.ASM     ACBP=48
+ 020D:0630 0006 C=DATA   S=_SCNSEG        G=DGROUP  M=CVTFAK     ACBP=48
+ 020D:0636 0000 C=CONST  S=_CONST         G=DGROUP  M=c0.ASM     ACBP=48
+ 020D:0636 0000 C=INITDATA S=_INIT_         G=DGROUP  M=c0.ASM     ACBP=48
+ 020D:0636 0006 C=INITDATA S=_INIT_         G=DGROUP  M=SETUPIO    ACBP=48
+ 020D:063C 0006 C=INITDATA S=_INIT_         G=DGROUP  M=SETARGV    ACBP=48
+ 020D:0642 0000 C=INITDATA S=_INITEND_      G=DGROUP  M=c0.ASM     ACBP=28
+ 020D:0642 0000 C=EXITDATA S=_EXIT_         G=DGROUP  M=c0.ASM     ACBP=48
+ 020D:0642 0000 C=EXITDATA S=_EXITEND_      G=DGROUP  M=c0.ASM     ACBP=28
+ 020D:0642 0000 C=BSS    S=_BSS           G=DGROUP  M=c0.ASM     ACBP=48
+ 020D:0642 0102 C=BSS    S=_BSS           G=DGROUP  M=STRGEN.C   ACBP=48
+ 020D:0744 0080 C=BSS    S=_BSS           G=DGROUP  M=ATEXIT     ACBP=48
+ 020D:07C4 0000 C=BSS    S=_BSS           G=DGROUP  M=IOERROR    ACBP=48
+ 020D:07C4 0000 C=BSS    S=_BSS           G=DGROUP  M=ISATTY     ACBP=48
+ 020D:07C4 0000 C=BSS    S=_BSS           G=DGROUP  M=LONGTOA    ACBP=48
+ 020D:07C4 0000 C=BSS    S=_BSS           G=DGROUP  M=LSEEK      ACBP=48
+ 020D:07C4 0000 C=BSS    S=_BSS           G=DGROUP  M=SETUPIO    ACBP=48
+ 020D:07C4 0000 C=BSS    S=_BSS           G=DGROUP  M=VPRINTER   ACBP=48
+ 020D:07C4 0000 C=BSS    S=_BSS           G=DGROUP  M=SETBLOCK   ACBP=48
+ 020D:07C4 0000 C=BSS    S=_BSS           G=DGROUP  M=ATOL       ACBP=48
+ 020D:07C4 0000 C=BSS    S=_BSS           G=DGROUP  M=MEMCPY     ACBP=48
+ 020D:07C4 0001 C=BSS    S=_BSS           G=DGROUP  M=PUTC       ACBP=48
+ 020D:07C6 0000 C=BSS    S=_BSS           G=DGROUP  M=STRCMP     ACBP=48
+ 020D:07C6 0000 C=BSS    S=_BSS           G=DGROUP  M=STRCPY     ACBP=48
+ 020D:07C6 0000 C=BSS    S=_BSS           G=DGROUP  M=STRLEN     ACBP=48
+ 020D:07C6 0004 C=BSS    S=_BSS           G=DGROUP  M=STRTOK     ACBP=48
+ 020D:07CA 0000 C=BSS    S=_BSS           G=DGROUP  M=WRITEA     ACBP=48
+ 020D:07CA 0000 C=BSSEND S=_BSSEND        G=DGROUP  M=c0.ASM     ACBP=28
+ 028A:0000 0080 C=STACK  S=_STACK         G=(none)  M=c0.ASM     ACBP=74
+
+  Address         Publics by Name
+
+ 020D:0000 idle  DATASEG@
+ 0000:0291 idle  DGROUP@
+ 0000:0374 idle  F_LXLSH@
+ 0000:0395 idle  F_PADD@
+ 0000:03C4 idle  F_PSUB@
+ 0000:0355       F_SCOPY@
+ 0000:0374 idle  LXLSH@
+ 0000:0371       N_LXLSH@
+ 0000:0392       N_PADD@
+ 0000:0519       N_PCMP@
+ 0000:03C1 idle  N_PSUB@
+ 0000:0395 idle  PADD@
+ 0000:03C4 idle  PSUB@
+ 0000:0355 idle  SCOPY@
+ 0000:027A       _abort
+ 0000:0295 idle  _atexit
+ 0000:1220 idle  _atoi
+ 0000:11AB       _atol
+ 020D:007F       _errno
+ 0000:031A       _exit
+ 0000:0C2E idle  _farfree
+ 0000:0D42 idle  _farmalloc
+ 0000:0EA6 idle  _farrealloc
+ 0000:1231       _fflush
+ 0000:12FE       _flushall
+ 0000:157D idle  _fputc
+ 0000:1712 idle  _fputchar
+ 0000:0C2E       _free
+ 0000:13C2       _fseek
+ 0000:1442 idle  _ftell
+ 020D:0642 idle  _gcUserName
+ 020D:0742 idle  _giDemoDays
+ 0000:043D       _isatty
+ 0000:04F0       _lseek
+ 01DC:01E7       _main
+ 0000:0D38       _malloc
+ 0000:1522       _memcpy
+ 0000:1546       _printf
+ 0000:0E9F idle  _realloc
+ 01DC:000D idle  _regvalidate
+ 0000:118F       _setblock
+ 0000:1929       _setvbuf
+ 0000:1A86       _sprintf
+ 0000:1AC9       _strcmp
+ 0000:1AF9       _strcpy
+ 0000:1B22       _strlen
+ 0000:1B41       _strtok
+ 0000:1AA8 idle  _vsprintf
+ 0000:1000 idle  __AHINCR
+ 0000:000C idle  __AHSHIFT
+ 020D:0618 idle  __argc
+ 020D:061A idle  __argv
+ 020D:0254       __atexitcnt
+ 020D:0744       __atexittbl
+ 0000:0F96       __brk
+ 020D:008B       __brklvl
+ 020D:006B       __C0argc
+ 020D:006D       __C0argv
+ 020D:0071 idle  __C0environ
+ 0000:033B idle  __cexit
+ 0000:016A       __checknull
+ 0000:0157       __cleanup
+ 020D:0256       __ctype
+ 0000:0000  Abs  __cvtfak
+ 0000:0349 idle  __c_exit
+ 020D:051E idle  __doserrno
+ 0000:042B idle  __DOSERROR
+ 020D:0520 idle  __dosErrorToSV
+ 020D:0075       __envLng
+ 020D:0077       __envseg
+ 020D:0079 idle  __envSize
+ 0000:0329       __exit
+ 020D:0358       __exitbuf
+ 020D:035C idle  __exitfopen
+ 020D:0360 idle  __exitopen
+ 0000:1561 idle  __fputc
+ 0000:1726       __FPUTN
+ 020D:0087       __heapbase
+ 020D:008F       __heaptop
+ 020D:005B idle  __Int0Vector
+ 020D:005F idle  __Int4Vector
+ 020D:0063 idle  __Int5Vector
+ 020D:0067 idle  __Int6Vector
+ 0000:03F2       __IOERROR
+ 0000:044E       __LONGTOA
+ 0000:0293 idle  __MMODEL
+ 020D:04F4       __nfile
+ 020D:04F6       __openfd
+ 020D:007D       __osmajor
+ 020D:007E idle  __osminor
+ 020D:007D idle  __osversion
+ 020D:007B       __psp
+ 0000:1060       __REALCVT
+ 020D:062E       __RealCvtVector
+ 0000:01C0       __restorezero
+ 0000:0FD5       __sbrk
+ 020D:0630 idle  __ScanTodVector
+ 0000:0000  Abs  __setargv__
+ 0000:053A       __setupio
+ 020D:0081 idle  __StartTime
+ 020D:057A       __stklen
+ 020D:0364       __streams
+ 0000:016B       __terminate
+ 0000:04D0 idle  __UTOA
+ 020D:007D idle  __version
+ 0000:060C       __VPRINTER
+ 0000:1D59       __write
+ 0000:1D95       __xfflush
+ 020D:0085 idle  ___brklvl
+ 0000:0AEE idle  ___first
+ 0000:0AF0 idle  ___last
+ 0000:0AF2 idle  ___rover
+ 0000:1C08       ___write
+
+  Address         Publics by Value
+
+ 0000:0000  Abs  __setargv__
+ 0000:0000  Abs  __cvtfak
+ 0000:000C idle  __AHSHIFT
+ 0000:0157       __cleanup
+ 0000:016A       __checknull
+ 0000:016B       __terminate
+ 0000:01C0       __restorezero
+ 0000:027A       _abort
+ 0000:0291 idle  DGROUP@
+ 0000:0293 idle  __MMODEL
+ 0000:0295 idle  _atexit
+ 0000:031A       _exit
+ 0000:0329       __exit
+ 0000:033B idle  __cexit
+ 0000:0349 idle  __c_exit
+ 0000:0355       F_SCOPY@
+ 0000:0355 idle  SCOPY@
+ 0000:0371       N_LXLSH@
+ 0000:0374 idle  LXLSH@
+ 0000:0374 idle  F_LXLSH@
+ 0000:0392       N_PADD@
+ 0000:0395 idle  F_PADD@
+ 0000:0395 idle  PADD@
+ 0000:03C1 idle  N_PSUB@
+ 0000:03C4 idle  F_PSUB@
+ 0000:03C4 idle  PSUB@
+ 0000:03F2       __IOERROR
+ 0000:042B idle  __DOSERROR
+ 0000:043D       _isatty
+ 0000:044E       __LONGTOA
+ 0000:04D0 idle  __UTOA
+ 0000:04F0       _lseek
+ 0000:0519       N_PCMP@
+ 0000:053A       __setupio
+ 0000:060C       __VPRINTER
+ 0000:0AEE idle  ___first
+ 0000:0AF0 idle  ___last
+ 0000:0AF2 idle  ___rover
+ 0000:0C2E       _free
+ 0000:0C2E idle  _farfree
+ 0000:0D38       _malloc
+ 0000:0D42 idle  _farmalloc
+ 0000:0E9F idle  _realloc
+ 0000:0EA6 idle  _farrealloc
+ 0000:0F96       __brk
+ 0000:0FD5       __sbrk
+ 0000:1000 idle  __AHINCR
+ 0000:1060       __REALCVT
+ 0000:118F       _setblock
+ 0000:11AB       _atol
+ 0000:1220 idle  _atoi
+ 0000:1231       _fflush
+ 0000:12FE       _flushall
+ 0000:13C2       _fseek
+ 0000:1442 idle  _ftell
+ 0000:1522       _memcpy
+ 0000:1546       _printf
+ 0000:1561 idle  __fputc
+ 0000:157D idle  _fputc
+ 0000:1712 idle  _fputchar
+ 0000:1726       __FPUTN
+ 0000:1929       _setvbuf
+ 0000:1A86       _sprintf
+ 0000:1AA8 idle  _vsprintf
+ 0000:1AC9       _strcmp
+ 0000:1AF9       _strcpy
+ 0000:1B22       _strlen
+ 0000:1B41       _strtok
+ 0000:1C08       ___write
+ 0000:1D59       __write
+ 0000:1D95       __xfflush
+ 01DC:000D idle  _regvalidate
+ 01DC:01E7       _main
+ 020D:0000 idle  DATASEG@
+ 020D:005B idle  __Int0Vector
+ 020D:005F idle  __Int4Vector
+ 020D:0063 idle  __Int5Vector
+ 020D:0067 idle  __Int6Vector
+ 020D:006B       __C0argc
+ 020D:006D       __C0argv
+ 020D:0071 idle  __C0environ
+ 020D:0075       __envLng
+ 020D:0077       __envseg
+ 020D:0079 idle  __envSize
+ 020D:007B       __psp
+ 020D:007D idle  __osversion
+ 020D:007D       __osmajor
+ 020D:007D idle  __version
+ 020D:007E idle  __osminor
+ 020D:007F       _errno
+ 020D:0081 idle  __StartTime
+ 020D:0085 idle  ___brklvl
+ 020D:0087       __heapbase
+ 020D:008B       __brklvl
+ 020D:008F       __heaptop
+ 020D:0254       __atexitcnt
+ 020D:0256       __ctype
+ 020D:0358       __exitbuf
+ 020D:035C idle  __exitfopen
+ 020D:0360 idle  __exitopen
+ 020D:0364       __streams
+ 020D:04F4       __nfile
+ 020D:04F6       __openfd
+ 020D:051E idle  __doserrno
+ 020D:0520 idle  __dosErrorToSV
+ 020D:057A       __stklen
+ 020D:0618 idle  __argc
+ 020D:061A idle  __argv
+ 020D:062E       __RealCvtVector
+ 020D:0630 idle  __ScanTodVector
+ 020D:0642 idle  _gcUserName
+ 020D:0742 idle  _giDemoDays
+ 020D:0744       __atexittbl
+
+Line numbers for STRGEN.OBJ(STRGEN.C) segment STRGEN_TEXT
+
+    22 01DC:000D    25 01DC:0013    26 01DC:001D    27 01DC:0027
+    28 01DC:0031    29 01DC:003B    31 01DC:0043    33 01DC:0048
+    35 01DC:0054    36 01DC:005B    40 01DC:0085    41 01DC:009D
+    42 01DC:00B3    43 01DC:00C9    45 01DC:00DF    49 01DC:0101
+    51 01DC:0119    52 01DC:012A    54 01DC:013B    57 01DC:014B
+    58 01DC:015C    59 01DC:0169    60 01DC:0193    61 01DC:01A2
+    62 01DC:01A8    65 01DC:01B7    69 01DC:01C1    70 01DC:01C7
+    72 01DC:01D9    73 01DC:01E5    76 01DC:01E7    79 01DC:01EE
+    81 01DC:0200    82 01DC:0205    85 01DC:020A    86 01DC:0216
+    87 01DC:022D    89 01DC:023F    90 01DC:0250    91 01DC:027D
+    93 01DC:0283    95 01DC:029F    97 01DC:02B1    98 01DC:02B8
+   100 01DC:02E8   102 01DC:02FA   104 01DC:0307   105 01DC:030B
+Program entry point at 0000:0000
+
